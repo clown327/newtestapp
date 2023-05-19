@@ -39,6 +39,7 @@ const BottomTabs = () => {
   );
 };
 //김재진 상병님 렛츠고
+//<NavigationContainer>은 파일에서 한번만 작성 되어야함
 
 
 
