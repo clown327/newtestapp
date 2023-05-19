@@ -1,7 +1,7 @@
 //민원을 관리할 수 있는 화면 입니다 stack
 import {Text, View} from 'react-native'
 
-export default managing = () => {
+export default function Managing (props) {
     
     return(
         <View>

@@ -3,31 +3,38 @@
 import React from "react";
 import { StyleSheet, Text, View,TouchableOpacity, FlatList, Button } from 'react-native';
 import CNavigation from "../CNavigation";
+import { NavigationContainer } from "@react-navigation/native";
 
 
-export function mainscreen (props) {
-    const min1box = [
-    { title : "민원", content : "민원을 담기 위한 상자입니다." }
-    ];
-
-return (
-    <View style={styles.min1boxcontainer}>
-        <FlatList style={{alignContent: "center"}}
-        contentsContainerStyle={{
-            justifyContent: "center",
-            alignItems: "center",
-            padding: 10,
-        }}
-        />
-    </View>
-)
+export default function Mainscreen(navigation) {
+    return (
+        <View style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center'
+        }}>
+            <FlatList style={styles.textContainer}>
+                <TouchableOpacity style={styles.textContainer} onPress={() => props.navigation.navigate("min1")}>
+                    <Text style={styles.textStyle}>
+                        이곳은 텍스트를 테스트하는 텍스트 영역입니다.
+                    </Text>
+                </TouchableOpacity>
+            </FlatList>
+        </View>
+    );
 }
 
 
-
-
 const styles = StyleSheet.create ({
-  min1boxcontainer: {
+    textContainer:{ 
+        height: 100,
+        borderColor: "#000",
+        borderWidth: 1,
+        borderRadius: 10,
+        margin: 10,
+
+    },
+  min1box: {
         height: 100,
         borderColor: "#000",
         borderWidth: 1,
@@ -38,4 +45,4 @@ const styles = StyleSheet.create ({
         flex: 1,
         backgroundColor: "#fff",
     },
-});
+}); 
