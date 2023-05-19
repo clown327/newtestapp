@@ -1,7 +1,7 @@
 //민원을 관리할 수 있는 화면 입니다 stack
 import {Text, View} from 'react-native'
 
-export default function Managing (props) {
+export const Managing = (props) => {
     
     return(
         <View>
@@ -9,5 +9,5 @@ export default function Managing (props) {
                 신고 접수하는 페이지
             </Text>
         </View>
-    )
+    );
 }

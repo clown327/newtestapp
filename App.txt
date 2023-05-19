@@ -1,0 +1,20 @@
+import React from "react";
+import {TabStack} from "./src/navigation/CNavigation";
+import { StatusBar } from "expo-status-bar"; 
+import  {StyleSheet, Text, View,SafeAreaView} from 'react-native';
+import { NavigationContainer } from "@react-navigation/native";
+import CNavigation from "./src/navigation/CNavigation";
+
+
+export default function App()
+{
+  return (
+    <NavigationContainer>
+      <SafeAreaView style={{flex:1}}>
+        <CNavigation/>
+      </SafeAreaView>
+    </NavigationContainer>
+  )
+}
+
+//const style = StyleSheet.create({});

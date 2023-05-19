@@ -1,17 +1,18 @@
 import React from "react";
+import { NavigationContainer } from "@react-navigation/native";
 import {CNavigation} from "./src/navigation/CNavigation";
-import { StatusBar } from "expo-status-bar"; 
-import  {StyleSheet, Text, View,SafeAreaView} from 'react-native';
+import {View, Text} from 'react-native';
+
+
 
 
 export default function App()
 {
   return (
-    <SafeAreaView style={{flex:1}}>
-      
+    <View style={{flex:1}}>
       <CNavigation/>
-    </SafeAreaView>
-  )
+    </View>
+  );
 }
 
 //const style = StyleSheet.create({});

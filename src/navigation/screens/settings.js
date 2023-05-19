@@ -5,8 +5,7 @@ import { StyleSheet, Text, View,TouchableOpacity, ScrollView, Button } from 'rea
 import { mainscreen } from "./Mainscreen";
 
 
-export default function Settings(props)
-{
+export const Settings = (props) =>{
   return (
     <View style={{
        flex: 1, 
@@ -18,4 +17,4 @@ export default function Settings(props)
       onPress={() => navigation.navigate("mainscreen")} />
     </View>
   );
-};
+}

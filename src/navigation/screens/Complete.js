@@ -1,19 +1,13 @@
-import React, { useState } from 'react';
-import { View, ScrollView, StyleSheet } from 'react-native';
+//민원을 관리할 수 있는 화면 입니다 stack
+import {Text, View} from 'react-native'
 
-
-
-
-
-export default function Complete(props)
-{
-  return (
-	<View style={{
-        flex:1,
-        justifyContent: 'center',
-        alignItems: 'center' }}>
-            <Button style={style.button} title="돌아가기"
-            onPress={() => navigation.navigate("Mainscreen")}/> 
-    </View>
-  );
-};
+export const Complete = (props) => {
+    
+    return(
+        <View>
+            <Text>
+                신고 접수하는 페이지
+            </Text>
+        </View>
+    );
+}

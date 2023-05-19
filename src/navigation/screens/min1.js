@@ -1,7 +1,7 @@
-//민원을 누르면 나오는 페이지 stack
+//민원을 관리할 수 있는 화면 입니다 stack
 import {Text, View} from 'react-native'
 
-export default function Min1 (props) {
+export const  Min1 = (props) => {
     
     return(
         <View>
@@ -9,5 +9,5 @@ export default function Min1 (props) {
                 신고 접수하는 페이지
             </Text>
         </View>
-    )
+    );
 }
