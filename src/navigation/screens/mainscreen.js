@@ -3,7 +3,7 @@ import {Text, View, ScrollView, TouchableOpacity} from 'react-native'
 
 export const Mainscreen = (navigation) => {
     return(
-        
+    <SafeAreaView>
     <ScrollView>      
         <View>
             <Text>saljdjwo</Text>
@@ -11,5 +11,6 @@ export const Mainscreen = (navigation) => {
         </View>
         
     </ScrollView>
+     </SafeAreaView>
     );
 }
