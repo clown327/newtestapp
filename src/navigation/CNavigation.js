@@ -20,7 +20,7 @@ const navigationRef = createNavigationContainerRef();
 //bottom tabs
 const BottomTabs = () => {
   return (
-    <NavigationContainer>
+    //<NavigationContainer>
       <Tab.Navigator>
         <Tab.Screen name="Mainscreen"
           component={Mainscreen}
@@ -35,7 +35,7 @@ const BottomTabs = () => {
             tabBarIcon: ({ color, size }) => (<Icon name="Settings" color={color} size={size} />)
           }} />
       </Tab.Navigator>
-    </NavigationContainer>
+    //</NavigationContainer>
   );
 };
 //김재진 상병님 렛츠고
