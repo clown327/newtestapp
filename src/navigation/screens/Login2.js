@@ -1,28 +1,33 @@
 import React from "react";
 import {Image, StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import roka from "../../../assets/rokalogo.png"
+import back from "../../../assets/backbutton.png"
+import { Directions } from "react-native-gesture-handler";
 
 export default function Login2(props) {
     console.disableYellowBox = true;
 
     return (
         <View style={styles.container}>
+            <TouchableOpacity onPress={() => props.navigation.navigate} style={styles.buttonplace}>
+                <Image source={ back } style={styles.buttonimage}/>
+            </TouchableOpacity>
             <Text style={styles.title}>
-                국민 국방 안전 신고앱에 오신것을 환영 합니다.
-            </Text>
-            <View style={styles.introContainer}>
-                <Image
-                    source={ roka }
-                    style={styles.image} />
-                <Text style={styles.introTitleText}>
-                    이곳은 관리자 페이지 입니다.
-                </Text>
-                <Text style={styles.introdescText}>
-                    국민을 위해 힘쓰시는 당신이 영웅입니다.
-                </Text>
-                <TouchableOpacity style={styles.button} onPress = {() => props.navigation.navigate("Home")}>
-                    <Text style={styles.buttonText}>메인화면</Text>
-                </TouchableOpacity>
+                   국민 국방 안전 신고앱에 오신것을 환영 합니다.
+             </Text>
+             <View style={styles.introContainer}>
+                 <Image
+                       source={ roka }
+                     style={styles.image} />
+                 <Text style={styles.introTitleText}>
+                     이곳은 관리자 페이지 입니다.
+             </Text>
+             <Text style={styles.introdescText}>
+                  국민을 위해 힘쓰시는 당신이 영웅입니다.
+             </Text>
+                   <TouchableOpacity style={styles.button} onPress = {() => props.navigation.navigate("Home")}>
+                  <Text style={styles.buttonText}>메인화면</Text>
+             </TouchableOpacity>
             </View>
         </View>
     );
@@ -84,5 +89,17 @@ const styles = StyleSheet.create({
   buttonText: {
     fontSize: 30,
     color: "white",
+  },
+  buttonimage: {
+    width: 50,
+    height: 50,
+    borderRadius: 10,
+  },
+  buttonplace: {
+    alignItems: "flex-start",
+    flexDirections: "row",
+    //justifyContent: "center",
+    position: 'relative',
+    right: 150,
   },
 });

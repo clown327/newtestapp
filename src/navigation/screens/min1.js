@@ -1,4 +1,4 @@
-//민원을 관리할 수 있는 화면 입니다 stack
+//민원을 보여주는 페이지 입니다.
 import {Text, View} from 'react-native'
 
 export const  Min1 = (props) => {
