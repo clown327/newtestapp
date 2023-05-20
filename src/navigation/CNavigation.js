@@ -29,6 +29,10 @@ const navigationRef = createNavigationContainerRef();
 //bottom tabs
 const BottomTabs = () => {
   return (
+<<<<<<< HEAD
+=======
+    //<NavigationContainer>
+>>>>>>> 57cfa764bd114b255e753ab025595a09256f9d26
       <Tab.Navigator>
         <Tab.Screen name="Mainscreen"
           component={Mainscreen}
@@ -43,6 +47,7 @@ const BottomTabs = () => {
             tabBarIcon: ({ color, size }) => (<Icon name="settings" color={color} size={size} />)
           }} />
       </Tab.Navigator>
+<<<<<<< HEAD
   );
 };//김재진 상병님 최고
 
@@ -57,6 +62,13 @@ function TopTabs () {
   );
 };
 */
+=======
+    //</NavigationContainer>
+  );
+};
+//김재진 상병님 렛츠고
+//<NavigationContainer>은 파일에서 한번만 작성 되어야함
+>>>>>>> 57cfa764bd114b255e753ab025595a09256f9d26
 
 
 

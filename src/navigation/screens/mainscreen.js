@@ -1,6 +1,7 @@
 //새로 만들어진 민원들을 보여주는 페이지 입니다.
 import {SafeAreaView ,Text, View, ScrollView, StyleSheet, TouchableOpacity, Button} from 'react-native'
 
+<<<<<<< HEAD
 export const Mainscreen = (props) => {
  return(
     <SafeAreaView style={styles.scrollcontainer} >
@@ -88,3 +89,18 @@ const styles = StyleSheet.create({
         color:"#000000",
     },
 });
+=======
+export const Mainscreen = (navigation) => {
+    return(
+    <SafeAreaView>
+    <ScrollView>      
+        <View>
+            <Text>saljdjwo</Text>
+
+        </View>
+        
+    </ScrollView>
+     </SafeAreaView>
+    );
+}
+>>>>>>> 57cfa764bd114b255e753ab025595a09256f9d26
