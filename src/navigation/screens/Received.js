@@ -1,7 +1,7 @@
-//민원을 관리할 수 있는 화면 입니다 stack
+//접수된 
 import {Text, View, SafeAreaView, StyleSheet} from 'react-native'
 
-export const Managing = (props) => {
+export const Received= (props) => {
     
     return(
     <SafeAreaView>

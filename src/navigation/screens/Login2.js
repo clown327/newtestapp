@@ -9,9 +9,6 @@ export default function Login2(props) {
 
     return (
         <View style={styles.container}>
-            <TouchableOpacity onPress={() => props.navigation.navigate} style={styles.buttonplace}>
-                <Image source={ back } style={styles.buttonimage}/>
-            </TouchableOpacity>
             <Text style={styles.title}>
                    국민 국방 안전 신고앱에 오신것을 환영 합니다.
              </Text>
@@ -25,7 +22,7 @@ export default function Login2(props) {
              <Text style={styles.introdescText}>
                   국민을 위해 힘쓰시는 당신이 영웅입니다.
              </Text>
-                   <TouchableOpacity style={styles.button} onPress = {() => props.navigation.navigate("Home")}>
+                   <TouchableOpacity style={styles.button} onPress = {() => props.navigation.navigate("BottomTabs")}>
                   <Text style={styles.buttonText}>메인화면</Text>
              </TouchableOpacity>
             </View>
@@ -99,7 +96,7 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     flexDirections: "row",
     //justifyContent: "center",
-    position: 'relative',
+    position: 'absolute',
     right: 150,
   },
 });

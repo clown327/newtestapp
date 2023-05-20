@@ -21,6 +21,8 @@ function MainScreen({navigation}) {
         title="필터링"
         onPress={() => navigation.navigate("Settings")}>
         </Button>
+
+        
       <ScrollView style={styles.container} >
         <TouchableOpacity style={styles.textContainer} onPress={() => navigation.navigate("min1")}>
           <Text style={styles.textStyle}>
