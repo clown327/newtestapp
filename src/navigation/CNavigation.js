@@ -3,7 +3,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNavigationContainerRef } from "@react-navigation/native";
-//import { StyleSheet, Text, View,TouchableOpacity, ScrollView, Button } from 'react-native';
+import { Animated, Platform, Dimension, StyleSheet, Text, View,TouchableOpacity, ScrollView, Button } from 'react-native';
 
 
 import {Managing} from "./screens/Managing";
@@ -14,6 +14,7 @@ import {Complete} from "./screens/Complete";
 import {Login} from "./screens/Login";
 import Login2 from "./screens/Login2";
 import { Home } from "./screens/Home";
+import {uesRef} from 'react';
 
 
 import Icon from 'react-native-vector-icons/MaterialIcons';

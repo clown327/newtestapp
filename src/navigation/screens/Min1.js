@@ -2,24 +2,28 @@
 import React, { useState, useEffect } from 'react';
 import { ScrollView, Text, View, StyleSheet, SafeAreaView, TouchableOpacity, Image } from 'react-native';
 import { SliderBox } from 'react-native-image-slider-box';
-import { database } from '../../../firebase';
-import { ref, child, onChildAdded } from 'firebase/database';
-import { useNavigation } from '@react-navigation/native';
 
 export const Min1 = (props) => {
 
     const report = props.route.params.report;
+    const images = JSON.parse(report.photo).slice(0, 4).map((uri) => ({ uri }));
+
+    const isCompleted = report.state === '처리완료';
+    const isProcessing = report.state === '처리중';
+    const isReceived = report.state === '미접수';
+    const isDoing = report.state === '접수';
+
     return (
         <ScrollView style={styles.container}>
             <SafeAreaView>
                 <View>
                     <View style={styles.title}>
-                    <Text style={styles.titletext}>유형 : {report.type} ({report.state})</Text>
-                    <Text></Text>
+                        <Text style={styles.titletext}>유형 : {report.type} ({report.state})</Text>
+                        <Text></Text>
                     </View>
 
                     <View style={styles.photocontainer}>
-                    <SliderBox images={JSON.parse(report.photo).slice(0, 4).map((uri) => ({ uri }))} style={styles.photo} />
+                        <SliderBox images={images} style={styles.photo} />
                     </View>
 
                     <View style={styles.detail}>
@@ -28,19 +32,37 @@ export const Min1 = (props) => {
                         <Text style={styles.detailtext}>{report.detail}</Text>
                     </View>
 
-                    <TouchableOpacity style={styles.combutton} onPress={() => {props.navigation.navigate('Complete',{report:report})}}>
-                    <Text style={styles.comtext}>접수하기!</Text>
-                    </TouchableOpacity>
+                    {isReceived && (
+                            <TouchableOpacity style={styles.combutton} onPress={() => {props.navigation.navigate('Complete',{report:report})}}>
+                                <Text style={styles.comtext}>접수하기!</Text>
+                            </TouchableOpacity>
+                            )}
+
+                    {isProcessing && (
+                            <TouchableOpacity style={styles.combutton} onPress={() => {props.navigation.navigate('Mainscreen')}}>
+                            <Text style={styles.comtext}>처리중입니다!</Text>
+                        </TouchableOpacity>
+                    )}
+
+                    {isCompleted && (
+                            <TouchableOpacity style={styles.combutton} onPress={() => {props.navigation.navigate('Mainscreen')}}>
+                            <Text style={styles.comtext}>처리완료되었습니다!</Text>
+                        </TouchableOpacity>
+                    )}
+                    {isDoing && (
+                            <TouchableOpacity style={styles.combutton} onPress={() => {props.navigation.navigate('Mainscreen')}}>
+                            <Text style={styles.comtext}>접수된 상태입니다!</Text>
+                        </TouchableOpacity>                        
+                    )}
                 </View>
             </SafeAreaView>
         </ScrollView>
   );
 };
 
-
 const styles = StyleSheet.create({
     container: {
-        flex:1,
+        flex:2,
         width:"100%",
         height:"100%",
         backgroundColor:"white",
@@ -69,7 +91,7 @@ const styles = StyleSheet.create({
         height:370,
         borderRadius:10,
 
-<<<<<<< HEAD:src/navigation/screens/min1.js
+
     },
     detail:{
         width:"95%",
@@ -97,6 +119,6 @@ const styles = StyleSheet.create({
 
     },
 });
-=======
-});
->>>>>>> 9e511bc1421ac79e1bac6fc52d49317c379d2e2f:src/navigation/screens/Min1.js
+
+
+

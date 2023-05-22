@@ -1,6 +1,5 @@
 import React from 'react';
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
-import Button1 from '../../../CustomButtons/Button1';
 import { SafeAreaView } from 'react-native-safe-area-context';
 //import { ScrollView } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/MaterialIcons';
