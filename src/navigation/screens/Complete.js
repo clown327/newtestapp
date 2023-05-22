@@ -1,54 +1,94 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import Button1 from '../../../CustomButtons/Button1';
-import { ScrollView } from 'react-native-gesture-handler';
+import { SafeAreaView } from 'react-native-safe-area-context';
+//import { ScrollView } from 'react-native-gesture-handler';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 
 export const Complete= (props) => {
-      return (
-      <View style={styles.container}>
-        <View style={styles.header}></View>
-        <View style={styles.title}><Text>민원을 접수했습니다!</Text></View>
-        <View style={styles.content}></View>
-        <View style={styles.footer}>
-          <Button1           
-            buttonColor={'#9F8BEF'}
-            title={'돌아가기!'}
-            onPress={() => props.navigation.navigate("BottomTabs") }/>
-      </View>
-      </View>
+
+    const report = props.route.params.report;
+      
+    
+    return (
+      <SafeAreaView style={styles.container}>
+        <View style={styles.comcontainer}>
+          <Text style={styles.comtext}>
+            접수되었습니다!
+          </Text>
+        </View>
+        <View style={styles.photocontainer}>
+            <Icon name="done" size={170} color="#222A5A" />
+        </View>
+        <View style={styles.buttoncontainer}>
+          <TouchableOpacity style={styles.button} onPress = {() => props.navigation.navigate("Mainscreen")}>
+            <Text style={styles.buttontext}>
+              돌아가기!
+            </Text>
+
+          </TouchableOpacity>
+        </View>
+      </SafeAreaView>
+
     );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    padding: 10,
-    backgroundColor: 'white',
+    backgroundColor:"white",
+    width:"100%",
+    height:"100%"
   },
-  header: {
-    width:'100%',
-    height:'9%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#ffffff',
+  comcontainer: {
+    width:"100%",
+    height:"20%",
+    //backgroundColor:"yellow",    
+    alignItems:"center",
+    justifyContent:"flex-end",
+    //flexDirection:"column"
+
   },
-  title: {
-    width:'100%',
-    height:'18%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#ffffff',
+  comtext:{
+    fontSize:30,
+    fontWeight:"bold",
+
   },
-  content: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#ffffff',
+  photocontainer:{
+    width:"100%",
+    height:"60%",
+    //backgroundColor:"red",
+    alignItems:"center",
+    justifyContent:"center",
+
   },
-  footer: {
-    width:'100%',
-    height:'10%',
-    backgroundColor: '#ffffff',
+  photo:{
+
   },
+  buttoncontainer:{
+    width:"100%",
+    height:"30%",
+    //backgroundColor:"powderblue",
+
+  },
+  button:{
+    width:"95%",
+    height:80,
+    margin:10,
+    borderRadius:10,
+    backgroundColor:"#1E90FF",    
+    alignItems:"center",
+    justifyContent:"center",
+  },
+  buttontext: {
+    color:"white",
+
+    fontSize:30,
+    fontWeight:"bold",
+
+
+  },
+
+ 
+  
 });

@@ -1,55 +1,81 @@
-//로그인 하여 홈으로 들어가는 페이지 입니다.
-import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
-import Button1 from '../../../CustomButtons/Button1';
-import { ScrollView } from 'react-native-gesture-handler';
-
+import React, { useState } from 'react';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image,ScrollView } from 'react-native';
+import roka from "./../../../assets/rokalogo.png";
 
 export const Login = (props) => {
-      return (
-      <View style={styles.container}>
-        <View style={styles.header}></View>
-        <View style={styles.title}></View>
-        <View style={styles.content}><Text>민원 사진이 들어갈 위치 입니다.</Text></View>
-        <View style={styles.footer}>
-          <Button1           
-            buttonColor={'#023e71'}
-            title={'로그인'}
-            onPress={() => props.navigation.navigate("Login2") }/>
-      </View>
-      </View>
-    );
-}
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleLogin = (props) => {
+    // Handle login logic here
+  };
+
+  return ( 
+ 
+    <View style={styles.container}>
+     
+      <Image source = {roka} style={styles.image}/>
+      <Text style={styles.title}>관리자 로그인</Text>
+      <TextInput
+        style={styles.input}
+        placeholder="Username"
+        value={username}
+        onChangeText={setUsername}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Password"
+        secureTextEntry={true}
+        value={password}
+        onChangeText={setPassword}
+      />
+      <TouchableOpacity style={styles.button} onPress={() => props.navigation.navigate("Login2")}>
+        <Text style={styles.buttonText}>Login</Text>
+      </TouchableOpacity>
+     
+    </View> 
+    
+  );
+};
 
 const styles = StyleSheet.create({
+  image: {
+    width: 200,
+    height: 200,
+    margintop: 50,
+  },
   container: {
     flex: 1,
-    padding: 10,
-    backgroundColor: 'white',
-  },
-  header: {
-    width:'100%',
-    height:'9%',
-    justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#ffffff',
+    justifyContent: 'center',
+    backgroundColor: '#fff',
   },
   title: {
-    width:'100%',
-    height:'18%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#ffffff',
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 32,
   },
-  content: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#ffffff',
+  input: {
+    width: '80%',
+    height: 48,
+    padding: 12,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    marginBottom: 18,
   },
-  footer: {
-    width:'100%',
-    height:'10%',
-    backgroundColor: '#ffffff',
+  button: {
+    backgroundColor: '#1E90FF',
+    width: '80%',
+    height: 48,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 4,
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 20,
+    fontWeight: 'bold',
   },
 });
+
+export default Login;

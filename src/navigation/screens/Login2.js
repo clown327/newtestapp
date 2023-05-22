@@ -10,19 +10,15 @@ export default function Login2(props) {
     return (
         <View style={styles.container}>
             <Text style={styles.title}>
-                   국민 국방 안전 신고앱에 오신것을 환영 합니다.
+                   국민 국방 안전 신고앱입니다.
              </Text>
              <View style={styles.introContainer}>
                  <Image
                        source={ roka }
                      style={styles.image} />
                  <Text style={styles.introTitleText}>
-                     이곳은 관리자 페이지 입니다.
-             </Text>
-             <Text style={styles.introdescText}>
-                  국민을 위해 힘쓰시는 당신이 영웅입니다.
-             </Text>
-                   <TouchableOpacity style={styles.button} onPress = {() => props.navigation.navigate("BottomTabs")}>
+                    국민을 위해 힘쓰시는 당신이 영웅입니다.</Text>
+                   <TouchableOpacity style={styles.button} onPress = {() => props.navigation.reset({routes: [{name: 'BottomTabs'}]})}>
                   <Text style={styles.buttonText}>메인화면</Text>
              </TouchableOpacity>
             </View>
@@ -50,7 +46,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     borderRadius: 10,
     height: 500,
-    marginTop: 40,
+    marginTop: 30,
     padding: 30,
     alignItems: "center",
     justifyContent: "center",
@@ -59,6 +55,7 @@ const styles = StyleSheet.create({
     width: 200,
     height: 200,
     borderRadius: 30,
+    flexDirection:"Top",
   },
   introTitleText: {
     width: 250,

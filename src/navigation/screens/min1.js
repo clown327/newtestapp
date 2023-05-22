@@ -1,124 +1,98 @@
 //접수된 민원을 보여주는 곳입니다.
-import React from 'react';
-import {Text, View, StyleSheet, SafeAreaView, TouchableOpacity} from 'react-native'
-import { ScrollView } from 'react-native-gesture-handler';
+import React, { useState, useEffect } from 'react';
+import { ScrollView, Text, View, StyleSheet, SafeAreaView, TouchableOpacity, Image } from 'react-native';
 import { SliderBox } from 'react-native-image-slider-box';
+import { database } from '../../../firebase';
+import { ref, child, onChildAdded } from 'firebase/database';
+import { useNavigation } from '@react-navigation/native';
 
+export const Min1 = (props) => {
 
-
-export const Min1 =(props) => {
+    const report = props.route.params.report;
     return (
-        
-    <SafeAreaView style = {styles.container}>
-    <View >
-      <View>
-        <Text style = {styles.Text}>
-            옆집 차은우
-        </Text>
-        <Text>
-            민원 유형
-        </Text>
-        <SliderBox 
-          images={[
-              "https://source.unsplash.com/1024x768/?nature", // Network image
-              "https://source.unsplash.com/1024x768/?water",  // Network image
-              "https://source.unsplash.com/1024x768/?girl",   // Network image
-              "https://source.unsplash.com/1024x768/?tree"    // Network image
-              //require('./assets/images/girl.jpg')           // Local image
-          ]}   sliderBoxHeight={350}
-          dotColor="#3785F9"
-          inactiveDotColor="#90A4AE"
-          paginationBoxVerticalPadding={20}
-          resizeMethod={'resize'}
-          resizeMode={'cover'}
-          paginationBoxStyle={{
-            position: "absolute",
-            bottom: 0,
-            padding: 0,
-            alignItems: "center",
-            alignSelf: "center",
-            justifyContent: "center",
-            paddingVertical: 10
-          }}
-          dotStyle={{
-            width: 10,
-            height: 10,
-            borderRadius: 5,
-            marginHorizontal: 0,
-            padding: 0,
-            margin: 0,
-            backgroundColor: "rgba(128, 128, 128, 0.92)"
-          }}
-          ImageComponentStyle={{borderRadius: 15, width: '97%', marginTop: 5}}
-          imageLoadingColor="#2196F3" 
-            />
-        </View> 
-        <View styles={styles.container1}>
-            <Text style = {styles.textcontainer}>
-                안녕하세요 이곳에는 민원 관련한 내용들이 들어갈 곳입니다.
-                안녕하세요 이곳에는 민원 관련한 내용들이 들어갈 곳입니다.
-                안녕하세요 이곳에는 민원 관련한 내용들이 들어갈 곳입니다.
-                안녕하세요 이곳에는 민원 관련한 내용들이 들어갈 곳입니다.
-                안녕하세요 이곳에는 민원 관련한 내용들이 들어갈 곳입니다.
-                안녕하세요 이곳에는 민원 관련한 내용들이 들어갈 곳입니다.
-                안녕하세요 이곳에는 민원 관련한 내용들이 들어갈 곳입니다.
-                안녕하세요 이곳에는 민원 관련한 내용들이 들어갈 곳입니다.
-                안녕하세요 이곳에는 민원 관련한 내용들이 들어갈 곳입니다.
-                안녕하세요 이곳에는 민원 관련한 내용들이 들어갈 곳입니다.
-            </Text>
-            <View style ={ styles.buttoncontainer}>
-            <TouchableOpacity TouchableOpacity style={styles.textContainer2} onPress={() => props.navigation.navigate("Complete")}>
-                <Text style = {styles.Text2}>
-                    접수하기
-                </Text>
-                </TouchableOpacity>
-            </View>
-        </View>
-    </View>
-      </SafeAreaView>
-    );
-}
+        <ScrollView style={styles.container}>
+            <SafeAreaView>
+                <View>
+                    <View style={styles.title}>
+                    <Text style={styles.titletext}>유형 : {report.type} ({report.state})</Text>
+                    <Text></Text>
+                    </View>
+
+                    <View style={styles.photocontainer}>
+                    <SliderBox images={JSON.parse(report.photo).slice(0, 4).map((uri) => ({ uri }))} style={styles.photo} />
+                    </View>
+
+                    <View style={styles.detail}>
+                        <Text>{report.position}</Text>
+                        <Text>{report.pnumber}</Text>
+                        <Text style={styles.detailtext}>{report.detail}</Text>
+                    </View>
+
+                    <TouchableOpacity style={styles.combutton} onPress={() => {props.navigation.navigate('Complete',{report:report})}}>
+                    <Text style={styles.comtext}>접수하기!</Text>
+                    </TouchableOpacity>
+                </View>
+            </SafeAreaView>
+        </ScrollView>
+  );
+};
+
 
 const styles = StyleSheet.create({
     container: {
+        flex:1,
         width:"100%",
         height:"100%",
         backgroundColor:"white",
-
     },
-    textcontainer:{
-        
-        margin:10,
-
+    title: {
+        width:"100%",
+        height:60,
+        marginTop:5,
+        //backgroundColor:"red",
     },
-    textContainer2: {
-        width:"95%",
-        height:80,
-        margin:10,
-        backgroundColor: "#9F8BEF",
-        borderRadius: 20,
-    },
-    buttoncontainer: {
-
-
-    },
-    Text:{
+    titletext: {
         fontSize:25,
-
+        fontWeight:"bold",
     },
-    Text2: {
-        fontSize:30,
-        textAlign:"center",
-        marginTop:19,
-        color: "white",
-
-    },
-    container1:{
+    photocontainer: {
+        width:370,
+        height:370,
+        marginTop:-10,
+        margin: 10,
+        borderRadius:10,
+        backgroundColor:"white",
         flex:1,
     },
-    images: {
-        width:"100%",
-        height:200,
-    },
+    photo: {
+        width:370,
+        height:370,
+        borderRadius:10,
 
+    },
+    detail:{
+        width:"95%",
+        //backgroundColor:"yellow",
+        margin:10,
+    },
+    detailtext: {
+        fontSize:17,
+        marginTop:4,
+    },
+    combutton:{
+        width:"95.5%",
+        height:65,
+        backgroundColor:"#1E90FF",
+        margin:10,
+        borderRadius:10,
+        alignItems:"center",
+        justifyContent:"center",
+
+    },
+    comtext:{
+        fontSize:25,
+        fontWeight:"bold",
+        color:"white",
+
+    },
 });

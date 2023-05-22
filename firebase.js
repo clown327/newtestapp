@@ -23,4 +23,19 @@ const app = initializeApp(firebaseConfig);
 // const analytics = getAnalytics(app);
 const database = getDatabase(app);
 
-export { database };
+export {database};
+
+/*
+
+import { database } from './firebase';
+import { ref, child, onChildAdded } from 'firebase/database';
+
+const reports = [];
+
+const repref = child(ref(database), 'reports');
+onChildAdded(repref, (snapshot) => {
+  reports.push(snapshot.val());
+});
+
+
+*/
