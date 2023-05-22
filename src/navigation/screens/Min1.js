@@ -69,6 +69,7 @@ const styles = StyleSheet.create({
         height:370,
         borderRadius:10,
 
+<<<<<<< HEAD:src/navigation/screens/min1.js
     },
     detail:{
         width:"95%",
@@ -96,3 +97,6 @@ const styles = StyleSheet.create({
 
     },
 });
+=======
+});
+>>>>>>> 9e511bc1421ac79e1bac6fc52d49317c379d2e2f:src/navigation/screens/Min1.js
