@@ -1,20 +1,26 @@
 //공지사항을 띄워주는 페이지 입니다.
 import {TextInput, SafeAreaView ,Text, View, ScrollView, StyleSheet, TouchableOpacity, Button, Image, RefreshControl} from 'react-native'
-import React, { useState} from 'react';
+import React, { useEffect, useState} from 'react';
 import { database } from '../../../firebase';
 import { ref, child, onChildAdded } from 'firebase/database';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Writenoti from '../../contents/Writenoti';
-
-
+const notices = [];
+const notref = child(ref(database), 'notices');
 export const Home = (props) => {
 
-    const notices = []; //database 안에 있는 reports라는 파일들 가져오기
+     //database 안에 있는 reports라는 파일들 가져오기
 
-    const notref = child(ref(database), 'notices');
-    onChildAdded(notref, (snapshot) => {
-        notices.push(snapshot.val());
-    });
+     useEffect(()=>{
+        const unsubscribe=onChildAdded(notref, (snapshot) => {
+            notices.push(snapshot.val());
+            onRefresh();
+        });
+        return(()=>{
+            unsubscribe();
+        })
+     },[])
+    
 
 
     const [refreshing, setRefreshing] = useState(false); //리프레쉬 시켜주는거
@@ -62,7 +68,8 @@ const styles = StyleSheet.create({
         width:"100%",
         height:"100%",
         flex:1,
-        backgroundColor:"white"
+        backgroundColor:"white",
+        paddingTop:40,
     },
     title:{
         width:"100%",
