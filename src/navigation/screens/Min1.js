@@ -1,31 +1,38 @@
 //접수된 민원을 보여주는 곳입니다.
 //민원의 상태 변경이 안됨;;
 import React from 'react';
-import { ScrollView, Text, View, StyleSheet, SafeAreaView, TouchableOpacity, Image ,useState, useEffect, child} from 'react-native';
+import { ScrollView, Text, View, StyleSheet, SafeAreaView, TouchableOpacity, Image ,useState, useEffect} from 'react-native';
 import { SliderBox } from 'react-native-image-slider-box';
-import { database, update } from '../../../firebase';
-import { getDatabase,ref, onValue} from "firebase/database";
+import { database } from '../../../firebase';
+import { getDatabase,ref, onValue,update,child} from "firebase/database";
 
 
 export const Min1 = (props) => {
 
-    const report = props.route.params.report; //mainscreen에서 주는 reports의 배열 값
+    const report = props.route.params.report;
+    // console.log(report) //mainscreen에서 주는 reports의 배열 값
     const images = JSON.parse(report.photo).slice(0, 4).map((uri) => ({ uri }));
 
     const isCompleted = report.state === '처리완료';
     const isProcessing = report.state === '처리중';
     const isReceived = report.state === '미접수';
-    const isDoing = report.state === '접수';
+    // const isDoing = report.state === '접수';
 
-    const updateReportState = (report, newState) => {
+    const updateReportState = async (report, newState) => {
         const dbRef = ref(database);
-        const reportsRef = child(dbRef, `reports/${report.id}`);
-        update(reportsRef, { state: newState });
+        const reportsRef = child(dbRef, `reports/${report.uid}`);
+        await update(reportsRef, { state: newState });
+        //지금 가지고 있는 오브젝트도 locally update; 위험한 practice이지만 일단 그냥 해버리기
+
+        // report.state=newState;
+        // 필요가 없구만
       };
 
-    const handleReceive = () => {
-    updateReportState(report, '처리중');
-    props.navigation.navigate('Complete');
+    const handleReceive = async (report,nextState) => {
+    await updateReportState(report, nextState);
+    // console.log("okay");
+    // props.navigation.navigate()
+    props.navigation.navigate('Mainscreen');
     };
 
     return (
@@ -48,26 +55,21 @@ export const Min1 = (props) => {
                     </View>
 
                     {isReceived && (
-                            <TouchableOpacity style={styles.combutton}  onPress={handleReceive}>
+                            <TouchableOpacity style={styles.combutton}  onPress={()=>{handleReceive(report,"처리중")}}>
                                 <Text style={styles.comtext}>접수하기!</Text>
                             </TouchableOpacity>
                             )}
 
                     {isProcessing && (
-                            <TouchableOpacity style={styles.combutton} onPress={() => {props.navigation.navigate('Mainscreen')}}>
-                            <Text style={styles.comtext}>처리중입니다!</Text>
+                            <TouchableOpacity style={styles.combutton} onPress={() => {handleReceive(report,"처리완료")}}>
+                            <Text style={styles.comtext}>처리 완료하기</Text>
                         </TouchableOpacity>
                     )}
 
                     {isCompleted && (
                             <TouchableOpacity style={styles.combutton} onPress={() => {props.navigation.navigate('Mainscreen')}}>
-                            <Text style={styles.comtext}>처리완료되었습니다!</Text>
+                            <Text style={styles.comtext}>처리 완료되었습니다!</Text>
                         </TouchableOpacity>
-                    )}
-                    {isDoing && (
-                            <TouchableOpacity style={styles.combutton} onPress={() => {props.navigation.navigate('Mainscreen')}}>
-                            <Text style={styles.comtext}>접수된 상태입니다!</Text>
-                        </TouchableOpacity>                        
                     )}
                 </View>
             </SafeAreaView>

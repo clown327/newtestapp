@@ -2,7 +2,7 @@
 import {SafeAreaView ,Text, View, ScrollView, StyleSheet, TouchableOpacity, Button, Image, RefreshControl} from 'react-native'
 import React, { useEffect, useState} from 'react';
 import { database } from '../../../firebase';
-import { ref, child, onChildAdded } from 'firebase/database';
+import { ref, child, onChildAdded, onChildChanged } from 'firebase/database';
 
 
 
@@ -15,10 +15,16 @@ export const Mainscreen = (props) => {
     useEffect(()=>{
         const unsubscribe=onChildAdded(repref, (snapshot) => {
             reports.push(snapshot.val());
+            onRefresh();
         });
-        onRefresh();
+
+        const unsubscribe2=onChildChanged(repref, (snapshot) => {
+            reports.splice(reports.findIndex((element) => element.uid === snapshot.val().uid),1,snapshot.val());
+            onRefresh();
+        });
+        
         return(
-            ()=>{unsubscribe();}
+            ()=>{unsubscribe();unsubscribe2();}
         )
     },[])
     
@@ -86,7 +92,7 @@ export const Mainscreen = (props) => {
          
         <SafeAreaView>
             <View>
-                <Text style={styles.title}>New Min1</Text>
+                <Text style={styles.title}>신고 접수</Text>
             </View>
             <View style={styles.catbutton}>
             <TouchableOpacity style={selectedCategory == '미접수'? activeButtonStyle : inactiveButtonStyle}
@@ -231,7 +237,9 @@ const styles = StyleSheet.create({
     title:{
         fontSize:27,
         fontWeight:"bold",
-        margin:10,
+        marginTop:50,
+        marginBottom:30,
+        textAlign:"center"
     },
     typetext:{
         fontSize:15,

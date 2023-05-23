@@ -40,7 +40,7 @@ const BottomTabs = () => {
 
   return (
     <Tab.Navigator tabBarOptions={{
-      showLabel: false,
+      showLabel: true,
       // Floating Tab Bar... 적용이 안됨 ㅠㅠ 포기
       style: {
         backgroundColor: 'white',
@@ -64,25 +64,31 @@ const BottomTabs = () => {
           component={Home}
           options={{headerShown: false,
             title: "home",
+            tabBarLabel:"공지사항",
             tabBarIcon: ({ color, size }) => (<Icon name="home" color={color} size={size} />)
           }} />
         <Tab.Screen name="Mainscreen"
           component={Mainscreen}
           options={{headerShown: false,
             title: "Dashboard",
+            tabBarLabel:"신고 목록",
             tabBarIcon: ({ color, size }) => (<Icon name="dashboard" color={color} size={size} />)
           }} />
           <Tab.Screen name="Shared"
             component={Shared}
             options={{headerShown:false,
               title: "Shared",
+              tabBarLabel:"공유받은 신고",
+              headerShown:false,
               tabBarIcon: ({ color, size }) => (<Icon name="ios-share" color={color} size={size} />)
           }} />        
                  
           <Tab.Screen name="Wanted"
             component={Wanted}
-            options={{headerShown:false,
+            options={{
+              headerShown:false,
               title: "wanted",
+              tabBarLabel:"수배",
               tabBarIcon: ({ color, size }) => (<Icon name="person-search" color={color} size={size} />)
           }} /> 
 
