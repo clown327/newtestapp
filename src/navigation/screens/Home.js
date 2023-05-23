@@ -17,7 +17,7 @@ export const Home = (props) => {
     });
 
 
-    const [refreshing, setRefreshing] = React.useState(false); //리프레쉬 시켜주는거
+    const [refreshing, setRefreshing] = useState(false); //리프레쉬 시켜주는거
 
     const onRefresh = React.useCallback(() => {
       setRefreshing(true);
