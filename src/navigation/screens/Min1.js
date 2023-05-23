@@ -1,17 +1,32 @@
 //접수된 민원을 보여주는 곳입니다.
-import React, { useState, useEffect } from 'react';
-import { ScrollView, Text, View, StyleSheet, SafeAreaView, TouchableOpacity, Image } from 'react-native';
+//민원의 상태 변경이 안됨;;
+import React from 'react';
+import { ScrollView, Text, View, StyleSheet, SafeAreaView, TouchableOpacity, Image ,useState, useEffect, child} from 'react-native';
 import { SliderBox } from 'react-native-image-slider-box';
+import { database, update } from '../../../firebase';
+import { getDatabase,ref, onValue} from "firebase/database";
+
 
 export const Min1 = (props) => {
 
-    const report = props.route.params.report;
+    const report = props.route.params.report; //mainscreen에서 주는 reports의 배열 값
     const images = JSON.parse(report.photo).slice(0, 4).map((uri) => ({ uri }));
 
     const isCompleted = report.state === '처리완료';
     const isProcessing = report.state === '처리중';
     const isReceived = report.state === '미접수';
     const isDoing = report.state === '접수';
+
+    const updateReportState = (report, newState) => {
+        const dbRef = ref(database);
+        const reportsRef = child(dbRef, `reports/${report.id}`);
+        update(reportsRef, { state: newState });
+      };
+
+    const handleReceive = () => {
+    updateReportState(report, '처리중');
+    props.navigation.navigate('Complete');
+    };
 
     return (
         <ScrollView style={styles.container}>
@@ -33,7 +48,7 @@ export const Min1 = (props) => {
                     </View>
 
                     {isReceived && (
-                            <TouchableOpacity style={styles.combutton} onPress={() => {props.navigation.navigate('Complete',{report:report})}}>
+                            <TouchableOpacity style={styles.combutton}  onPress={handleReceive}>
                                 <Text style={styles.comtext}>접수하기!</Text>
                             </TouchableOpacity>
                             )}
@@ -71,6 +86,7 @@ const styles = StyleSheet.create({
         width:"100%",
         height:60,
         marginTop:5,
+        marginLeft:10,
         //backgroundColor:"red",
     },
     titletext: {
@@ -94,19 +110,24 @@ const styles = StyleSheet.create({
 
     },
     detail:{
-        width:"95%",
+        width:"93%",
         //backgroundColor:"yellow",
-        margin:10,
+        marginLeft:14,
+        marginBottom:14,
+
     },
     detailtext: {
         fontSize:17,
         marginTop:4,
     },
     combutton:{
-        width:"95.5%",
+        width:"88%",
         height:65,
         backgroundColor:"#1E90FF",
-        margin:10,
+        marginTop:10,
+        
+        marginLeft:25,
+        marginRight:25,
         borderRadius:10,
         alignItems:"center",
         justifyContent:"center",

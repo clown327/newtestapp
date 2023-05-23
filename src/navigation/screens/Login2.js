@@ -9,15 +9,19 @@ export default function Login2(props) {
 
     return (
         <View style={styles.container}>
+          <View style={styles.titlecontainer}>
             <Text style={styles.title}>
-                   국민 국방 안전 신고앱입니다.
+                   국방 안전 
              </Text>
+             <Text style={styles.title}>신고앱입니다.</Text>
+          </View>
              <View style={styles.introContainer}>
                  <Image
                        source={ roka }
                      style={styles.image} />
                  <Text style={styles.introTitleText}>
-                    국민을 위해 힘쓰시는 당신이 영웅입니다.</Text>
+                    국민을 위해 힘쓰는</Text>
+                  <Text style={styles.introTitleText}>당신이 '영웅'입니다.</Text>
                    <TouchableOpacity style={styles.button} onPress = {() => props.navigation.reset({routes: [{name: 'BottomTabs'}]})}>
                   <Text style={styles.buttonText}>메인화면</Text>
              </TouchableOpacity>
@@ -36,11 +40,16 @@ const styles = StyleSheet.create({
     paddingRight: 20,
     alignItems: "center",
   },
+  titlecontainer:{
+    marginTop:50,
+    alignItems:"center",
+
+  },  
   title: {
-    fontSize: 32,
+    fontSize: 35,
     fontWeight: "bold",
     color: "white",
-    marginTop: 50,
+    //marginTop: 50,
   },
   introContainer: {
     backgroundColor: "white",
@@ -59,7 +68,7 @@ const styles = StyleSheet.create({
   },
   introTitleText: {
     width: 250,
-    fontSize: 20,
+    fontSize: 25,
     fontWeight: "bold",
     textAlign: "center",
   },
@@ -83,11 +92,13 @@ const styles = StyleSheet.create({
   buttonText: {
     fontSize: 30,
     color: "white",
+    fontWeight:"bold",
   },
   buttonimage: {
     width: 50,
     height: 50,
     borderRadius: 10,
+    
   },
   buttonplace: {
     alignItems: "flex-start",

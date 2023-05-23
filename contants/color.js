@@ -1,1 +1,0 @@
-export const mainColor="rgba(172,145,230,100)";

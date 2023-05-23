@@ -5,11 +5,10 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 
+
 export const Complete= (props) => {
 
-    const report = props.route.params.report;
-      
-    
+    const report = props.route.params.report; //reports의 파라미터값
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.comcontainer}>
@@ -25,7 +24,6 @@ export const Complete= (props) => {
             <Text style={styles.buttontext}>
               돌아가기!
             </Text>
-
           </TouchableOpacity>
         </View>
       </SafeAreaView>
@@ -71,9 +69,13 @@ const styles = StyleSheet.create({
 
   },
   button:{
-    width:"95%",
-    height:80,
-    margin:10,
+    width:"85%",
+    height:70,
+    //margin:30,
+    marginLeft:30,
+    marginRight:30,
+    marginBottom:30,
+    padding:10,
     borderRadius:10,
     backgroundColor:"#1E90FF",    
     alignItems:"center",

@@ -1,14 +1,127 @@
-//접수된 신고를 보는 곳입니다.
-import {Text, View} from 'react-native'
-import React from 'react';
+//공지사항을 띄워주는 페이지 입니다.
+import {TextInput, SafeAreaView ,Text, View, ScrollView, StyleSheet, TouchableOpacity, Button, Image, RefreshControl} from 'react-native'
+import React, { useState} from 'react';
+import { database } from '../../../firebase';
+import { ref, child, onChildAdded } from 'firebase/database';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import Writenoti from '../../contents/Writenoti';
 
-export const  Home = (props) => {
+
+export const Home = (props) => {
+
+    const notices = []; //database 안에 있는 reports라는 파일들 가져오기
+
+    const notref = child(ref(database), 'notices');
+    onChildAdded(notref, (snapshot) => {
+        notices.push(snapshot.val());
+    });
+
+
+    const [refreshing, setRefreshing] = React.useState(false); //리프레쉬 시켜주는거
+
+    const onRefresh = React.useCallback(() => {
+      setRefreshing(true);
+      setTimeout(() => {
+        setRefreshing(false);
+      }, 2000);
+    }, []);
     
     return(
-        <View>
-            <Text>
-                접수된 신고를 보는 곳입니다.
-            </Text>
-        </View>
+        <ScrollView style={styles.container} refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>}>
+            <SafeAreaView>
+                <View style={styles.title}>
+                    <Text style={styles.titleText}>Home</Text>
+                    <TouchableOpacity style={styles.button} onPress={() => props.navigation.navigate("Writenoti")}>
+                        <Text style={styles.buttontext}>글쓰기</Text>
+                    </TouchableOpacity>
+                </View>
+
+                
+                <View>
+                    {notices.map((notice, index) => (
+                        <TouchableOpacity key={index} style={styles.Noticontainer} >
+                        <View style={styles.photo}>
+                            <Icon name="person" size={60} color="#000000" />
+                        </View>
+                        <View style={styles.noticontent}>
+                            <Text>{notice.content}</Text>
+                        </View>
+                        </TouchableOpacity>
+
+                    ))}
+                </View>
+
+            </SafeAreaView>
+        </ScrollView>
     );
 }
+
+const styles = StyleSheet.create({
+    container:{
+        width:"100%",
+        height:"100%",
+        flex:1,
+        backgroundColor:"white"
+    },
+    title:{
+        width:"100%",
+        height:60,
+        //backgroundColor:"powderblue", 
+        flexDirection:"row",
+        marginBottom:20,
+        
+    },
+    button: {
+        //backgroundColor:"black",
+        width:80,
+        height:37,
+        marginLeft:160,
+        marginTop:13,
+        borderRadius:13,
+        alignItems:"center",
+        justifyContent:"center",
+        borderWidth:1,
+        borderColor:"#AAAAAA",
+    },
+    buttontext:{
+        fontSize:17,
+        fontWeight:"bold",
+
+    },
+    titleText:{
+        fontSize:27,
+        fontWeight:"bold",
+        margin:10,
+        marginLeft:20,
+    },
+    Noticontainer:{
+        width:"91%",
+        height:80,
+        //backgroundColor: "black",
+        borderRadius:10,
+        padding:10,
+        marginLeft:16.8,
+        flexDirection:"row",
+        borderBottomWidth:1,
+        borderBottomColor:"#D9D9D9",
+        
+    },
+    photo:{
+        width:"18%",
+        height:60,
+        //backgroundColor:"green",
+
+    },
+    noticontent:{
+        width:"77%",
+        height:"100%",
+        //backgroundColor:"powderblue",
+        marginLeft:12,
+
+    },
+    
+    
+
+
+});

@@ -1,6 +1,6 @@
 //새로 만들어진 민원들을 보여주는 페이지 입니다. 끝
 import {SafeAreaView ,Text, View, ScrollView, StyleSheet, TouchableOpacity, Button, Image, RefreshControl} from 'react-native'
-import React, {useEffect, useState} from 'react';
+import React, { useState} from 'react';
 import { database } from '../../../firebase';
 import { ref, child, onChildAdded } from 'firebase/database';
 
@@ -86,10 +86,6 @@ export const Mainscreen = (props) => {
                             onPress={() => category(selectedCategory == '전체' ? '미접수' : '전체')}>
                                 <Text>미접수</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={selectedCategory == '접수'? activeButtonStyle: inactiveButtonStyle}
-                            onPress={() => category(selectedCategory == '전체' ? '접수' : '전체')}>
-                                <Text>접수</Text>
-            </TouchableOpacity>
             <TouchableOpacity style={selectedCategory == '처리중'? activeButtonStyle: inactiveButtonStyle}
                             onPress={() => category(selectedCategory == '전체' ? '처리중' : '전체')}>
                                 <Text>처리중</Text>
@@ -125,6 +121,7 @@ export const Mainscreen = (props) => {
 const styles = StyleSheet.create({
     container: {
         flex:1, 
+        padding:10,
         width:"100%",
         height:"100%",
         backgroundColor:"white",
