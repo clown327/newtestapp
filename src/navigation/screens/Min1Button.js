@@ -1,3 +1,11 @@
+//안씀//안씀//안씀//안씀//안씀
+//안씀//안씀//안씀//안씀//안씀
+//안씀//안씀//안씀//안씀//안씀
+//안씀//안씀//안씀//안씀//안씀
+//안씀//안씀//안씀//안씀//안씀
+
+
+
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import { useState, useEffect } from 'react';
