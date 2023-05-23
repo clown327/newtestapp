@@ -41,7 +41,7 @@ const BottomTabs = () => {
   return (
     <Tab.Navigator tabBarOptions={{
       showLabel: false,
-      // Floating Tab Bar...
+      // Floating Tab Bar... 적용이 안됨 ㅠㅠ 포기
       style: {
         backgroundColor: 'white',
         position: 'absolute',
