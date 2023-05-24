@@ -1,15 +1,16 @@
 //민원을 관리할 수 있는 화면 입니다 stack
 import {useState , SafeAreaView ,Text, View, ScrollView, StyleSheet, TouchableOpacity, Button, Image, RefreshControl} from 'react-native'
-import React from 'react';
+import React, {useContext} from 'react';
 import { database } from '../../../firebase';
 import { ref, child, onChildAdded } from 'firebase/database';
+import { Context } from '../../../Context';
 
 
 
 
 export const Shared = (props) => {
     const reports = []; //database 안에 있는 reports라는 파일들 가져오기
-
+    const [adminCode,setAdminCode]=useContext(Context)
     const repref = child(ref(database), 'reports');
     onChildAdded(repref, (snapshot) => {
         reports.push(snapshot.val());
