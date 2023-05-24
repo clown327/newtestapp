@@ -4,15 +4,16 @@ import React, { useEffect, useState} from 'react';
 import { database } from '../../../firebase';
 import { ref, child, onChildAdded } from 'firebase/database';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import Writenoti from '../../contents/Writenoti';
+
+
+
 const notices = [];
+
 const notref = child(ref(database), 'notices');
 
 
 export const Home = (props) => {
 
-     //database 안에 있는 reports라는 파일들 가져오기
-     //database 안에 있는 reports라는 파일들 가져오기
 
      useEffect(()=>{
         const unsubscribe=onChildAdded(notref, (snapshot) => {
@@ -23,7 +24,7 @@ export const Home = (props) => {
             unsubscribe();
         })
      },[])
-    
+    /*
      useEffect(()=>{
         const unsubscribe=onChildAdded(notref, (snapshot) => {
             notices.push(snapshot.val());
@@ -33,7 +34,7 @@ export const Home = (props) => {
             unsubscribe();
         })
      },[])
-    
+    */
 
 
     const [refreshing, setRefreshing] = useState(false); //리프레쉬 시켜주는거
@@ -59,9 +60,9 @@ export const Home = (props) => {
                 </View>
 
                 
-                <View>
+                <View> 
                     {notices.map((notice, index) => (
-                        <TouchableOpacity key={index} style={styles.Noticontainer} >
+                        <TouchableOpacity style={styles.Noticontainer} key={index} onPress={()=>{props.navigation.navigate('Notiview', {notice:notice})}}>
                         <View style={styles.photo}>
                             <Icon name="person" size={60} color="#000000" />
                         </View>

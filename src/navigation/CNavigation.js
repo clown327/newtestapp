@@ -20,11 +20,12 @@ import { Wanted } from "./screens/Wanted";
 import { Shared } from "./screens/Shared";
 import { Writenoti } from "../contents/Writenoti";
 import { Comment } from "../contents/Comment";
-
+import { Notiview } from "../contents/Notiview";
 import { uesRef } from 'react';
 
 
 import Icon from 'react-native-vector-icons/MaterialIcons';//아이콘
+
 
 
 
@@ -45,7 +46,7 @@ const BottomTabs = () => {
         <Tab.Screen name="Home"
           component={Home}
           options={{headerShown: false,
-            title: "home",
+            title: "Home",
             tabBarLabel:"공지사항",
             tabBarIcon: ({ color, size }) => (<Icon name="home" color={color} size={size} />)
           }} />
@@ -128,6 +129,7 @@ export const CNavigation = () => {
         <Stack.Screen name="Complete" component={Complete} options={{gestureEnabled: false}} />
         <Stack.Screen name="Writenoti" component={Writenoti} options={{gestureEnabled: true}} />
         <Stack.Screen name="Comment" component={Comment} options={{gestureEnabled: true}} />
+        <Stack.Screen name="Notiview" component={Notiview} options={{gestureEnabled: true}} />
         
       </Stack.Navigator>
     </NavigationContainer>

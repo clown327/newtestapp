@@ -10,6 +10,7 @@ import { ref, child, onChildAdded, onChildChanged } from 'firebase/database';
 const reports = []; //database 안에 있는 reports라는 파일들 가져오기
 
 const repref = child(ref(database), 'reports');
+
 export const Mainscreen = (props) => {
 
     useEffect(()=>{
