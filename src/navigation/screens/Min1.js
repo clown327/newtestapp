@@ -22,6 +22,7 @@ import { MyCheckbox } from "../../../CustomButtons/MyCheckBox";
 
 export const Min1 = (props) => {
   const report = props.route.params.report;
+  const initSharedList=report.shareList;
   const {width,height}=useWindowDimensions()
   // console.log(report) //mainscreen에서 주는 reports의 배열 값
   const images = JSON.parse(report.photo)
@@ -32,6 +33,24 @@ export const Min1 = (props) => {
   const isProcessing = report.state === "처리중";
   const isReceived = report.state === "미접수";
   // const isDoing = report.state === '접수';
+
+  const updateSharedList=async (adminCode,bool)=>{
+    const sharedList=JSON.parse(report.shareList);
+    const dbRef = ref(database);
+    const reportsRef = child(dbRef, `reports/${report.uid}`);
+    if(sharedList.includes(adminCode)){
+        if(!bool){
+            sharedList.splice(sharedList.findIndex(v=>v===adminCode),1)
+        }   
+    }else{
+        if(bool){
+            sharedList.push(adminCode);
+        }
+    }
+    const newSharedList=JSON.stringify(sharedList);
+    await update(reportsRef, { shareList: newSharedList });
+    report.shareList=newSharedList;
+  }
 
   const updateReportState = async (report, newState) => {
     const dbRef = ref(database);
@@ -81,8 +100,67 @@ export const Min1 = (props) => {
             <Text>{report.position}</Text>
             <Text>{report.pnumber}</Text>
             <Text style={styles.detailtext}>{report.detail}</Text>
+            <View style={{ backgroundColor: "powderblue", padding:10, borderRadius:10 }}>
+              <Text style={styles.titletext}>공유 부대 목록</Text>
+
+              <View style={{ flexDirection: "row", alignItems: "center",justifyContent:"space-around", marginBottom:10}}>
+                <MyCheckbox
+                  disabled={false}
+                  checkFunction={(checkState) => {
+                    updateSharedList("0",checkState);
+                    console.log(checkState);
+                  }}
+                  initCheck={initSharedList.includes("0")}
+                />
+                <Text>지상작전사령부</Text>
+                <MyCheckbox
+                disabled={false}
+                  checkFunction={(checkState) => {
+                    updateSharedList("1",checkState)
+                  }}
+                  initCheck={initSharedList.includes("1")}
+                />
+                <Text>수도군단</Text>
+                <MyCheckbox
+               
+                disabled={false}
+                  checkFunction={(checkState) => {
+                    updateSharedList("2",checkState)
+                  }}
+                  initCheck={initSharedList.includes("2")}
+                />
+                <Text>51사단</Text>
+              </View>
+            
+            <View style={{ flexDirection: "row",  alignItems: "center",justifyContent:"space-around" }}>
+              <MyCheckbox
+              disabled={true}
+                checkFunction={(checkState) => {
+                    updateSharedList("3",checkState)
+                }}
+                initCheck={initSharedList.includes("3")}
+              />
+              <Text>167 여단</Text>
+              <MyCheckbox
+              disabled={false}
+              
+                checkFunction={(checkState) => {
+                    updateSharedList("4",checkState)
+                }}
+                initCheck={initSharedList.includes("4")}
+              />
+              <Text>168 여단</Text>
+              <MyCheckbox
+               disabled={false}
+                checkFunction={(checkState) => {
+                    updateSharedList("5",checkState)
+                }}
+                initCheck={initSharedList.includes("5")}
+              />
+              <Text>169 여단</Text>
+            </View>
+            </View>
           </View>
-            <MyCheckbox />
           {isReceived && (
             <TouchableOpacity
               style={styles.combutton}
@@ -137,26 +215,26 @@ export const Min1 = (props) => {
               <Text style={styles.comtext}>조치사항 작성</Text>
             </TouchableOpacity>
           )} */}
-          {isProcessing&&<DropDownCard
-            buttonWidth={width*0.85}
-            buttonHeight={65}
-            title={"조치사항 작성"}
-            description={"신고 내용에 대한 조치사항 및 사진을 올려주세요!"}
-          >
-            <Comment report={report}/>
-
-
-          </DropDownCard>}
-          {isProcessing&&<DropDownCard
-            buttonWidth={width*0.85}
-            buttonHeight={65}
-            title={"신고자 알림 작성"}
-            description={"신고자에게 전달하고 싶은 사항을 작성해주세요"}
-          >
-            <Comment2 report={report}/>
-
-
-          </DropDownCard>}
+          {isProcessing && (
+            <DropDownCard
+              buttonWidth={width * 0.85}
+              buttonHeight={65}
+              title={"조치사항 작성"}
+              description={"신고 내용에 대한 조치사항 및 사진을 올려주세요!"}
+            >
+              <Comment report={report} />
+            </DropDownCard>
+          )}
+          {isProcessing && (
+            <DropDownCard
+              buttonWidth={width * 0.85}
+              buttonHeight={65}
+              title={"신고자 알림 작성"}
+              description={"신고자에게 전달하고 싶은 사항을 작성해주세요"}
+            >
+              <Comment2 report={report} />
+            </DropDownCard>
+          )}
           {/* {isProcessing && (
             <TouchableOpacity
               style={styles.combutton}
@@ -214,17 +292,18 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   photocontainer: {
-    width: 370,
-    height: 370,
+    width: 320,
+    height: 320,
     marginTop: -10,
     margin: 10,
     borderRadius: 10,
     backgroundColor: "white",
     flex: 1,
+    alignSelf:"center"
   },
   photo: {
-    width: 370,
-    height: 370,
+    width: 320,
+    height: 320,
     borderRadius: 10,
   },
   detail: {

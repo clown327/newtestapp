@@ -1,23 +1,28 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
-export function MyCheckbox() {
-  const [checked, setChecked] = useState(false);
+export function MyCheckbox(props) {
+  
+  const [checked, setChecked] = useState(props.initCheck);
   return (
     <Pressable
-      style={[styles.checkboxBase, checked && styles.checkboxChecked]}
-      onPress={() => setChecked(!checked)}>
-      {checked && <Ionicons name="checkmark" size={24} color="white" />}
+    disabled={props.disabled}
+      style={[styles.checkboxBase, checked && styles.checkboxChecked, props.disabled&&styles.disabled]}
+      onPress={() => {props.checkFunction(!checked); setChecked(!checked); }}>
+      {checked && <Ionicons name="checkmark" size={20} color="white" />}
     </Pressable>
   );
 }
 
 
 const styles = StyleSheet.create({
+  disabled:{
+    backgroundColor: 'gray',
+  },
   checkboxBase: {
-    width: 20,
-    height: 20,
+    width: 30,
+    height: 30,
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 4,
