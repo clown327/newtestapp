@@ -47,6 +47,9 @@ export const Min1 = (props) => {
             // props.navigation.navigate()
             props.navigation.navigate('Mainscreen');
             };
+        
+
+    
 
     return (
         <ScrollView style={styles.container}>

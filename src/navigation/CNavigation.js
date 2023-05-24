@@ -45,7 +45,7 @@ const BottomTabs = () => {
         <Tab.Screen name="Home"
           component={Home}
           options={{headerShown: false,
-            title: "Home",
+            title: "home",
             tabBarLabel:"공지사항",
             tabBarIcon: ({ color, size }) => (<Icon name="home" color={color} size={size} />)
           }} />

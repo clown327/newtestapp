@@ -8,10 +8,22 @@ import Writenoti from '../../contents/Writenoti';
 const notices = [];
 const notref = child(ref(database), 'notices');
 
+
 export const Home = (props) => {
 
      //database 안에 있는 reports라는 파일들 가져오기
+     //database 안에 있는 reports라는 파일들 가져오기
 
+     useEffect(()=>{
+        const unsubscribe=onChildAdded(notref, (snapshot) => {
+            notices.push(snapshot.val());
+            onRefresh();
+        });
+        return(()=>{
+            unsubscribe();
+        })
+     },[])
+    
      useEffect(()=>{
         const unsubscribe=onChildAdded(notref, (snapshot) => {
             notices.push(snapshot.val());
@@ -25,6 +37,8 @@ export const Home = (props) => {
 
 
     const [refreshing, setRefreshing] = useState(false); //리프레쉬 시켜주는거
+
+
 
     const onRefresh = React.useCallback(() => {
       setRefreshing(true);
