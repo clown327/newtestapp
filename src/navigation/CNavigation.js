@@ -19,6 +19,7 @@ import { Home } from "./screens/Home";
 import { Wanted } from "./screens/Wanted";
 import { Shared } from "./screens/Shared";
 import { Writenoti } from "../contents/Writenoti";
+import { Comment } from "../contents/Comment";
 
 import { uesRef } from 'react';
 
@@ -39,50 +40,37 @@ const BottomTabs = () => {
   
 
   return (
-    <Tab.Navigator tabBarOptions={{
-      showLabel: false,
-      // Floating Tab Bar...
-      style: {
-        backgroundColor: 'white',
-        position: 'absolute',
-        bottom: 40,
-        marginHorizontal: 20,
-        // Max Height...
-        height: 60,
-        borderRadius: 10,
-        // Shadow...
-        shadowColor: '#000',
-        shadowOpacity: 0.06,
-        shadowOffset: {
-          width: 10,
-          height: 10
-        },
-        paddingHorizontal: 20,
-      }
-    }}>
+    <Tab.Navigator screenOptions={{
+      showLabel: true}}>
         <Tab.Screen name="Home"
           component={Home}
           options={{headerShown: false,
-            title: "home",
+            title: "Home",
+            tabBarLabel:"공지사항",
             tabBarIcon: ({ color, size }) => (<Icon name="home" color={color} size={size} />)
           }} />
         <Tab.Screen name="Mainscreen"
           component={Mainscreen}
           options={{headerShown: false,
             title: "Dashboard",
+            tabBarLabel:"신고 목록",
             tabBarIcon: ({ color, size }) => (<Icon name="dashboard" color={color} size={size} />)
           }} />
           <Tab.Screen name="Shared"
             component={Shared}
             options={{headerShown:false,
               title: "Shared",
+              tabBarLabel:"공유받은 신고",
+              headerShown:false,
               tabBarIcon: ({ color, size }) => (<Icon name="ios-share" color={color} size={size} />)
           }} />        
                  
           <Tab.Screen name="Wanted"
             component={Wanted}
-            options={{headerShown:false,
+            options={{
+              headerShown:false,
               title: "wanted",
+              tabBarLabel:"수배",
               tabBarIcon: ({ color, size }) => (<Icon name="person-search" color={color} size={size} />)
           }} /> 
 
@@ -134,14 +122,12 @@ export const CNavigation = () => {
         <Stack.Screen name="Login2" component={Login2} options={{gestureEnabled: false}}/>
 
         <Stack.Screen name="BottomTabs" component={BottomTabs} options={{gestureEnabled: true}} />
-        
-
-        
+      
         <Stack.Screen name="Min1" component={Min1} options={{ headerShown: false }}/>
         <Stack.Screen name="Managing" component={Managing} options={{ headerShown: true }} />
-        <Stack.Screen name="Complete" component={Complete} options={{gestureEnabled: true}} />
+        <Stack.Screen name="Complete" component={Complete} options={{gestureEnabled: false}} />
         <Stack.Screen name="Writenoti" component={Writenoti} options={{gestureEnabled: true}} />
-        
+        <Stack.Screen name="Comment" component={Comment} options={{gestureEnabled: true}} />
         
       </Stack.Navigator>
     </NavigationContainer>

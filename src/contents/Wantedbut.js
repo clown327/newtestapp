@@ -1,39 +1,17 @@
 import React, { useState } from 'react';
 import { SafeAreaView ,Text, View, ScrollView, StyleSheet, TouchableOpacity, 
         KeyboardAvoidingView, Platform, Button, Image, RefreshControl, TextInput } from 'react-native';
-import { database } from "./../../firebase";
+import { database } from "../../firebase";
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { ref, push, set, getDatabase, child } from 'firebase/database';
+import { ref, push } from 'firebase/database';
 
 
-
-export const Writenoti = (props) => {
-
-    //const notice = props.route.params.notices;
-    const [content, setContent] = useState('');
+export const Comment = (props) => {
     const [title, setTitle] = useState('');
+    const [content, setContent] = useState('');
 
-    const dbRef = ref(database);
-    const noticesRef = child(dbRef, 'notices');
+    const noticesRef = ref(database, 'notices');
 
-    const Post = async (notices) => {
-        const newNoticeRef = push(noticesRef);
-        const date = new Date(Date.now()).toLocaleString('ko-KR',{ timeZone: 'Asia/Seoul'});
-        const newkey = push(newNoticeRef).key;
-        report.uid = newKey;
-        const uploading = await set(red(database, "notices/"+newkey). catch);
-        set(newNoticeRef(dbRef, 'notices/'+ newKey), {
-          content: content,
-          date:date,
-          title: title
-        });
-        props.navigation.navigate('Home');
-      };
-
-
-
-
-/*
     const savenotices = () => {
         const newnoticesRef = push(noticesRef);
         newnoticesRef.set({
@@ -42,19 +20,21 @@ export const Writenoti = (props) => {
         });
     }
 
-*/
+    const [images,setImages]=useState([]);
+    useEffect(()=>{
+        setImages(props.route.params.urls);
+    },[])
 
 
 
     return(
         <ScrollView
             style={styles.container}
-            keyboardShouldPersistTaps='handled'
-        >
+            keyboardShouldPersistTaps='handled'>
             <SafeAreaView>
                 <View style={styles.title}>
-                    <Text style={styles.titletext}>공지사항 작성</Text>
-                    <TouchableOpacity style={styles.button} onPress={Post}>
+                    <Text style={styles.titletext}>처치된 사항</Text>
+                    <TouchableOpacity style={styles.button} onPress={savenotices}>
                         <View style={styles.send}>
                             <Icon name="done" size={50} color="#000000" />
                         </View>
@@ -62,18 +42,14 @@ export const Writenoti = (props) => {
                 </View>
                 <View style={styles.title2}>
                 <TextInput
-                    style={styles.content}
-                    placeholder="제목을 입력 주세요"
+                    style={styles.input}
+                    placeholder="제목을 입력해 주세요"
                     onChangeText={text => setTitle(text)}
-                    value={ title }
-                    ref={input => titleInput = input}
+                    value={title}
                     returnKeyType="done"
-                    multiline={true}
-                    numberOfLines={1}
-                    />
-                <View style={styles.imagecontainer}>
-                    
-                </View>
+                    onSubmitEditing={() => contentInput.focus()}
+                    singleLine={true}
+                />
                 </View>
                 <View style={styles.contentcontainer}>
                 <TextInput
@@ -113,9 +89,6 @@ const styles = StyleSheet.create({
         fontSize:27,
         fontWeight:"bold",
         margin:10,
-    },
-    imagecontainer:{
-
     },
     inputContainer: {
         width: '90%',

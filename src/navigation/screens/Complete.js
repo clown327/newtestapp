@@ -1,14 +1,12 @@
 import React from 'react';
-import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-//import { ScrollView } from 'react-native-gesture-handler';
+import {StyleSheet, Text, View, TouchableOpacity, SafeAreaView} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 
 
 export const Complete= (props) => {
 
-    const report = props.route.params.report; //reports의 파라미터값
+    //const report = props.route.params.report; //reports의 파라미터값
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.comcontainer}>
@@ -44,12 +42,10 @@ const styles = StyleSheet.create({
     alignItems:"center",
     justifyContent:"flex-end",
     //flexDirection:"column"
-
   },
   comtext:{
     fontSize:30,
     fontWeight:"bold",
-
   },
   photocontainer:{
     width:"100%",
@@ -59,14 +55,11 @@ const styles = StyleSheet.create({
     justifyContent:"center",
 
   },
-  photo:{
-
-  },
+  //photo:{},
   buttoncontainer:{
     width:"100%",
     height:"30%",
     //backgroundColor:"powderblue",
-
   },
   button:{
     width:"85%",
@@ -83,13 +76,7 @@ const styles = StyleSheet.create({
   },
   buttontext: {
     color:"white",
-
     fontSize:30,
     fontWeight:"bold",
-
-
   },
-
- 
-  
 });

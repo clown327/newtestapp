@@ -2,7 +2,6 @@ import {Text, View, StyleSheet, TextInput, TouchableOpacity} from 'react-native'
 import React, {useState} from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { height } from 'deprecated-react-native-prop-types/DeprecatedImagePropType';
 
 export const  Search = (props) => {
     const [phoneNumber, setPhoneNumber] = useState('');

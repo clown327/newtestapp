@@ -1,6 +1,6 @@
 //민원을 관리할 수 있는 화면 입니다 stack
-import {SafeAreaView ,Text, View, ScrollView, StyleSheet, TouchableOpacity, Button, Image, RefreshControl} from 'react-native'
-import React, { useState} from 'react';
+import {useState , SafeAreaView ,Text, View, ScrollView, StyleSheet, TouchableOpacity, Button, Image, RefreshControl} from 'react-native'
+import React from 'react';
 import { database } from '../../../firebase';
 import { ref, child, onChildAdded } from 'firebase/database';
 
@@ -23,6 +23,8 @@ export const Shared = (props) => {
         setRefreshing(false);
       }, 2000);
     }, []);
+
+    
     
     return(
         <ScrollView style={styles.container} refreshControl={

@@ -1,20 +1,33 @@
 //새로 만들어진 민원들을 보여주는 페이지 입니다. 끝
 import {SafeAreaView ,Text, View, ScrollView, StyleSheet, TouchableOpacity, Button, Image, RefreshControl} from 'react-native'
-import React, { useState} from 'react';
+import React, { useEffect, useState} from 'react';
 import { database } from '../../../firebase';
-import { ref, child, onChildAdded } from 'firebase/database';
+import { ref, child, onChildAdded, onChildChanged } from 'firebase/database';
 
 
 
 //source = {{uri:JSON.parse(reports[1].photo)[0],}} style = {styles.square} 사진 넣는 법
+const reports = []; //database 안에 있는 reports라는 파일들 가져오기
 
+const repref = child(ref(database), 'reports');
 export const Mainscreen = (props) => {
-    const reports = []; //database 안에 있는 reports라는 파일들 가져오기
 
-    const repref = child(ref(database), 'reports');
-    onChildAdded(repref, (snapshot) => {
-        reports.push(snapshot.val());
-    });
+    useEffect(()=>{
+        const unsubscribe=onChildAdded(repref, (snapshot) => {
+            reports.push(snapshot.val());
+            onRefresh();
+        });
+
+        const unsubscribe2=onChildChanged(repref, (snapshot) => {
+            reports.splice(reports.findIndex((element) => element.uid === snapshot.val().uid),1,snapshot.val());
+            onRefresh();
+        });
+        
+        return(
+            ()=>{unsubscribe();unsubscribe2();}
+        )
+    },[])
+    
 
 
 
@@ -27,23 +40,23 @@ export const Mainscreen = (props) => {
       }, 2000);
     }, []);
 
-    const [cateState, setCateState] = useState(reports); // 초기값은 전체 데이터
-    const [selectedCategory, setSelectedCategory] = useState("전체"); // 선택된 카테고리 초기값은 "전체"
+    // const [cateState, setCateState] = useState(reports); // 초기값은 전체 데이터
+    const [selectedCategory, setSelectedCategory] = useState("미접수"); // 선택된 카테고리 초기값은 "전체"
 
 
-    const category = (cate) => {
-    if (cate == '전체') {
-        setCateState(reports);
-        setSelectedCategory('전체');
-    } else {
-        setCateState(
-        reports.filter((d) => {
-            return d.state == cate;
-        })
-        );
-        setSelectedCategory(cate);
-    }
-    };
+    // const category = (cate) => {
+    // if (cate == '전체') {
+    //     setCateState(reports);
+    //     setSelectedCategory('전체');
+    // } else {
+    //     setCateState(
+    //     reports.filter((d) => {
+    //         return d.state == cate;
+    //     })
+    //     );
+    //     setSelectedCategory(cate);
+    // }
+    // };
     const activeButtonStyle = {
         width:"20%",
         height:37,
@@ -79,24 +92,24 @@ export const Mainscreen = (props) => {
          
         <SafeAreaView>
             <View>
-                <Text style={styles.title}>New Min1</Text>
+                <Text style={styles.title}>신고 접수</Text>
             </View>
             <View style={styles.catbutton}>
             <TouchableOpacity style={selectedCategory == '미접수'? activeButtonStyle : inactiveButtonStyle}
-                            onPress={() => category(selectedCategory == '전체' ? '미접수' : '전체')}>
+                            onPress={() => {setSelectedCategory("미접수")}}>
                                 <Text>미접수</Text>
             </TouchableOpacity>
             <TouchableOpacity style={selectedCategory == '처리중'? activeButtonStyle: inactiveButtonStyle}
-                            onPress={() => category(selectedCategory == '전체' ? '처리중' : '전체')}>
+                            onPress={() => {setSelectedCategory("처리중")}}>
                                 <Text>처리중</Text>
             </TouchableOpacity>
             <TouchableOpacity style={selectedCategory == '처리완료'? activeButtonStyle: inactiveButtonStyle}
-                            onPress={() => category(selectedCategory == '전체' ? '처리완료' : '전체')}>
+                            onPress={() => {setSelectedCategory("처리완료")}}>
                                 <Text>처리완료</Text>
             </TouchableOpacity>
             </View>
 
-            {cateState.map((report, index) => (
+            {reports.filter(rep=>rep.state===selectedCategory).map((report, index) => (
                 <TouchableOpacity key={index} onPress={() => {props.navigation.navigate('Min1', {report:report})}}>
                     <View style={styles.item}>
                     <View style={styles.photocontainer}>
@@ -129,7 +142,7 @@ const styles = StyleSheet.create({
     catbutton: {
         width:"100%",
         height:40,
-        backgroundColor:"white",
+        backgroundColor:"transparent",
         marginBottom:17,
         flexDirection:"row",
         justifyContent:'center'
@@ -224,7 +237,9 @@ const styles = StyleSheet.create({
     title:{
         fontSize:27,
         fontWeight:"bold",
-        margin:10,
+        marginTop:50,
+        marginBottom:30,
+        textAlign:"center"
     },
     typetext:{
         fontSize:15,

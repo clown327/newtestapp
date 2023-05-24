@@ -1,12 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import {Image, StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import roka from "../../../assets/rokalogo.png"
 import back from "../../../assets/backbutton.png"
 import { Directions } from "react-native-gesture-handler";
+import { Context } from "../../../Context";
 
 export default function Login2(props) {
     console.disableYellowBox = true;
-
     return (
         <View style={styles.container}>
           <View style={styles.titlecontainer}>
@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
     width: 200,
     height: 200,
     borderRadius: 30,
-    flexDirection:"Top",
+    flexDirection:"column",
   },
   introTitleText: {
     width: 250,
