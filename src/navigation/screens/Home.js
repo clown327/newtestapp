@@ -17,7 +17,7 @@ export const Home = (props) => {
 
      useEffect(()=>{
         const unsubscribe=onChildAdded(notref, (snapshot) => {
-            notices.push(snapshot.val());
+            notices.unshift(snapshot.val());
             onRefresh();
         });
         return(()=>{

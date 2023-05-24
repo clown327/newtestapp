@@ -121,11 +121,30 @@ export const Comment = (props) => {
         await update(reportsRef, { processImage: urls });
     };
     const handleSave = async (images) => {
+        showAlert({
+            alertType:"custom",
+            dismissable:false,
+            customAlert:(
+                <View style={styles.alertText}>
+                <Text>저장 중입니다.</Text>
+              </View>
+            )
+        })
         await updateReportProcess(report, content);
         const downloadUrls=await uploadImage(images);
         await updateReportProcessImages(report, JSON.stringify(downloadUrls));
         report.processText=content;
+        closeAlert();
         // props.navigation;
+        showAlert({
+            alertType:"custom",
+            dismissable:true,
+            customAlert:(
+                <View style={styles.alertText}>
+                <Text>저장이 완료되었습니다!</Text>
+              </View>
+            )
+        })
     };
 
 
@@ -152,12 +171,12 @@ export const Comment = (props) => {
             <View style={styles.title}>
               <Text style={styles.titletext}>조치 사항</Text>
 
-              <TouchableOpacity style={styles.button} onPress={()=>{handleSave(images)}}>
+             {!props.isComplete&& <TouchableOpacity style={styles.button} onPress={()=>{handleSave(images)}}>
                 <View style={styles.send}>
                   <Icon name="save" size={50} color="#000000" />
                   <Text style={styles.sendTenxt}>저장하기</Text>
                 </View>
-              </TouchableOpacity>
+              </TouchableOpacity>}
             </View>
             <View style={styles.title2}>
             <ScrollView
@@ -169,7 +188,7 @@ export const Comment = (props) => {
                 justifyContent: "center",
               }}
             >
-              <TouchableOpacity
+              {!props.isComplete&&<TouchableOpacity
                 onPress={() => {
                   if (images.length > 4) {
                     showAlert({
@@ -260,7 +279,7 @@ export const Comment = (props) => {
                 >
                   <Text style={{ fontSize: 20 }}>+</Text>
                 </View>
-              </TouchableOpacity>
+              </TouchableOpacity>}
               {images.map((uri) => {
                 //이미지 띄우기
                 //   console.log(uri);
@@ -299,6 +318,7 @@ export const Comment = (props) => {
             <View style={styles.contentcontainer}>
               <TextInput
                 style={styles.content}
+                editable={!props.isComplete}
                 placeholder="조치된 내용을 입력해 주세요"
                 onChangeText={(text) => setContent(text)}
                 value={content}
@@ -390,5 +410,19 @@ const styles = StyleSheet.create({
         marginRight:5,
         marginBottom:5,
         padding:10,
-    }
+        color:"black"
+    },
+    alertText: {
+        width: 250,
+        height: 100,
+        elevation: 2,
+        backgroundColor: "white",
+        borderRadius: 30,
+        justifyContent: "space-around",
+        alignItems: "center",
+      },
 });
+
+Comment.defaultProps={
+    isComplete:false
+}

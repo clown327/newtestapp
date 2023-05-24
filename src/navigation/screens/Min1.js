@@ -256,10 +256,16 @@ export const Min1 = (props) => {
               <Text style={styles.comtext}>처리 완료하기</Text>
             </TouchableOpacity>
           )}
-
+          {isCompleted && (
+            <Comment report={report} isComplete={true}/>
+          )}
+          {isCompleted && (
+            <Comment2 report={report} isComplete={true}/>
+          )}
           {isCompleted && (
             <TouchableOpacity
               style={styles.combutton}
+              disabled={false}
               onPress={() => {
                 handleReceive3(report, "미접수");
               }}

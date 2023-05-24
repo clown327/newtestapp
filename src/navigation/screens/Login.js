@@ -68,7 +68,7 @@ export const Login = (props) => {
           /> */}
           <TouchableOpacity style={styles.button} onPress={() => {
             if(handleLogin(username)){
-              setContext(cities[username]);
+              setContext(username);
               props.navigation.navigate("Login2");
             }
             }}>
