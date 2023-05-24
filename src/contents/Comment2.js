@@ -6,21 +6,21 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import { ref, set, update, child } from 'firebase/database';
 
 
-export const Comment = (props) => {
+export const Comment2 = (props) => {
 
     // const report = props.route.params.report;
     const report=props.report
     
-    const [content, setContent] = useState(report.processText);
+    const [content, setContent] = useState(report.userReply);
 
     const updateReportProcess = async (report, newText) => { //과정 업데이트 해주는거
         const dbRef = ref(database);
         const reportsRef = child(dbRef, `reports/${report.uid}`);
-        await update(reportsRef, { processText: newText });
+        await update(reportsRef, { userReply: newText });
     };
     const handleSave = async () => {
         await updateReportProcess(report, content);
-        report.processText=content;
+        report.userReply=content;
         // props.navigation;
     };
 
@@ -46,7 +46,7 @@ export const Comment = (props) => {
         <ScrollView style={{ width:"100%" }} keyboardShouldPersistTaps="handled">
           <SafeAreaView>
             <View style={styles.title}>
-              <Text style={styles.titletext}>처리된 내용</Text>
+              <Text style={styles.titletext}>신고자 알림</Text>
 
               <TouchableOpacity style={styles.button} onPress={handleSave}>
                 <View style={styles.send}>
@@ -55,13 +55,10 @@ export const Comment = (props) => {
                 </View>
               </TouchableOpacity>
             </View>
-            <View style={styles.title2}>
-              {/*이곳에는 사진을 넣을겁니다. */}
-            </View>
             <View style={styles.contentcontainer}>
               <TextInput
                 style={styles.content}
-                placeholder="조치된 내용을 입력해 주세요"
+                placeholder="신고자에게 전달할 내용을 적어주세요"
                 onChangeText={(text) => setContent(text)}
                 value={content}
                 ref={(input) => (contentInput = input)}
