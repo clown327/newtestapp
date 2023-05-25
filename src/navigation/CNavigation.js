@@ -22,9 +22,13 @@ import { Writenoti } from "../contents/Writenoti";
 import { Comment } from "../contents/Comment";
 import { Notiview } from "../contents/Notiview";
 import { uesRef } from 'react';
+import { Wantedbut } from "../contents/Wantedbut";
+import { Wantedview } from "../contents/Wantedview";
 
 
 import Icon from 'react-native-vector-icons/MaterialIcons';//아이콘
+import { Sharescreen } from "../contents/Sharescreen";
+
 
 
 
@@ -130,7 +134,10 @@ export const CNavigation = () => {
         <Stack.Screen name="Writenoti" component={Writenoti} options={{gestureEnabled: true}} />
         <Stack.Screen name="Comment" component={Comment} options={{gestureEnabled: true}} />
         <Stack.Screen name="Notiview" component={Notiview} options={{gestureEnabled: true}} />
-        
+        <Stack.Screen name="Wantedbut" component={Wantedbut} options={{gestureEnabled: true}} />
+        <Stack.Screen name="Wantedview" component={Wantedview} options={{gestureEnabled: true}} />
+        <Stack.Screen name="Sharescreen" component={Sharescreen} options={{gestureEnabled: true}} />
+
       </Stack.Navigator>
     </NavigationContainer>
   );

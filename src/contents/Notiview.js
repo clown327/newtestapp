@@ -11,7 +11,7 @@ export const Notiview = (props) => {
     <ScrollView
          style={styles.container}
          keyboardShouldPersistTaps='handled'>
-         <SafeAreaView>
+         <View style={styles.container2}>
              <View style={styles.title}>
                  <Text style={styles.titletext}>공지사항</Text>
              </View>
@@ -21,7 +21,7 @@ export const Notiview = (props) => {
              <View style={styles.contentcontainer}>
                 <Text style={styles.content}>{notice.content}</Text>
              </View>
-         </SafeAreaView>
+         </View>
      </ScrollView>
     );
 }
@@ -33,6 +33,9 @@ const styles = StyleSheet.create({
         height:"100%",
         backgroundColor:"white"
     },
+    container2:{
+        marginTop:50,
+      },    
     send:{
         marginLeft: 110,
 
@@ -67,16 +70,18 @@ const styles = StyleSheet.create({
     title2:{
         width:"91%",
         padding:10,
-        height:65,
+        height:"100%",
+        flex:1,
         backgroundColor:"powderblue",
         borderRadius:10,
         marginLeft:16,
-        marginTop: 20,
+        marginTop: 10,
+        justifyContent:"center",
         
     },
     titletext2:{
         fontSize:27,
-        margin:5,
+        
         fontWeight:"bold",
     },
     contentcontainer:{

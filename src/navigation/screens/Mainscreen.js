@@ -1,8 +1,9 @@
 //새로 만들어진 민원들을 보여주는 페이지 입니다. 끝
 import {SafeAreaView ,Text, View, ScrollView, StyleSheet, TouchableOpacity, Button, Image, RefreshControl} from 'react-native'
-import React, { useEffect, useState} from 'react';
+import React, { useContext, useEffect, useState} from 'react';
 import { database } from '../../../firebase';
 import { ref, child, onChildAdded, onChildChanged } from 'firebase/database';
+
 
 
 
@@ -12,10 +13,10 @@ const reports = []; //database 안에 있는 reports라는 파일들 가져오�
 const repref = child(ref(database), 'reports');
 
 export const Mainscreen = (props) => {
-
+    
     useEffect(()=>{
         const unsubscribe=onChildAdded(repref, (snapshot) => {
-            reports.push(snapshot.val());
+            reports.unshift(snapshot.val());
             onRefresh();
         });
 
@@ -38,7 +39,7 @@ export const Mainscreen = (props) => {
       setRefreshing(true);
       setTimeout(() => {
         setRefreshing(false);
-      }, 2000);
+      }, 700);
     }, []);
 
     // const [cateState, setCateState] = useState(reports); // 초기값은 전체 데이터
@@ -127,6 +128,8 @@ export const Mainscreen = (props) => {
                     </View>
                 </TouchableOpacity>
                 ))}
+
+                
         </SafeAreaView>
     </ScrollView>
     );
@@ -137,7 +140,7 @@ const styles = StyleSheet.create({
         flex:1, 
         padding:10,
         width:"100%",
-        height:"100%",
+        //height:"100%",
         backgroundColor:"white",
     },
     catbutton: {
@@ -238,9 +241,9 @@ const styles = StyleSheet.create({
     title:{
         fontSize:27,
         fontWeight:"bold",
-        marginTop:50,
+        marginTop:20,
         marginBottom:30,
-        textAlign:"center"
+        //textAlign:"center"
     },
     typetext:{
         fontSize:15,

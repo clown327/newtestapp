@@ -5,28 +5,39 @@ import back from "../../../assets/backbutton.png"
 import { Directions } from "react-native-gesture-handler";
 import { Context } from "../../../Context";
 
+const adminName={
+  "0":"지상작전사령부",
+  "1":"수도군단",
+  "2":"51사단",
+  "3":"167여단",
+  "4":"168여단",
+  "5":"169여단"
+}
+
 export default function Login2(props) {
     console.disableYellowBox = true;
+    const [adminCode,setAdminCode]=useContext(Context);
     return (
-        <View style={styles.container}>
-          <View style={styles.titlecontainer}>
-            <Text style={styles.title}>
-                   국방 안전 
-             </Text>
-             <Text style={styles.title}>신고앱입니다.</Text>
-          </View>
-             <View style={styles.introContainer}>
-                 <Image
-                       source={ roka }
-                     style={styles.image} />
-                 <Text style={styles.introTitleText}>
-                    국민을 위해 힘쓰는</Text>
-                  <Text style={styles.introTitleText}>당신이 '영웅'입니다.</Text>
-                   <TouchableOpacity style={styles.button} onPress = {() => props.navigation.reset({routes: [{name: 'BottomTabs'}]})}>
-                  <Text style={styles.buttonText}>메인화면</Text>
-             </TouchableOpacity>
-            </View>
+      <View style={styles.container}>
+        <View style={styles.titlecontainer}>
+          <Text style={styles.title}>국방 안전</Text>
+          <Text style={styles.title}>신고앱입니다.</Text>
         </View>
+        <View style={styles.introContainer}>
+          <Image source={roka} style={styles.image} />
+          <Text style={styles.introTitleText}>국민을 위해 힘쓰는</Text>
+          <Text style={styles.introTitleText}>당신이 '영웅'입니다.</Text>
+          <Text style={{fontSize:15,marginTop:10}}>{`관리자 계정: ${adminName[adminCode]}`}</Text>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() =>
+              props.navigation.reset({ routes: [{ name: "BottomTabs" }] })
+            }
+          >
+            <Text style={styles.buttonText}>시작하기</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
     );
 }
 

@@ -26,14 +26,16 @@ export const Writenoti = (props) => {
 
   const Post = async () => {
     const newNoticeRef = push(noticesRef);
-    const date = new Date(Date.now()).toLocaleString('ko-KR', {
-      timeZone: 'Asia/Seoul',
-    });
-    const newkey = newNoticeRef.key; // Add this line to get the newkey
+
+    const date1 = new Date(Date.now()); //시간이 들어가야하는 경우에는 이 3줄 넣어서 date 업로드 해주기 
+    const date = date1.toLocaleDateString('ko-KR', { timeZone: 'Asia/Seoul' }) + ' ' + 
+                  date1.toLocaleTimeString('en-GB', { timeZone: 'Asia/Seoul' }); 
+    //const newkey = newNoticeRef.key;
     set(newNoticeRef, {
       content: content,
       date: date,
       title: title,
+      uid: newNoticeRef.key
     });
     props.navigation.navigate('Home');
   };
@@ -43,7 +45,7 @@ export const Writenoti = (props) => {
       style={styles.container}
       keyboardShouldPersistTaps="handled"
     >
-      <SafeAreaView>
+      <View style={styles.container2}>
         <View style={styles.title}>
           <Text style={styles.titletext}>공지사항 작성</Text>
           <TouchableOpacity style={styles.button} onPress={Post}>
@@ -54,7 +56,7 @@ export const Writenoti = (props) => {
         </View>
         <View style={styles.title2}>
           <TextInput
-            style={styles.content}
+            style={styles.content1}
             placeholder="제목을 입력 주세요"
             onChangeText={(text) => setTitle(text)}
             value={title}
@@ -67,7 +69,7 @@ export const Writenoti = (props) => {
         </View>
         <View style={styles.contentcontainer}>
           <TextInput
-            style={styles.content}
+            style={styles.content2}
             placeholder="내용을 입력해 주세요"
             onChangeText={(text) => setContent(text)}
             value={content}
@@ -77,7 +79,7 @@ export const Writenoti = (props) => {
             numberOfLines={4}
           />
         </View>
-      </SafeAreaView>
+      </View>
     </ScrollView>
   );
 };
@@ -88,6 +90,10 @@ const styles = StyleSheet.create({
     height: '100%',
     backgroundColor: 'white',
   },
+  container2:{
+    marginTop:50,
+  },
+
   send: {
     marginLeft: 110,
   },
@@ -103,6 +109,7 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   imagecontainer: {},
+
   inputContainer: {
     width: '90%',
     padding: 10,
@@ -119,11 +126,13 @@ const styles = StyleSheet.create({
   title2: {
     width: '91%',
     padding: 10,
-    height: 60,
+    height: "100%",
+    flex:1,
     backgroundColor: 'powderblue',
     borderRadius: 10,
     marginLeft: 16,
-    marginTop: 20,
+    marginTop: 10,
+    justifyContent:"center",
   },
   titletext2: {
     fontSize: 27,
@@ -136,13 +145,22 @@ const styles = StyleSheet.create({
     backgroundColor: '#D9D9D9',
     borderRadius: 10,
     marginLeft: 17,
-    marginTop: 30,
+    marginTop: 20,
   },
-  content: {
+  content1: {
+    fontSize: 20,
+    marginTop: 3,
+    marginLeft: 10,
+    marginRight: 5,
+    marginBottom: 5,
+    fontWeight:"bold",
+  },
+  content2: {
     fontSize: 17,
     marginTop: 3,
     marginLeft: 10,
     marginRight: 5,
     marginBottom: 5,
+    //fontWeight:"bold",
   },
 });

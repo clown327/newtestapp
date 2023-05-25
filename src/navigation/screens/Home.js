@@ -17,7 +17,7 @@ export const Home = (props) => {
 
      useEffect(()=>{
         const unsubscribe=onChildAdded(notref, (snapshot) => {
-            notices.push(snapshot.val());
+            notices.unshift(snapshot.val());
             onRefresh();
         });
         return(()=>{
@@ -63,11 +63,8 @@ export const Home = (props) => {
                 <View> 
                     {notices.map((notice, index) => (
                         <TouchableOpacity style={styles.Noticontainer} key={index} onPress={()=>{props.navigation.navigate('Notiview', {notice:notice})}}>
-                        <View style={styles.photo}>
-                            <Icon name="person" size={60} color="#000000" />
-                        </View>
                         <View style={styles.noticontent}>
-                            <Text>{notice.content}</Text>
+                            <Text style={styles.textcont}>{notice.title}</Text>
                         </View>
                         </TouchableOpacity>
 
@@ -82,7 +79,7 @@ export const Home = (props) => {
 const styles = StyleSheet.create({
     container:{
         width:"100%",
-        height:"100%",
+        //height:"100%",
         flex:1,
         backgroundColor:"white",
         paddingTop:40,
@@ -130,6 +127,7 @@ const styles = StyleSheet.create({
         borderBottomWidth:1,
         borderBottomColor:"#D9D9D9",
         
+        
     },
     photo:{
         width:"18%",
@@ -142,9 +140,14 @@ const styles = StyleSheet.create({
         height:"100%",
         //backgroundColor:"powderblue",
         marginLeft:12,
+        justifyContent:"center",
+        fontSize:27,
 
     },
-    
+    textcont:{
+        fontSize:15,
+        fontWeight:"bold",
+    },
     
 
 

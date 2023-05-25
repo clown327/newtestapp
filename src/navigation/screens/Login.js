@@ -3,6 +3,7 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image,ScrollView, 
 import roka from "./../../../assets/rokalogo.png";
 import { showAlert } from 'react-native-customisable-alert';
 import { Context } from '../../../Context';
+//import { Shared } from './Shared';
 
 // ["화성시","평택시","안산시","안양시"]
 // 69 평택, 화성 68 사단, 67 안산, 군단 안양
@@ -68,7 +69,7 @@ export const Login = (props) => {
           /> */}
           <TouchableOpacity style={styles.button} onPress={() => {
             if(handleLogin(username)){
-              setContext(cities[username]);
+              setContext(username);
               props.navigation.navigate("Login2");
             }
             }}>

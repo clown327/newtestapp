@@ -6,10 +6,6 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 export const  Search = (props) => {
     const [phoneNumber, setPhoneNumber] = useState('');
 
-    const handleSearch = () => {
-        // 검색 기능 구현
-    }
-
 
 
     return(
