@@ -8,7 +8,8 @@ import {
   StyleSheet,
   SafeAreaView,
   TouchableOpacity,
-  useWindowDimensions
+  useWindowDimensions,
+  Linking
 } from "react-native";
 import { SliderBox } from "react-native-image-slider-box";
 import { database } from "../../../firebase";
@@ -162,6 +163,14 @@ export const Min1 = (props) => {
             </View>
             </View>
           </View>
+          <TouchableOpacity
+              style={{...styles.combutton,width:"50%", alignSelf:"center"}}
+              onPress={() => {
+                Linking.openURL(`tel:${report.pnumber}`)
+              }}
+            >
+              <Text style={{...styles.comtext, fontSize:15}}>신고자에게 전화하기</Text>
+          </TouchableOpacity>
           {isReceived && (
             <TouchableOpacity
               style={styles.combutton}
@@ -265,7 +274,7 @@ export const Min1 = (props) => {
           )}
           {isCompleted && (
             <TouchableOpacity
-              style={styles.combutton}
+              style={{...styles.combutton}}
               disabled={false}
               onPress={() => {
                 handleReceive3(report, "미접수");

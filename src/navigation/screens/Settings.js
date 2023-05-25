@@ -7,7 +7,7 @@ export const  Settings = (props) => {
 
       <SafeAreaView style={styles.container}>
         <ScrollView>
-        <View >
+        <View>
           </View>
             <TouchableOpacity style={styles.container1}>
               <Text style={styles.text1}>
@@ -18,7 +18,6 @@ export const  Settings = (props) => {
             <TouchableOpacity style={styles.topbutton} onPress={ ()=> props.navigation.navigate("Managing")}>
                <Text>
                 Managing
-
                </Text>
              </TouchableOpacity>
              <TouchableOpacity style={styles.topbutton}>
