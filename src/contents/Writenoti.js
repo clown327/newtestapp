@@ -135,14 +135,14 @@ const styles = StyleSheet.create({
     justifyContent:"center",
   },
   titletext2: {
-    fontSize: 27,
+    fontSize: 24,
     fontWeight: 'bold',
   },
   contentcontainer: {
     width: '91%',
     height: '100%',
     flex: 1,
-    backgroundColor: '#D9D9D9',
+    backgroundColor: '#E9E4E4',
     borderRadius: 10,
     marginLeft: 17,
     marginTop: 20,

@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   send: {
-    marginLeft: 75,
+    marginLeft: 40,
     marginRight: 5,
     alignItems: "center",
   },

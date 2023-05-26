@@ -1,136 +1,102 @@
 //민원을 관리할 수 있는 화면 입니다 stack
 import {Text, View, SafeAreaView, StyleSheet, ScrollView } from 'react-native'
+import { mainColor } from '../../color';
 
 export const Wantedview = (props) => {
-
-    const bountie = props.route.params.bountie;
     
-    return( 
-    <ScrollView>
-        <View style={styles.container2}>
-            <View>
-            <View style={styles.title}>
-                <Text style={styles.titletext}>
-                유형 : {bountie.title} ({bountie.pos})
-                </Text>
-                <Text></Text>
-            </View>
-                <View style={styles.detail}>
-                    <Text style={styles.detailtext}>{bountie.content}</Text>
-                </View>
-            </View>
-        </View>
-    </ScrollView>
-    );
-};
 
 
+  const bountie = props.route.params.bountie;
+  
+  return(
+  <ScrollView
+       style={styles.container}
+       keyboardShouldPersistTaps='handled'>
+       <View style={styles.container2}>
+           <View style={styles.title}>
+               <Text style={styles.titletext}>수배</Text>
+           </View>
+           <View style={styles.title2}>
+              <Text style={styles.titletext2}>{bountie.title}</Text>
+           </View>
+           <View style={styles.contentcontainer}>
+              <Text style={styles.content}>{bountie.content}</Text>
+           </View>
+       </View>
+   </ScrollView>
+  );
+}
 const styles = StyleSheet.create({
-    container: {
-      flex: 2,
-      width: "100%",
-      height: "100%",
-      backgroundColor: "white",
-    },
-    container2:{
-        marginTop:50,
-      },    
-    title: {
-      width: "100%",
+  container:{
+      width:"100%",
+      height:"100%",
+      backgroundColor:"white"
+  },
+  container2:{
+      marginTop:50,
+    },    
+  send:{
+      marginLeft: 110,
+
+  },
+  title:{
+      width:"100%",
+      height:60,
+      margin:13,
+      flexDirection:"row"
+  },
+  titletext:{
+      fontSize:27,
+      fontWeight:"bold",
+      margin:10,
+      color:mainColor,
+  },
+  imagecontainer:{
+
+  },
+  inputContainer: {
+      width: '90%',
+      padding: 10,
       height: 60,
-      marginTop: 5,
-      marginLeft: 10,
-      //backgroundColor:"red",
-    },
-    titletext: {
-      fontSize: 25,
-      fontWeight: "bold",
-    },
-    photocontainer: {
-      width: 370,
-      height: 370,
-      marginTop: -10,
-      margin: 10,
+      backgroundColor: 'powderblue',
       borderRadius: 10,
-      backgroundColor: "white",
-      flex: 1,
-    },
-    photo: {
-      width: 370,
-      height: 370,
-      borderRadius: 10,
-    },
-    detail: {
-      width: "93%",
-      //backgroundColor:"yellow",
-      marginLeft: 14,
-      marginBottom: 14,
-    },
-    detailtext: {
-      fontSize: 17,
-      marginTop: 4,
-    },
-    combutton: {
-      width: "88%",
-      height: 65,
-      backgroundColor: "#1E90FF",
-      marginTop: 10,
-  
-      marginLeft: 25,
-      marginRight: 25,
-      borderRadius: 10,
-      alignItems: "center",
-      justifyContent: "center",
-    },
-    comtext: {
-      fontSize: 25,
-      fontWeight: "bold",
-      color: "white",
-    },
-  
-  
-    comcontainer2: {
-      width:"100%",
-      height:"20%",
-      //backgroundColor:"yellow",    
-      alignItems:"center",
-      justifyContent:"flex-end",
-      //flexDirection:"column"
-    },
-    comtext2:{
-      fontSize:30,
-      fontWeight:"bold",
-    },
-    photocontainer2:{
-      width:"100%",
-      height:"60%",
-      //backgroundColor:"red",
-      alignItems:"center",
-      justifyContent:"center",
-  
-    },
-    //photo:{},
-    buttoncontainer2:{
-      width:"100%",
-      height:"30%",
-      //backgroundColor:"powderblue",
-    },
-    button2:{
-      width:"85%",
-      height:70,
-      //margin:30,
-      marginLeft:30,
-      marginRight:30,
-      // marginBottom:30,
+      marginLeft: 16,
+      marginTop: 20,
+  },
+  input: {
+      fontSize: 27,
+      fontWeight: 'bold',
+  },
+  title2:{
+      width:"91%",
       padding:10,
+      height:"100%",
+      flex:1,
+      backgroundColor:"powderblue",
       borderRadius:10,
-      backgroundColor:"#1E90FF",    
-      alignItems:"center",
+      marginLeft:16,
+      marginTop: 10,
       justifyContent:"center",
-    },
-    buttontext2: {
-      color:"white",
-      fontSize:30,
+      
+  },
+  titletext2:{
+      fontSize:24,
       fontWeight:"bold",
-    }
-  });
+  },
+  contentcontainer:{
+      width:"91%",
+      height:"100%",
+      flex:1,
+      backgroundColor:"#E9E4E4",
+      borderRadius:10,
+      marginLeft:17,
+      marginTop:30,
+  },
+  content:{
+      fontSize:17,
+      marginTop:3,
+      marginLeft:10,
+      marginRight:5,
+      marginBottom:5,
+  }
+});

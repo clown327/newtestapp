@@ -342,7 +342,7 @@ const styles = StyleSheet.create({
         backgroundColor:"white"
     },
     send:{
-        marginLeft: 75,
+        marginLeft: 70,
         marginRight:5,
         alignItems:"center",
     },

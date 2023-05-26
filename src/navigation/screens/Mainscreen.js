@@ -3,6 +3,9 @@ import {SafeAreaView ,Text, View, ScrollView, StyleSheet, TouchableOpacity, Butt
 import React, { useContext, useEffect, useState} from 'react';
 import { database } from '../../../firebase';
 import { ref, child, onChildAdded, onChildChanged } from 'firebase/database';
+import { Animated } from 'react-native'
+import { conColor, mainColor } from '../../../color';
+import logo from "../../../assets/logo.png";
 
 
 
@@ -62,27 +65,29 @@ export const Mainscreen = (props) => {
     const activeButtonStyle = {
         width:"20%",
         height:37,
-        backgroundColor: '#E4E6FD',
+        color:mainColor,
         margin: 3,
         marginLeft: 7,
         marginRight: 7,
-        borderRadius: 30,
-        marginTop: 5,
+        borderBottomWidth:2.5,
+        borderBottomColor:mainColor,
+        marginTop: 29.5,
         alignItems: 'center',
         justifyContent: 'center',
+        
     };
     
     const inactiveButtonStyle = {
         width: '20%',
         height: 37,
-        borderWidth: 1,
-        borderColor: '#D1D1D1',
-        marginLeft: 7,
-        marginRight: 7,
-        borderRadius: 30,
-        marginTop: 5,
+        borderBottomWidth:2.5,
+        borderBottomColor:conColor,
+        marginLeft: 8,
+        marginRight: 8,
+        marginTop: 29.5,
         alignItems: 'center',
         justifyContent: 'center',
+        opacity:0.4,
         };
       //미접수/접수/처리중/처리완료 
 
@@ -92,45 +97,57 @@ export const Mainscreen = (props) => {
     refreshControl={
       <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
          
-        <SafeAreaView>
-            <View>
-                <Text style={styles.title}>신고 접수</Text>
-            </View>
-            <View style={styles.catbutton}>
-            <TouchableOpacity style={selectedCategory == '미접수'? activeButtonStyle : inactiveButtonStyle}
-                            onPress={() => {setSelectedCategory("미접수")}}>
-                                <Text>미접수</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={selectedCategory == '처리중'? activeButtonStyle: inactiveButtonStyle}
-                            onPress={() => {setSelectedCategory("처리중")}}>
-                                <Text>처리중</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={selectedCategory == '처리완료'? activeButtonStyle: inactiveButtonStyle}
-                            onPress={() => {setSelectedCategory("처리완료")}}>
-                                <Text>처리완료</Text>
-            </TouchableOpacity>
+        <View style={styles.container2}>
+
+            <View style={styles.topcontainer}>
+                <View style={styles.titlecontainer}>
+                    <Text style={{fontSize:27,fontWeight:"900",color:mainColor,margin:10, marginLeft:15,}}>신고 목록</Text>
+                    <Image source={logo} style={{width:60, height:55, marginLeft:150,}}/>
+                </View>    
+                 <View style={{}}>
+                    <View style={styles.catbutton}>
+                        <TouchableOpacity style={selectedCategory == '미접수'? activeButtonStyle : inactiveButtonStyle}
+                                        onPress={() => {setSelectedCategory("미접수")}}>
+                                            <Text style={{fontSize:17,fontWeight:"700",color:mainColor,}}>미접수</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={selectedCategory == '처리중'? activeButtonStyle: inactiveButtonStyle}
+                                        onPress={() => {setSelectedCategory("처리중")}}>
+                                            <Text style={{fontSize:17,fontWeight:"700",color:mainColor,}}>처리중</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={selectedCategory == '처리완료'? activeButtonStyle: inactiveButtonStyle}
+                                        onPress={() => {setSelectedCategory("처리완료")}}>
+                                            <Text style={{fontSize:17,fontWeight:"700",color:mainColor,}}>처리완료</Text>
+                        </TouchableOpacity>
+                    </View>    
+                </View>
+
+
             </View>
 
-            {reports.filter(rep=>rep.state===selectedCategory).map((report, index) => (
-                <TouchableOpacity key={index} onPress={() => {props.navigation.navigate('Min1', {report:report})}}>
-                    <View style={styles.item}>
-                    <View style={styles.photocontainer}>
-                        <Image source={{ uri: JSON.parse(report.photo)[0],}} style={styles.photo} />
-                    </View>
-                    <View style={styles.textcontainer}>
-                        <View style={styles.typedate}>
-                        <Text style={styles.typetext}>{report.type} ({report.state})</Text>
-                        </View>
-                        <View style={styles.detail}>
-                        <Text style={styles.detailtext}>{report.detail}</Text>
-                        </View>
-                    </View>
-                    </View>
-                </TouchableOpacity>
-                ))}
 
-                
-        </SafeAreaView>
+            <View style={styles.botcontainer}>
+                {reports.filter(rep=>rep.state===selectedCategory).map((report, index) => (
+                    <TouchableOpacity key={index} onPress={() => {props.navigation.navigate('Min1', {report:report})}}>
+                        <View style={styles.item}>
+                        <View style={styles.photocontainer}>
+                            <Image source={{ uri: JSON.parse(report.photo)[0],}} style={styles.photo} />
+                        </View>
+                        <View style={styles.textcontainer}>
+                            <View style={styles.typedate}>
+                            <Text style={styles.typetext}>{report.type}({report.state})</Text>
+                            </View>
+                            <View style={styles.detail}>
+                            <Text style={styles.detailtext}>{report.detail}</Text>
+                            </View>
+                        </View>
+                        </View>
+                    </TouchableOpacity>
+                    ))}
+
+
+
+            </View>
+        </View>
     </ScrollView>
     );
 };
@@ -138,82 +155,61 @@ export const Mainscreen = (props) => {
 const styles = StyleSheet.create({
     container: {
         flex:1, 
-        padding:10,
         width:"100%",
-        //height:"100%",
+        height:"100%",
         backgroundColor:"white",
     },
+    titlecontainer:{
+        flexDirection:"row",
+    },
+        topcontainer:{
+        width:"100%",
+        padding:10,
+        height:150,
+        justifyContent:"center",
+        //backgroundColor:"powderblue",
+        
+        borderBottomWidth:2.5,
+        borderBottomColor:conColor,
+    },
+    botcontainer:{
+        width:"100%",
+        height:"88%",
+        padding:10,
+        //backgroundColor:"powderblue",
+        alignItems:"center",
+        //justifyContent:"center",
+    },
+    container2:{
+        marginTop:40,
+      },
+      container3:{
+        justifyContent:"center",
+        alignItems:"center",
+      },
     catbutton: {
         width:"100%",
+        height:"100%",
         height:40,
-        backgroundColor:"transparent",
-        marginBottom:17,
         flexDirection:"row",
-        justifyContent:'center'
-
-    },
-    button1:{
-        width:"20%",
-        height:37,
-        //backgroundColor:"yellow",
-        borderWidth:1,
-        borderColor:"#D1D1D1",
-        //margin:3,
-        marginLeft:7,
-        marginRight:7,
-        borderRadius:30,
-        marginTop:5,
-        alignItems:"center",
-        justifyContent:"center",
-    },
-    button2:{
-        width:"23.8%",
-        height:50,
-        //backgroundColor:"yellow",
-        borderWidth:1,
-        borderColor:"gray",
-        margin:2,
-        borderRadius:10,
-        marginTop:5,
-    },
-    button3:{
-        width:"23.8%",
-        height:50,
-        //backgroundColor:"yellow",
-        borderWidth:1,
-        borderColor:"gray",
-        margin:2,
-        borderRadius:10,
-        marginTop:5,
-    },
-    button4:{
-        width:"23.8%",
-        height:50,
-       //backgroundColor:"yellow",
-        borderWidth:1,
-        borderColor:"gray",
-        margin:2,
-        borderRadius:10,
-        marginTop:5,
+        justifyContent:'center',
     },
     item: {
-      backgroundColor: 'powderblue',
-      width:"93.5%",
+      width:360,
       height: 180,
-      padding: 10,
       borderRadius: 20,
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'space-between',
-      marginBottom: 20,
-      marginLeft:12,
-      marginRight:17,
+      margin:20,
+      borderWidth:2.5,
+      borderColor:mainColor,
     },
     photocontainer: {
         width:"42%",
-        height:"95%",
+        height:"92.5%",
        // backgroundColor: "red",
-        marginLeft:4,
+        marginLeft:6,
         borderRadius:20,
     },
     photo: { //여기에 이미지가 들어감
@@ -240,9 +236,10 @@ const styles = StyleSheet.create({
     },
     title:{
         fontSize:27,
-        fontWeight:"bold",
-        marginTop:20,
-        marginBottom:30,
+        fontWeight:"900",
+        marginTop:10,
+        marginBottom:20,
+        color:mainColor
         //textAlign:"center"
     },
     typetext:{

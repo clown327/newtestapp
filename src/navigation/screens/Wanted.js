@@ -1,7 +1,9 @@
 import {SafeAreaView ,Text, View, ScrollView, StyleSheet, TouchableOpacity, Button, Image, RefreshControl} from 'react-native'
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext } from 'react';
 import { database } from '../../../firebase';
-import { ref, child, onChildAdded } from 'firebase/database';
+import { ref, child, onChildAdded} from 'firebase/database';
+import { conColor, mainColor } from '../../../color';
+import { Context } from '../../../Context';
 
 
 //수배 위치
@@ -10,8 +12,20 @@ import { ref, child, onChildAdded } from 'firebase/database';
     const bounties = []; //database 안에 있는 bounties라는 파일들 가져오기
 
     const bouref = child(ref(database), 'bounties');
+   
+    const adminName={
+        "0":"지상작전사령부",
+        "1":"수도군단",
+        "2":"51사단",
+        "3":"167여단",
+        "4":"168여단",
+        "5":"169여단"
+      }
 
 export const Wanted = (props) => {
+
+    const [adminCode, setAdminCode]=useContext(Context);
+
 
     useEffect(()=>{
         const unsubscribe=onChildAdded(bouref, (snapshot) => {
@@ -22,7 +36,6 @@ export const Wanted = (props) => {
             unsubscribe();
         })
      },[])
-    
 
     const [refreshing, setRefreshing] = React.useState(false); //리프레쉬 시켜주는거
     const onRefresh = React.useCallback(() => {
@@ -35,144 +48,112 @@ export const Wanted = (props) => {
 
 
     return(
-        <ScrollView style={styles.container} refreshControl={
+        <ScrollView style={styles.container} contentContainerStyle={styles.scrollView} refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>}>
+
             <View style={styles.container2}>
-                <View style={styles.title}>
-                    <Text style={styles.titleText}>Wanted</Text>                
-                    <TouchableOpacity style={styles.button} onPress={()=> props.navigation.navigate("Wantedbut")}>
-                        <Text>수배하기</Text>
-                    </TouchableOpacity>
-                </View>
+                <View style={styles.topcontainer}>
+                                <View style={{width:"50%" , justifyContent:"center",marginTop:10,}}>
+                                    <Text style={{fontSize:27,fontWeight:"900",color:mainColor,margin:10,}}>수배</Text>
+                                    <Text style={{fontSize:17,fontWeight:"600",color:mainColor, margin:10,marginTop:17}}>{`부대명:${adminName[adminCode]}`}</Text>
+                                </View>
+                                <View style={{width:"50%"}}>
+                                    <TouchableOpacity style={{
+                                        width:80,
+                                        height:37,
+                                        marginLeft:90,
+                                        marginTop:20,
+                                        borderRadius:15,
+                                        alignItems:"center",
+                                        justifyContent:"center",
+                                        borderWidth:1.5,
+                                        backgroundColor:conColor,
+                                        borderColor:mainColor,
+                                    }} onPress={()=> props.navigation.navigate("Wantedbut")}>
+                                        <Text style={{
+                                                fontSize:17,
+                                                fontWeight:"bold",
+                                                color:mainColor
+                                        }}>수배하기</Text>
+                                    </TouchableOpacity>
+                                </View>
 
-                {bounties.map((bountie, index) => (
-                    <TouchableOpacity key={index} onPress={() => {props.navigation.navigate('Wantedview', {bountie:bountie})}}>
-                        <View style={styles.item}>
-                        <View style={styles.textcontainer}>
-                            <View style={styles.typedate}>
-                            <Text style={styles.typetext}>{bountie.title} ({bountie.pos})</Text>
-                            </View>
-                            <View style={styles.detail}>
-                            <Text style={styles.datetext}>{bountie.date}</Text>
-                            <Text style={styles.detailtext}>{bountie.content}</Text>
-                            </View>
-                        </View>
-                        </View>
-                    </TouchableOpacity>
-                    ))}
 
-
-
-
+                    </View>
+                    <View style={styles.botcontainer}>
+                        {bounties.map((bountie, index) => (
+                                    <TouchableOpacity key={index} onPress={() => {props.navigation.navigate('Wantedview', {bountie:bountie})}}>
+                                        <View style={styles.item}>
+                                        <View style={styles.textcontainer}>
+                                            <View style={styles.typedate}>
+                                            <Text style={styles.typetext}>{bountie.title}({bountie.pos})</Text>
+                                            </View>
+                                            <View style={styles.detail}>
+                                            <Text style={styles.datetext}>{bountie.date}</Text>
+                                            <Text style={styles.detailtext}>{bountie.content}</Text>
+                                            </View>
+                                        </View>
+                                        </View>
+                                    </TouchableOpacity>
+                                    ))}
+                    </View>
             </View>
         </ScrollView>
     );
 }
-/*
 
 
-    
-*/
+
 const styles = StyleSheet.create({
-    container:{
+    container: {
+        flex:1, 
         width:"100%",
         height:"100%",
-        backgroundColor:"white"
+        backgroundColor:"white",
+    },
+        topcontainer:{
+        width:"100%",
+        padding:10,
+        height:150,
+        justifyContent:"center",
+        //backgroundColor:"powderblue",
+        borderBottomWidth:2.5,
+        borderBottomColor:conColor,
+        flexDirection:"row"
+    },
+    botcontainer:{
+        width:"100%",
+        height:"88%",
+        padding:10,
+        //backgroundColor:"powderblue",
+        alignItems:"center",
+        //justifyContent:"center",
     },
     container2:{
-        marginTop:50,
-      },    
-    button:{
-          //backgroundColor:"black",
-          width:80,
-          height:37,
-          marginLeft:115,
-          borderRadius:13,
-          alignItems:"center",
-          justifyContent:"center",
-          borderWidth:1,
-          borderColor:"#AAAAAA",
-          marginTop:15,
+        marginTop:40,
+      },
+      container3:{
+        justifyContent:"center",
+        alignItems:"center",
+      },
+    catbutton: {
+        width:"100%",
+        height:"100%",
+        height:40,
+        flexDirection:"row",
+        justifyContent:'center',
     },
-    titleText:{
-        fontSize:30,
-        fontWeight:"bold",
-        margin:10,
-        marginLeft:20,
-    },
-    wantedcontainer:{
-        backgroundColor: 'powderblue',
-        width:"93.5%",
+    item: {
+        width:350,
         height: 180,
-        padding: 10,
         borderRadius: 20,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        marginBottom: 20,
-        marginLeft:12,
-        marginRight:17,
-    },
-    imagecontainer:{
-        width:"42%",
-        height:"95%",
-       backgroundColor: "white",
-        marginLeft:4,
-        borderRadius:20,
-    },
-    textcontainer:{
-        width:"53%",
-        height:"100%",
-        backgroundColor: "blue",
-        marginLeft:5,
-        marginRight:2,
-
-    },
-    titlecontainer:{
-        width:"100%",
-        height: "20%",
-        backgroundColor:"gray",
-
-    },
-    contentcontainer:{
-        width:"100%",
-        height:"80%",
-        backgroundColor:"white",
-    },
-    content:{
-        //margin:,
-        fontSize:13,
-
-    },
-    container: {
-        flex:1, 
-        padding:10,
-        width:"100%",
-        height:"100%",
-        backgroundColor:"white",
-    },
-    catbutton: {
-        width:"100%",
-        height:40,
-        backgroundColor:"transparent",
-        marginBottom:17,
-        flexDirection:"row",
-        justifyContent:'center'
-
-    },
-    item: {
-      backgroundColor: 'powderblue',
-      width:"93.5%",
-      height: 180,
-      padding: 10,
-      borderRadius: 20,
-      flexDirection: 'row',
-      alignItems: 'center',
-      justifyContent: 'center',
-      marginBottom: 20,
-      marginLeft:12,
-      marginRight:17,
-    },
+        margin:20,
+        borderWidth:2.5,
+        borderColor:mainColor,
+      },
     photocontainer: {
         width:"42%",
         height:"95%",
@@ -186,11 +167,10 @@ const styles = StyleSheet.create({
       borderRadius: 20,
     },
     textcontainer: {
-        width:"95%",
-        height:"100%",
+        width:"90%",
+        height:"95%",
         //backgroundColor: "blue",
-        marginLeft:5,
-        marginRight:2,
+        margin:5,
     },
     typedate:{  
         width:"100%",
@@ -203,11 +183,11 @@ const styles = StyleSheet.create({
         //backgroundColor:"red",
     },
     title:{
-        flexDirection:"row",
-        fontSize:30,
-        fontWeight:"bold",
+        fontSize:27,
+        fontWeight:"900",
         marginTop:10,
-        marginBottom:30,
+        marginBottom:20,
+        color:mainColor,
         textAlign:"center"
     },
     typetext:{
@@ -216,11 +196,9 @@ const styles = StyleSheet.create({
         fontWeight:"bold",
     },
     detailtext:{
-        fontSize:15,
-        marginTop:5,
+        fontSize:13,
     },
     datetext:{
         fontSize:12,
-    }
-
-});
+    },
+  });

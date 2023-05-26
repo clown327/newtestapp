@@ -4,6 +4,8 @@ import roka from "../../../assets/rokalogo.png"
 import back from "../../../assets/backbutton.png"
 import { Directions } from "react-native-gesture-handler";
 import { Context } from "../../../Context";
+import logo from "../../../assets/logo.png"
+import { conColor, mainColor } from "../../../color";
 
 const adminName={
   "0":"지상작전사령부",
@@ -24,7 +26,7 @@ export default function Login2(props) {
           <Text style={styles.title}>신고앱입니다.</Text>
         </View>
         <View style={styles.introContainer}>
-          <Image source={roka} style={styles.image} />
+          <Image source={logo} style={styles.image} />
           <Text style={styles.introTitleText}>국민을 위해 힘쓰는</Text>
           <Text style={styles.introTitleText}>당신이 '영웅'입니다.</Text>
           <Text style={{fontSize:15,marginTop:10}}>{`관리자 계정: ${adminName[adminCode]}`}</Text>
@@ -45,7 +47,7 @@ const styles = StyleSheet.create({
   container: {
     width: "100%",
     height: "100%",
-    backgroundColor: "powderblue",
+    backgroundColor: conColor,
     paddingTop: 50,
     paddingLeft: 20,
     paddingRight: 20,
@@ -59,12 +61,12 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 35,
     fontWeight: "bold",
-    color: "white",
+    color: "black",
     //marginTop: 50,
   },
   introContainer: {
     backgroundColor: "white",
-    borderRadius: 10,
+    borderRadius: 20,
     height: 500,
     marginTop: 30,
     padding: 30,
@@ -91,8 +93,8 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   button: {
-    backgroundColor: "orange",
-    borderRadius: 10,
+    backgroundColor: "#071462",
+    borderRadius: 20,
     width: 200,
     height: 50,
     alignItems: "center",

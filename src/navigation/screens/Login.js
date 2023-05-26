@@ -4,6 +4,7 @@ import roka from "./../../../assets/rokalogo.png";
 import { showAlert } from 'react-native-customisable-alert';
 import { Context } from '../../../Context';
 //import { Shared } from './Shared';
+import logo from "../../../assets/logo.png"
 
 // ["화성시","평택시","안산시","안양시"]
 // 69 평택, 화성 68 사단, 67 안산, 군단 안양
@@ -51,7 +52,7 @@ export const Login = (props) => {
         style={styles.container}
       >
         <View style={styles.inner}>
-          <Image source = {roka} style={styles.image}/>
+          <Image source = {logo} style={styles.image}/>
           <Text style={styles.title}>관리자 로그인</Text>
           <TextInput
             style={styles.input}

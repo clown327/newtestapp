@@ -1,5 +1,6 @@
 //공지를 보여주는 화면입니다.
 import {Text, View, SafeAreaView, StyleSheet, ScrollView} from 'react-native'
+import { mainColor } from '../../color';
 
 export const Notiview = (props) => {
     
@@ -50,6 +51,7 @@ const styles = StyleSheet.create({
         fontSize:27,
         fontWeight:"bold",
         margin:10,
+        color:mainColor,
     },
     imagecontainer:{
 
@@ -80,15 +82,14 @@ const styles = StyleSheet.create({
         
     },
     titletext2:{
-        fontSize:27,
-        
+        fontSize:24,
         fontWeight:"bold",
     },
     contentcontainer:{
         width:"91%",
         height:"100%",
         flex:1,
-        backgroundColor:"#D9D9D9",
+        backgroundColor:"#E9E4E4",
         borderRadius:10,
         marginLeft:17,
         marginTop:30,
