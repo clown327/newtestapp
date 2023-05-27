@@ -86,11 +86,11 @@ export const Wanted = (props) => {
                                         <View style={styles.item}>
                                         <View style={styles.textcontainer}>
                                             <View style={styles.typedate}>
-                                            <Text style={styles.typetext}>{bountie.title}({bountie.pos})</Text>
+                                            <Text style={styles.typetext}> {bountie.title}({bountie.pos})</Text>
                                             </View>
                                             <View style={styles.detail}>
-                                            <Text style={styles.datetext}>{bountie.date}</Text>
-                                            <Text style={styles.detailtext}>{bountie.content}</Text>
+                                            <Text style={styles.datetext}> {bountie.date}</Text>
+                                            <Text style={styles.detailtext}> {bountie.content}</Text>
                                             </View>
                                         </View>
                                         </View>
@@ -167,9 +167,11 @@ const styles = StyleSheet.create({
       borderRadius: 20,
     },
     textcontainer: {
-        width:"90%",
-        height:"95%",
-        //backgroundColor: "blue",
+        width:"95%",
+        height:"90%",
+        marginLeft:8,
+        borderRadius:15,
+        backgroundColor: conColor,
         margin:5,
     },
     typedate:{  

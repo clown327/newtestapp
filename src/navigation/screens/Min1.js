@@ -272,7 +272,7 @@ export const Min1 = (props) => {
           {isCompleted && (
             <Comment2 report={report} isComplete={true}/>
           )}
-          {isCompleted && (
+          {isCompleted && ( //처리완료된 민원을 다시 미접수로 만들어주는 부분 
             <TouchableOpacity
               style={{...styles.combutton}}
               disabled={false}
@@ -307,8 +307,6 @@ const styles = StyleSheet.create({
   pnumtext:{
     color:"gray",
   },
-
-
   title: {
     width: "100%",
     height: 60,

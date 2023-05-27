@@ -6,7 +6,7 @@ import { database } from '../../../firebase';
 import { push, ref, child, onChildAdded, onChildChanged } from 'firebase/database';
 import { Context } from '../../../Context';
 import { mainColor, conColor } from '../../../color';
-import logo from "../../../assets/logo.png";
+import logo from "../../../assets/logo.jpg";
 
     
     const reports = [];

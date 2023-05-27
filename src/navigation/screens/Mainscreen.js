@@ -5,7 +5,7 @@ import { database } from '../../../firebase';
 import { ref, child, onChildAdded, onChildChanged } from 'firebase/database';
 import { Animated } from 'react-native'
 import { conColor, mainColor } from '../../../color';
-import logo from "../../../assets/logo.png";
+import logo from "../../../assets/logo.jpg";
 
 
 
@@ -219,8 +219,9 @@ const styles = StyleSheet.create({
     },
     textcontainer: {
         width:"53%",
-        height:"100%",
-        //backgroundColor: "blue",
+        height:"90%",
+        //backgroundColor: conColor,
+        borderRadius:20,
         marginLeft:5,
         marginRight:2,
     },
@@ -243,7 +244,7 @@ const styles = StyleSheet.create({
         //textAlign:"center"
     },
     typetext:{
-        fontSize:15,
+        fontSize:14,
         marginTop:2,
         fontWeight:"bold",
     },

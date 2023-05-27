@@ -4,7 +4,7 @@ import roka from "./../../../assets/rokalogo.png";
 import { showAlert } from 'react-native-customisable-alert';
 import { Context } from '../../../Context';
 //import { Shared } from './Shared';
-import logo from "../../../assets/logo.png"
+import logo from "../../../assets/logo.jpg"
 
 // ["화성시","평택시","안산시","안양시"]
 // 69 평택, 화성 68 사단, 67 안산, 군단 안양

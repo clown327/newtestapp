@@ -4,7 +4,7 @@ import roka from "../../../assets/rokalogo.png"
 import back from "../../../assets/backbutton.png"
 import { Directions } from "react-native-gesture-handler";
 import { Context } from "../../../Context";
-import logo from "../../../assets/logo.png"
+import logo from "../../../assets/logo.jpg"
 import { conColor, mainColor } from "../../../color";
 
 const adminName={
