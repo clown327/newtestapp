@@ -98,7 +98,7 @@ export const Min1 = (props) => {
           </View>
             <View style={{height:365,width:"95%",marginLeft:10,alignItems:"center", borderBottomColor:mainColor, borderBottomWidth:1.5,}}>
               <View style={styles.photocontainer}>
-              {report.photo ?(
+              {images.length>0 ?(
                 <SliderBox images={images} style={styles.photo} />):(
                   <SliderBox images={roka} style={styles.photo} />
                 )
@@ -280,7 +280,7 @@ export const Min1 = (props) => {
           )} */}
           {isProcessing && (
             <TouchableOpacity
-              style={styles.combutton}
+              style={{...styles.combutton,alignSelf:"center"}}
               onPress={() => {
                 handleReceive1(report, "처리완료");
                 props.navigation.navigate("Mainscreen");
@@ -298,7 +298,7 @@ export const Min1 = (props) => {
           {isCompleted && ( //처리완료된 민원을 다시 미접수로 만들어주는 부분 
             <TouchableOpacity
               style={{...styles.combutton2}}
-              disabled={disabled}
+              disabled={true}
             >
               <Text style={styles.comtext}>처리 완료되었습니다</Text>
             </TouchableOpacity>

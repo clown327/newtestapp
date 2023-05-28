@@ -1,5 +1,5 @@
 //민원을 관리할 수 있는 화면 입니다 stack
-import {Text, View, SafeAreaView, StyleSheet, ScrollView } from 'react-native'
+import {Text, View, StyleSheet, ScrollView } from 'react-native'
 import { mainColor } from '../../color';
 
 export const Wantedview = (props) => {

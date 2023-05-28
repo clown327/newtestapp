@@ -1,16 +1,8 @@
 import React, { useState } from 'react';
-import { SafeAreaView ,Text, View, ScrollView, StyleSheet, TouchableOpacity, 
-        KeyboardAvoidingView, Platform, Button, Image, RefreshControl, TextInput } from 'react-native';
-import { database, storage } from "../../firebase";
+import { Text, View, ScrollView, StyleSheet, TouchableOpacity,  TextInput } from 'react-native';
+import { database } from "../../firebase";
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { ref, push, set, getDatabase, child, unshift } from 'firebase/database';
-import * as ImagePicker from "expo-image-picker";
-import {
-    ref as ref_storage,
-    uploadBytes,
-    getDownloadURL,
-    
-  } from "firebase/storage";
+import { ref, push, set, child } from 'firebase/database';
 
 
 

@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import { SafeAreaView ,Text, View, ScrollView, StyleSheet, TouchableOpacity, 
-        KeyboardAvoidingView, Platform, Button, Image, RefreshControl, TextInput } from 'react-native';
+import { SafeAreaView ,Text, View, ScrollView, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
 import { database } from "../../firebase";
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { ref, set, update, child } from 'firebase/database';
-import { showAlert,closeAlert } from 'react-native-customisable-alert';
+import { ref,update, child } from 'firebase/database';
+import { showAlert} from 'react-native-customisable-alert';
 
 export const Comment2 = (props) => {
 

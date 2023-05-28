@@ -2,11 +2,10 @@
 //이 페이지는 공지사항을 보여주는 페이지 입니다.
 
 
-import {TextInput, SafeAreaView ,Text, View, ScrollView, StyleSheet, TouchableOpacity, Button, Image, RefreshControl} from 'react-native'
+import {Text, View, ScrollView, StyleSheet, TouchableOpacity, RefreshControl} from 'react-native'
 import React, { useEffect, useState} from 'react';
 import { database } from '../../../firebase';
 import { ref, child, onChildAdded } from 'firebase/database';
-import Icon from 'react-native-vector-icons/MaterialIcons';
 import { conColor, mainColor } from '../../../color';
 
 

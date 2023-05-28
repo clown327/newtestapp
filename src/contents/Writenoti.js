@@ -1,16 +1,10 @@
 import React, { useState } from 'react';
 import {
-  SafeAreaView,
   Text,
   View,
   ScrollView,
   StyleSheet,
   TouchableOpacity,
-  KeyboardAvoidingView,
-  Platform,
-  Button,
-  Image,
-  RefreshControl,
   TextInput,
 } from 'react-native';
 import { database } from './../../firebase';

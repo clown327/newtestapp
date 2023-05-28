@@ -1,5 +1,5 @@
 //민원을 보여주는 페이지 입니다.
-import {ScrollView, Image, TouchableOpacity, Text, View, StyleSheet, Button, SafeAreaView, ScrollViewComponent} from 'react-native';
+import {ScrollView, Image, TouchableOpacity, Text, View, StyleSheet, SafeAreaView} from 'react-native';
 //import person from "../../../assets/person.png";
 
 export const  Settings = (props) => {

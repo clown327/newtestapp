@@ -1,5 +1,5 @@
-import {SafeAreaView ,Text, View, ScrollView, StyleSheet, TouchableOpacity, Button, Image, RefreshControl} from 'react-native'
-import React, {useState, useEffect, useContext } from 'react';
+import {Text, View, ScrollView, StyleSheet, TouchableOpacity, RefreshControl} from 'react-native'
+import React, { useEffect, useContext } from 'react';
 import { database } from '../../../firebase';
 import { ref, child, onChildAdded} from 'firebase/database';
 import { conColor, mainColor } from '../../../color';

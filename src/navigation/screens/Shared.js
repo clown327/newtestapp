@@ -1,9 +1,9 @@
 //민원을 관리할 수 있는 화면 입니다 stack
 import {Text, View, ScrollView, StyleSheet, 
-        TouchableOpacity, Button, Image, RefreshControl, } from 'react-native'
-import React, {useContext, useState,useEffect} from 'react';
+        TouchableOpacity, Image, RefreshControl, } from 'react-native'
+import React, {useContext, useEffect} from 'react';
 import { database } from '../../../firebase';
-import { push, ref, child, onChildAdded, onChildChanged } from 'firebase/database';
+import { ref, child, onChildAdded } from 'firebase/database';
 import { Context } from '../../../Context';
 import { mainColor, conColor } from '../../../color';
 import logo from "../../../assets/logo.jpg";
@@ -58,7 +58,7 @@ export const Shared = (props) => {
                         <View style={styles.topcontainer}>
                             <View style={{flexDirection:"row",}}>
                                  <Text style={{fontSize:27,fontWeight:"900",color:mainColor,margin:10,}}>공유받은 신고</Text>
-                                 <Image source={logo} style={{width:60,height:60, marginLeft:100}}/>
+                                 <Image source={logo} style={{width:60,height:60, marginLeft:100,marginBottom:5,}}/>
                             </View>
                            
                             <Text style={{fontSize:17,fontWeight:"600",color:mainColor, margin:10,}}>{`부대명:${adminName[adminCode]}`}</Text>
@@ -74,7 +74,7 @@ export const Shared = (props) => {
                             </View>
                             <View style={styles.textcontainer}>
                                 <View style={styles.typedate}>
-                                <Text style={styles.typetext}>{report.type}({report.state})</Text>
+                                <Text style={styles.typetext}>{report.type}</Text>
                                 </View>
                                 <View style={styles.detail}>
                                 <Text style={styles.detailstate}>({report.state})</Text>

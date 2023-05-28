@@ -1,13 +1,13 @@
 //민원을 관리할 수 있는 화면 입니다 stack
 import {Text, View, SafeAreaView, StyleSheet, ScrollView} from 'react-native'
 import { SliderBox } from "react-native-image-slider-box";
-import { mainColor } from '../../color';
+import { conColor, mainColor } from '../../color';
 
 export const Sharescreen = (props) => {
 
     const report = props.route.params.report;
     const images = JSON.parse(report.photo).slice(0, 4).map((uri) => ({ uri }));
-    
+    const Pimages = JSON.parse(report.processImage).slice(0, 4).map((uri) => ({ uri }));
     return( 
     <ScrollView style={styles.container}>
         <View style={styles.container2}>
@@ -28,6 +28,21 @@ export const Sharescreen = (props) => {
                       <Text style={styles.pnumtext}>{report.pnumber}</Text>
                       <Text style={styles.detailtext}>{report.detail}</Text>
                   </View>
+                  <View style={styles.process}>
+                    <Text style={{fontSize:25, fontWeight:"600" ,margin:10,}}>조치사항</Text>
+                    <View style={styles.Pphotocontainer}>
+                      <SliderBox images={Pimages} style={styles.photo} />
+                    </View>
+                    <View style={styles.Pdetail}>
+                      <Text style={styles.Pdetailtext}>{report.processText}</Text>
+                  </View>
+                  </View>
+
+                  <View style={styles.Uprocess}>
+                    <Text style={{fontSize:25, fontWeight:"600" ,margin:10,}}>신고자 알림</Text>
+                    <Text style={styles.Udetailtext}>{report.userReply}</Text>
+
+                    </View>
               </View>
         </View>
     </ScrollView>
@@ -81,22 +96,87 @@ const styles = StyleSheet.create({
       alignSelf:"center",
       //backgroundColor:"black",
     },
+    Pphotocontainer: {
+      width: 320,
+      height: 320,
+      //marginTop: -10,
+      margin: 10,
+      marginTop:20,
+      marginRight:20,
+      borderRadius: 20,
+      //backgroundColor: "transparent",
+      flex: 1,
+      alignSelf:"center",
+      //backgroundColor:"black",
+    },
     photo: {
       width: 330,
       height: 330,
-      borderRadius: 10,
+      borderRadius: 30,
     },
     detail: {
       width: "84%",
-     // backgroundColor:"yellow",
+      //backgroundColor:"yellow",
+      height:"100%",
       marginLeft: 30,
+      flex:1,
+      marginBottom: 14,
+      marginTop:20,
+      
+    },
+    Pdetail: {
+      width: "84%",
+      //backgroundColor:conColor,
+      height:"100%",
+      marginLeft: 30,
+      flex:1,
+      marginBottom: 14,
+      marginTop:20,
+    },
+    Udetail: {
+      width: "84%",
+      //backgroundColor:"yellow",
+      height:"100%",
+      marginLeft: 30,
+      flex:1,
+      marginBottom: 14,
+      marginTop:20,
+    },
+    process:{
+      width: "90%",
+      backgroundColor:conColor,
+      borderRadius:20,
+      height:"100%",
+      marginLeft: 20,
       flex:1,
       marginBottom: 14,
       marginTop:10,
     },
+    Uprocess:{
+      width: "90%",
+      backgroundColor:conColor,
+      borderRadius:20,
+      height:"100%",
+      marginLeft: 20,
+      flex:1,
+      marginBottom: 14,
+      marginTop:10,
+    },
+
+    Udetailtext: {
+      fontSize: 17,
+      margin:10,
+
+      //backgroundColor:"black",
+    },
+    Pdetailtext: {
+      fontSize: 17,
+
+      //backgroundColor:"black",
+    },
     detailtext: {
-      fontSize: 15,
-      marginTop: 7,
+      fontSize: 17,
+      margin:10,
 
       //backgroundColor:"black",
     },

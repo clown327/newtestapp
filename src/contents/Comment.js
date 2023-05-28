@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { SafeAreaView ,Text, View, ScrollView, StyleSheet, TouchableOpacity, 
-        KeyboardAvoidingView, Platform, Button, Image, RefreshControl, TextInput } from 'react-native';
+import { SafeAreaView ,Text, View, ScrollView, StyleSheet, TouchableOpacity, Button, Image, TextInput } from 'react-native';
 import { database,storage } from "../../firebase";
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { ref, set, update, child } from 'firebase/database';
+import { ref, update, child } from 'firebase/database';
 import * as ImagePicker from "expo-image-picker";
-import { onValue, push, remove } from "firebase/database";
+import {  push } from "firebase/database";
 import { showAlert,closeAlert } from 'react-native-customisable-alert';
 import {
     ref as ref_storage,
