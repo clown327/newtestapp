@@ -179,7 +179,7 @@ const styles = StyleSheet.create({
         backgroundColor:"white"
     },
     send:{
-        marginLeft: 110,
+        marginLeft: 220,
     },
     container2:{
         marginTop:50,

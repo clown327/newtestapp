@@ -24,6 +24,7 @@ import { Notiview } from "../contents/Notiview";
 import { uesRef } from 'react';
 import { Wantedbut } from "../contents/Wantedbut";
 import { Wantedview } from "../contents/Wantedview";
+import { Daegong } from "../contents/Daegong";
 
 
 import Icon from 'react-native-vector-icons/MaterialIcons';//아이콘
@@ -137,6 +138,7 @@ export const CNavigation = () => {
         <Stack.Screen name="Wantedbut" component={Wantedbut} options={{gestureEnabled: true}} />
         <Stack.Screen name="Wantedview" component={Wantedview} options={{gestureEnabled: true}} />
         <Stack.Screen name="Sharescreen" component={Sharescreen} options={{gestureEnabled: true}} />
+        <Stack.Screen name="Daegong" component={Daegong} options={{gestureEnabled: true}} />
 
       </Stack.Navigator>
     </NavigationContainer>

@@ -20,6 +20,9 @@ export const Wantedview = (props) => {
               <Text style={styles.titletext2}>{bountie.title}</Text>
            </View>
            <View style={styles.contentcontainer}>
+              <Text style={styles.content2}>{bountie.pos}</Text>
+           </View>
+           <View style={styles.contentcontainer}>
               <Text style={styles.content}>{bountie.content}</Text>
            </View>
        </View>
@@ -98,5 +101,13 @@ const styles = StyleSheet.create({
       marginLeft:10,
       marginRight:5,
       marginBottom:5,
-  }
+  },
+  content2:{
+    fontWeight:"bold",
+    fontSize:17,
+    marginTop:3,
+    marginLeft:10,
+    marginRight:5,
+    marginBottom:5,
+}
 });

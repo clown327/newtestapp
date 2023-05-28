@@ -77,6 +77,7 @@ export const Shared = (props) => {
                                 <Text style={styles.typetext}>{report.type}({report.state})</Text>
                                 </View>
                                 <View style={styles.detail}>
+                                <Text style={styles.detailstate}>({report.state})</Text>
                                 <Text style={styles.detailtext}>{report.detail}</Text>
                                 </View>
                             </View>
@@ -200,4 +201,9 @@ const styles = StyleSheet.create({
       detailtext:{
           fontSize:13,
       },
+      detailstate:{
+        fontSize:14,
+        fontWeight:"600",
+        marginBottom:5,
+    },
 });

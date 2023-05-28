@@ -6,6 +6,7 @@ import { ref, child, onChildAdded, onChildChanged } from 'firebase/database';
 import { Animated } from 'react-native'
 import { conColor, mainColor } from '../../../color';
 import logo from "../../../assets/logo.jpg";
+import roka from "../../../assets/rokalogo.png";
 
 
 
@@ -102,7 +103,7 @@ export const Mainscreen = (props) => {
             <View style={styles.topcontainer}>
                 <View style={styles.titlecontainer}>
                     <Text style={{fontSize:27,fontWeight:"900",color:mainColor,margin:10, marginLeft:15,}}>신고 목록</Text>
-                    <Image source={logo} style={{width:60, height:55, marginLeft:150,}}/>
+                    <Image source={logo} style={{width:60, height:60, marginLeft:152,}}/>
                 </View>    
                  <View style={{}}>
                     <View style={styles.catbutton}>
@@ -130,12 +131,17 @@ export const Mainscreen = (props) => {
                     <TouchableOpacity key={index} onPress={() => {props.navigation.navigate('Min1', {report:report})}}>
                         <View style={styles.item}>
                         <View style={styles.photocontainer}>
-                            <Image source={{ uri: JSON.parse(report.photo)[0],}} style={styles.photo} />
+                            {report.photo ? (
+                                <Image source={{ uri: JSON.parse(report.photo)[0],}} style={styles.photo} />
+                                ) : (
+                                <Image source={roka} style={styles.photo} />
+                                )}
                         </View>
                         <View style={styles.textcontainer}>
                             <View style={styles.typedate}>
-                            <Text style={styles.typetext}>{report.type}({report.state})</Text>
+                            <Text style={styles.typetext}>{report.type}</Text>
                             </View>
+                            <Text style={styles.detailstate}>({report.state})</Text>
                             <View style={styles.detail}>
                             <Text style={styles.detailtext}>{report.detail}</Text>
                             </View>
@@ -232,7 +238,7 @@ const styles = StyleSheet.create({
     },
     detail:{
         width:"100%",
-        height:"80%",
+        height:105,
         //backgroundColor:"red",
     },
     title:{
@@ -250,6 +256,11 @@ const styles = StyleSheet.create({
     },
     detailtext:{
         fontSize:13,
+    },
+    detailstate:{
+        fontSize:14,
+        fontWeight:"600",
+        marginBottom:5,
     },
   });
   

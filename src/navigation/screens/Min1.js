@@ -20,6 +20,9 @@ import { DropDownCard } from "../../../CustomButtons/DropDownCard";
 import { Comment } from "../../contents/Comment";
 import { Comment2 } from "../../contents/Comment2";
 import { MyCheckbox } from "../../../CustomButtons/MyCheckBox";
+import { conColor, mainColor } from "../../../color";
+import { disabled } from "deprecated-react-native-prop-types/DeprecatedTextPropTypes";
+import roka from "../../../assets/rokalogo.png";
 
 
 export const Min1 = (props) => {
@@ -89,18 +92,27 @@ export const Min1 = (props) => {
         <View>
           <View style={styles.title}>
             <Text style={styles.titletext}>
-              유형 : {report.type} ({report.state})
+              {report.type} ({report.state})
             </Text>
             <Text></Text>
           </View>
+            <View style={{height:365,width:"95%",marginLeft:10,alignItems:"center", borderBottomColor:mainColor, borderBottomWidth:1.5,}}>
+              <View style={styles.photocontainer}>
+              {report.photo ?(
+                <SliderBox images={images} style={styles.photo} />):(
+                  <SliderBox images={roka} style={styles.photo} />
+                )
+              }
+              </View>
+            </View>
 
-          <View style={styles.photocontainer}>
-            <SliderBox images={images} style={styles.photo} />
-          </View>
+
 
           <View style={styles.detail}>
-            <Text style={styles.positext}>{report.position}</Text>
-            <Text style={styles.pnumtext}>{report.pnumber}</Text>
+              <Text style={styles.positext}>{report.position}</Text>
+              <Text style={styles.pnumtext}>{report.pnumber}</Text>
+  
+
             <Text style={styles.detailtext}>{report.detail}</Text>
             <View style={{ backgroundColor: "powderblue", padding:10, borderRadius:10 }}>
               <Text style={styles.titletext}>공유 부대 목록</Text>
@@ -163,14 +175,24 @@ export const Min1 = (props) => {
             </View>
             </View>
           </View>
-          <TouchableOpacity
-              style={{...styles.combutton,width:"50%", alignSelf:"center"}}
+          <View style={{flexDirection:"row",}}>
+                     <TouchableOpacity
+              style={{...styles.combutton,width:"40%", alignSelf:"center"}}
               onPress={() => {
                 Linking.openURL(`tel:${report.pnumber}`)
               }}
             >
               <Text style={{...styles.comtext, fontSize:15}}>신고자에게 전화하기</Text>
           </TouchableOpacity>
+          <TouchableOpacity
+              style={{...styles.combutton,width:"40%", alignSelf:"center"}}
+              onPress={() => props.navigation.navigate("Daegong")}
+            >
+              <Text style={{...styles.comtext, fontSize:15}}>대공혐의점</Text>
+          </TouchableOpacity>
+          </View>
+ 
+
           {isReceived && (
             <TouchableOpacity
               style={styles.combutton}
@@ -193,9 +215,10 @@ export const Min1 = (props) => {
                       <View style={styles.comcontainer2}>
                         <Text style={styles.comtext2}>접수되었습니다!</Text>
                       </View>
-                      <View style={styles.photocontainer2}>
-                        <Icon name="done" size={170} color="#222A5A" />
+                          <View style={styles.photocontainer2}>
+                              <Icon name="done" size={170} color="#222A5A" />
                       </View>
+                     
                       <View style={styles.buttoncontainer2}>
                         <TouchableOpacity
                           style={styles.button2}
@@ -274,13 +297,10 @@ export const Min1 = (props) => {
           )}
           {isCompleted && ( //처리완료된 민원을 다시 미접수로 만들어주는 부분 
             <TouchableOpacity
-              style={{...styles.combutton}}
-              disabled={false}
-              onPress={() => {
-                handleReceive3(report, "미접수");
-              }}
+              style={{...styles.combutton2}}
+              disabled={disabled}
             >
-              <Text style={styles.comtext}>처리완료!</Text>
+              <Text style={styles.comtext}>처리 완료되었습니다</Text>
             </TouchableOpacity>
           )}
         </View>
@@ -308,11 +328,16 @@ const styles = StyleSheet.create({
     color:"gray",
   },
   title: {
-    width: "100%",
+    width: "95%",
     height: 60,
-    marginTop: 5,
+    marginTop: 15,
     marginLeft: 10,
     //backgroundColor:"red",
+    justifyContent:"center",
+    alignItems:"center",
+    flex:1,
+    borderBottomWidth:1.5,
+    borderBottomColor:mainColor,
   },
   titletext: {
     fontSize: 25,
@@ -321,10 +346,11 @@ const styles = StyleSheet.create({
   photocontainer: {
     width: 320,
     height: 320,
-    marginTop: -10,
+    //marginTop: -10,
     margin: 10,
+    marginTop:20,
     borderRadius: 10,
-    backgroundColor: "transparent",
+    //backgroundColor: "transparent",
     flex: 1,
     alignSelf:"center",
     //backgroundColor:"black",
@@ -341,13 +367,25 @@ const styles = StyleSheet.create({
     marginBottom: 14,
   },
   detailtext: {
-    fontSize: 18,
-    marginTop: 4,
+    fontSize: 17,
+    marginTop: 15,
+    marginBottom:15,
   },
   combutton: {
-    width: "87%",
+    width: "35%",
     height: 65,
     backgroundColor: "#1E90FF",
+    marginTop: 10,
+    marginLeft: 26,
+  
+    borderRadius: 10,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  combutton2: {
+    width: "87%",
+    height: 65,
+    backgroundColor: "#BAD5FD",
     marginTop: 10,
     marginLeft: 26,
     marginRight: 25,
@@ -356,7 +394,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   comtext: {
-    fontSize: 25,
+    fontSize: 20,
     fontWeight: "bold",
     color: "white",
   },
@@ -371,7 +409,7 @@ const styles = StyleSheet.create({
     //flexDirection:"column"
   },
   comtext2:{
-    fontSize:30,
+    fontSize:20,
     fontWeight:"bold",
   },
   photocontainer2:{

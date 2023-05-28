@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "rokaAppbata",
-    "icon": "./assets/logo.jpg",
+    "icon": "./assets/rokalogo.png",
     "slug": "rokaAppbata",
     "version": "1.0.0",
     "orientation": "portrait",

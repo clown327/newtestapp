@@ -1,6 +1,7 @@
 //민원을 관리할 수 있는 화면 입니다 stack
 import {Text, View, SafeAreaView, StyleSheet, ScrollView} from 'react-native'
 import { SliderBox } from "react-native-image-slider-box";
+import { mainColor } from '../../color';
 
 export const Sharescreen = (props) => {
 
@@ -17,9 +18,11 @@ export const Sharescreen = (props) => {
                   </Text>
                   <Text></Text>
               </View>
-                <View style={styles.photocontainer}>
-                  <SliderBox images={images} style={styles.photo} />
-                </View>
+              <View style={{height:365,width:"95%",marginLeft:8,alignItems:"center", borderBottomColor:mainColor, borderBottomWidth:1.5,}}>
+                  <View style={styles.photocontainer}>
+                    <SliderBox images={images} style={styles.photo} />
+                  </View>
+                  </View>
                   <View style={styles.detail}>
                       <Text style={styles.positext}>{report.position}</Text>
                       <Text style={styles.pnumtext}>{report.pnumber}</Text>
@@ -51,23 +54,32 @@ const styles = StyleSheet.create({
         color:"gray",
       },
     title: {
-      width: "100%",
+      width: "95%",
       height: 60,
-      marginTop: 5,
-      marginLeft: 27,
+      marginTop: 15,
+      marginLeft: 10,
       //backgroundColor:"red",
+      justifyContent:"center",
+      alignItems:"center",
+      flex:1,
+      borderBottomWidth:1.5,
+      borderBottomColor:mainColor,
     },
     titletext: {
       fontSize: 25,
       fontWeight: "bold",
     },
     photocontainer: {
-      width: 330,
-      height: 330,
-      marginLeft:30,
+      width: 320,
+      height: 320,
+      //marginTop: -10,
+      margin: 10,
+      marginTop:20,
       borderRadius: 10,
-      backgroundColor: "white",
+      //backgroundColor: "transparent",
       flex: 1,
+      alignSelf:"center",
+      //backgroundColor:"black",
     },
     photo: {
       width: 330,
@@ -80,9 +92,10 @@ const styles = StyleSheet.create({
       marginLeft: 30,
       flex:1,
       marginBottom: 14,
+      marginTop:10,
     },
     detailtext: {
-      fontSize: 17,
+      fontSize: 15,
       marginTop: 7,
 
       //backgroundColor:"black",
