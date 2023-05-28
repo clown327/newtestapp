@@ -131,7 +131,7 @@ export const Mainscreen = (props) => {
                     <TouchableOpacity key={index} onPress={() => {props.navigation.navigate('Min1', {report:report})}}>
                         <View style={styles.item}>
                         <View style={styles.photocontainer}>
-                            {report.photo ? (
+                            {JSON.parse(report.photo).length>0 ? (
                                 <Image source={{ uri: JSON.parse(report.photo)[0],}} style={styles.photo} />
                                 ) : (
                                 <Image source={roka} style={styles.photo} />

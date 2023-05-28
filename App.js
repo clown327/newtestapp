@@ -4,7 +4,7 @@ import {CNavigation} from "./src/navigation/CNavigation";
 import {View, Text} from 'react-native';
 import CustomisableAlert from "react-native-customisable-alert";
 import { Context } from "./Context";
-
+import 'expo-dev-client';
 
 export default function App()
 {
