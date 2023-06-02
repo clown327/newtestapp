@@ -1,16 +1,8 @@
 //접수된 민원을 보여주는 곳입니다.
 //민원의 상태 변경이 안됨;;
 import React from "react";
-import {
-  ScrollView,
-  Text,
-  View,
-  StyleSheet,
-  SafeAreaView,
-  TouchableOpacity,
-  useWindowDimensions,
-  Linking
-} from "react-native";
+import {ScrollView, Text, View, StyleSheet, SafeAreaView, TouchableOpacity,
+        useWindowDimensions, Linking} from "react-native";
 import { SliderBox } from "react-native-image-slider-box";
 import { database } from "../../../firebase";
 import { ref, update, child } from "firebase/database";
@@ -23,6 +15,8 @@ import { MyCheckbox } from "../../../CustomButtons/MyCheckBox";
 import { conColor, mainColor } from "../../../color";
 import { disabled } from "deprecated-react-native-prop-types/DeprecatedTextPropTypes";
 import roka from "../../../assets/rokalogo.png";
+import { useContext } from "react";
+import { Context } from "../../../Context";
 
 
 export const Min1 = (props) => {
@@ -30,9 +24,12 @@ export const Min1 = (props) => {
   const initSharedList=report.shareList;
   const {width,height}=useWindowDimensions()
   // console.log(report) //mainscreen에서 주는 reports의 배열 값
+  const [userName,setUserName]=useContext(Context);
+
   const images = JSON.parse(report.photo)
     .slice(0, 4)
     .map((uri) => ({ uri }));
+
 
   const isCompleted = report.state === "처리완료";
   const isProcessing = report.state === "처리중";
@@ -98,7 +95,7 @@ export const Min1 = (props) => {
           </View>
             <View style={{height:365,width:"95%",marginLeft:10,alignItems:"center", borderBottomColor:mainColor, borderBottomWidth:1.5,}}>
               <View style={styles.photocontainer}>
-              {images.length>0 ?(
+              {images.length > 0 ? (
                 <SliderBox images={images} style={styles.photo} />):(
                   <SliderBox images={roka} style={styles.photo} />
                 )
@@ -119,7 +116,7 @@ export const Min1 = (props) => {
 
               <View style={{ flexDirection: "row", alignItems: "center",justifyContent:"space-around", marginBottom:10}}>
                 <MyCheckbox
-                  disabled={false}
+                  disabled={userName==="0"}
                   checkFunction={(checkState) => {
                     updateSharedList("0",checkState);
                     console.log(checkState);
@@ -128,7 +125,7 @@ export const Min1 = (props) => {
                 />
                 <Text>지상작전사령부</Text>
                 <MyCheckbox
-                disabled={false}
+                disabled={userName==="1"}
                   checkFunction={(checkState) => {
                     updateSharedList("1",checkState)
                   }}
@@ -137,7 +134,7 @@ export const Min1 = (props) => {
                 <Text>수도군단</Text>
                 <MyCheckbox
                
-                disabled={false}
+                disabled={userName==="2"}
                   checkFunction={(checkState) => {
                     updateSharedList("2",checkState)
                   }}
@@ -148,7 +145,7 @@ export const Min1 = (props) => {
             
             <View style={{ flexDirection: "row",  alignItems: "center",justifyContent:"space-around" }}>
               <MyCheckbox
-              disabled={true}
+              disabled={userName==="3"}
                 checkFunction={(checkState) => {
                     updateSharedList("3",checkState)
                 }}
@@ -156,7 +153,7 @@ export const Min1 = (props) => {
               />
               <Text>167 여단</Text>
               <MyCheckbox
-              disabled={false}
+              disabled={userName==="4"}
               
                 checkFunction={(checkState) => {
                     updateSharedList("4",checkState)
@@ -165,13 +162,13 @@ export const Min1 = (props) => {
               />
               <Text>168 여단</Text>
               <MyCheckbox
-               disabled={false}
+               disabled={userName==="5"}
                 checkFunction={(checkState) => {
                     updateSharedList("5",checkState)
                 }}
                 initCheck={initSharedList.includes("5")}
               />
-              <Text>169 여단</Text>
+              <Text>68-2여단</Text>
             </View>
             </View>
           </View>

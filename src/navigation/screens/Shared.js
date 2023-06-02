@@ -19,7 +19,7 @@ import logo from "../../../assets/logo.jpg";
         "2":"51사단",
         "3":"167여단",
         "4":"168여단",
-        "5":"169여단"
+        "5":"68-2대대"
       }
 
 export const Shared = (props) => {
@@ -74,7 +74,7 @@ export const Shared = (props) => {
                             </View>
                             <View style={styles.textcontainer}>
                                 <View style={styles.typedate}>
-                                <Text style={styles.typetext}>{report.type}</Text>
+                                <Text style={styles.typetext}>{report.type}({report.state})</Text>
                                 </View>
                                 <View style={styles.detail}>
                                 <Text style={styles.detailstate}>({report.state})</Text>

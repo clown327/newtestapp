@@ -14,26 +14,22 @@ export const Login = (props) => {
   const [context,setContext]=useContext(Context);
   const handleLogin = (username) => {
     // Handle login logic here
-    const userNum=parseInt(username);
-    if(userNum){
-      if(userNum>5||userNum<0){
-        showAlert({
-          alertType: "custom",
-          dismissable: true,
-          customAlert: (
-            <View style={styles.alertText}>
-              <Text>잘못된 관리자 코드입니다!</Text>
-            </View>
-          ),
-        });
-        return false;
-    } else{
+    const userNum = parseInt(username);
 
-      return true;
+    if (userNum > 5 || userNum < 0) {
+      showAlert({
+        alertType: "custom",
+        dismissable: true,
+        customAlert: (
+          <View style={styles.alertText}>
+            <Text>잘못된 관리자 코드입니다!</Text>
+          </View>
+        ),
+      });
+      return false;
     }
 
-    }
-    return false;
+    return true;
   };
 
   const handlePress = () => {

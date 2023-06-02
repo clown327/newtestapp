@@ -7,6 +7,8 @@ import { Animated } from 'react-native'
 import { conColor, mainColor } from '../../../color';
 import logo from "../../../assets/logo.jpg";
 import roka from "../../../assets/rokalogo.png";
+import { Context } from '../../../Context';
+
 
 
 
@@ -15,6 +17,9 @@ import roka from "../../../assets/rokalogo.png";
 const reports = []; //database 안에 있는 reports라는 파일들 가져오기
 
 const repref = child(ref(database), 'reports');
+// const hwa = hwaCode("2", "4", "5");
+// hwaCode = ("화성");
+
 
 export const Mainscreen = (props) => {
     
@@ -34,6 +39,7 @@ export const Mainscreen = (props) => {
         )
     },[])
     
+    const [adminCode, setAdminCode]=useContext(Context);
 
 
 
@@ -126,29 +132,30 @@ export const Mainscreen = (props) => {
             </View>
 
 
-            <View style={styles.botcontainer}>
-                {reports.filter(rep=>rep.state===selectedCategory).map((report, index) => (
-                    <TouchableOpacity key={index} onPress={() => {props.navigation.navigate('Min1', {report:report})}}>
-                        <View style={styles.item}>
-                        <View style={styles.photocontainer}>
-                            {JSON.parse(report.photo).length>0 ? (
-                                <Image source={{ uri: JSON.parse(report.photo)[0],}} style={styles.photo} />
-                                ) : (
-                                <Image source={roka} style={styles.photo} />
-                                )}
-                        </View>
-                        <View style={styles.textcontainer}>
-                            <View style={styles.typedate}>
-                            <Text style={styles.typetext}>{report.type}</Text>
-                            </View>
-                            <Text style={styles.detailstate}>({report.state})</Text>
-                            <View style={styles.detail}>
-                            <Text style={styles.detailtext}>{report.detail}</Text>
-                            </View>
-                        </View>
-                        </View>
-                    </TouchableOpacity>
-                    ))}
+                    <View style={styles.botcontainer}>
+                       
+                        {reports.filter(rep=>rep.state===selectedCategory && (adminCode==="2" || adminCode==="4"|| adminCode==="5") && rep.position.includes("화성")).map((report, index) => (
+                            <TouchableOpacity key={index} onPress={() => {props.navigation.navigate('Min1', {report:report})}}>
+                                <View style={styles.item}>
+                                <View style={styles.photocontainer}>
+                                    {JSON.parse(report.photo).length>0 ? (
+                                        <Image source={{ uri: JSON.parse(report.photo)[0],}} style={styles.photo} />
+                                        ) : (
+                                        <Image source={roka} style={styles.photo} />
+                                        )}
+                                </View>
+                                <View style={styles.textcontainer}>
+                                    <View style={styles.typedate}>
+                                    <Text style={styles.typetext}>{report.type}</Text>
+                                    </View>
+                                    <Text style={styles.detailstate}>({report.state})</Text>
+                                    <View style={styles.detail}>
+                                    <Text style={styles.detailtext}>{report.detail}</Text>
+                                    </View>
+                                </View>
+                                </View>
+                            </TouchableOpacity>
+                            ))}
 
 
 
@@ -157,6 +164,13 @@ export const Mainscreen = (props) => {
     </ScrollView>
     );
 };
+
+        /*
+        삼항 연산자 ' (조건) ? (참일 경우) : (거짓일 경우) ' 로 부분 조건부 렌더링 구현
+
+        51사단 168여단 68-2대대 이렇게만 화성으로 분류할 것.
+
+        */
 
 const styles = StyleSheet.create({
     container: {

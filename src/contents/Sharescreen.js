@@ -2,6 +2,7 @@
 import {Text, View, SafeAreaView, StyleSheet, ScrollView} from 'react-native'
 import { SliderBox } from "react-native-image-slider-box";
 import { conColor, mainColor } from '../../color';
+import roka from "../../assets/rokalogo.png";
 
 export const Sharescreen = (props) => {
 
@@ -31,7 +32,11 @@ export const Sharescreen = (props) => {
                   <View style={styles.process}>
                     <Text style={{fontSize:25, fontWeight:"600" ,margin:10,}}>조치사항</Text>
                     <View style={styles.Pphotocontainer}>
-                      <SliderBox images={Pimages} style={styles.photo} />
+                    {images.length > 0 ? (
+                        <SliderBox images={Pimages} style={styles.photo} />) :(
+                          <SliderBox images={roka} style={styles.photo} />
+                        )
+                    } 
                     </View>
                     <View style={styles.Pdetail}>
                       <Text style={styles.Pdetailtext}>{report.processText}</Text>
