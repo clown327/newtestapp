@@ -11,6 +11,9 @@ import roka from "../../../assets/rokalogo.png";
 import { Context } from '../../../Context';
 import { SliderBox } from "react-native-image-slider-box";
 import image from '../../../assets/image.jpg';
+import iwant from '../../../assets/iwant.jpg';
+import weare from '../../../assets/weare.jpg';
+import miy from '../../../assets/miy.jpg'
 
 
 
@@ -71,7 +74,7 @@ export const Mainscreen = (props) => {
                 
                 <View style={{alignItems:"center", marginTop:10,}}>
                     <View style={styles.photocon1}> 
-                        <SliderBox images={[image, image, image]} autoplay circleLoop style={styles.photo}
+                        <SliderBox images={[weare, iwant, miy]}  circleLoop style={styles.photo}
                         />
                     </View>
                 </View>
@@ -82,7 +85,7 @@ export const Mainscreen = (props) => {
                         <Text style={{fontSize:17,fontWeight:"bold",}}>New 신고</Text>
                         
                         <View style={{marginLeft:200}}>
-                            <TouchableOpacity>
+                            <TouchableOpacity onPress={()=> {props.navigation.navigate('More')}}>
                                 <Text style={{fontSize:17,fontWeight:"bold", color:"#BE6DFE"}}>더보기..</Text>
                             </TouchableOpacity>
                         </View>
@@ -94,13 +97,17 @@ export const Mainscreen = (props) => {
                         <ScrollView horizontal = {true} > 
                         {reports.filter(rep=>rep.state==="미접수").map((report, index) => (
                             <View>
-                                <TouchableOpacity key={index}>
+                                <TouchableOpacity key={index} onPress={()=>{props.navigation.navigate('Min1', {report:report})}}>
                                     <View style={styles.item}>
                                         <View style={styles.photocon}>
-                                            <Image source={roka} style={{borderRadius:30, width:"100%",height:"100%"}} />
+                                        {JSON.parse(report.photo).length>0 ? (
+                                        <Image source={{ uri: JSON.parse(report.photo)[0],}} style={{borderRadius:30, width:"100%",height:"100%"}} />
+                                        ) : (
+                                        <Image source={roka} style={{borderRadius:30, width:"100%",height:"100%"}} />
+                                        )}
                                         </View>
                                         <View style={{alignItems:"center"}}>
-                                            <Text style={{color:"white", marginTop:10, fontSize:15, fontWeight:"800"}}>{report.position}}</Text>
+                                            <Text style={{color:"white", marginTop:10, fontSize:15, fontWeight:"800"}}>{report.position}</Text>
                                             <Text style={{color:"white", marginTop:5, fontSize:15, fontWeight:"800"}}>{report.type}</Text>
                                         </View>
                                     </View>
@@ -116,7 +123,7 @@ export const Mainscreen = (props) => {
                         <Text style={{fontSize:17,fontWeight:"bold",}}>접수했던 신고</Text>
                         
                         <View style={{marginLeft:170}}>
-                            <TouchableOpacity>
+                            <TouchableOpacity onPress={()=> {props.navigation.navigate('More2')}}>
                                 <Text style={{fontSize:17,fontWeight:"bold", color:"#BE6DFE"}}>더보기..</Text>
                             </TouchableOpacity>
                         </View>
@@ -127,13 +134,13 @@ export const Mainscreen = (props) => {
                         <ScrollView horizontal = {true}>
                             <View>
                             {reports.filter(rep=>rep.state==="처리중").map((report, i)=>(
-                                <TouchableOpacity key={i}>
+                                <TouchableOpacity key={i} onPress={()=>{props.navigation.navigate('Min1', {report:report})}}>
                                     <View style={styles.item}>
                                         <View style={styles.photocon}>
                                             <Image source={roka} style={{borderRadius:30, width:"100%",height:"100%"}} />
                                         </View>
                                         <View style={{alignItems:"center"}}>
-                                            <Text style={{color:"white", marginTop:10, fontSize:15, fontWeight:"800"}}>{report.position}}</Text>
+                                            <Text style={{color:"white", marginTop:10, fontSize:15, fontWeight:"800"}}>{report.position}</Text>
                                             <Text style={{color:"white", marginTop:5, fontSize:15, fontWeight:"800"}}>{report.type}</Text>
                                         </View>
                                     </View>

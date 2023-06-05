@@ -20,7 +20,7 @@ export const Home = (props) => {
      useEffect(()=>{
         const unsubscribe=onChildAdded(notref, (snapshot) => {
             notices.unshift(snapshot.val());
-            onRefresh();
+           
         });
         return(()=>{
             unsubscribe();
@@ -39,26 +39,51 @@ export const Home = (props) => {
     */
 
 
-    const [refreshing, setRefreshing] = useState(false); //리프레쉬 시켜주는거
 
 
 
-    const onRefresh = React.useCallback(() => {
-      setRefreshing(true);
-      setTimeout(() => {
-        setRefreshing(false);
-      }, 700);
-    }, []);
+
     
     return(
-        <ScrollView style={{width:"100%",height:"100%",backgroundColor:"white" }}>
-            <View>
+        <ScrollView style={{width:'100%', height:'100%', flex:1,backgroundColor:"white"}} >
+
+                <View style={{flexDirection:"row", borderBottomWidth:2, borderBottomColor:'#ccc'}} >
+                    <Text style={{fontSize:25,fontWeight:"800", margin:10}}>메뉴</Text>
+                    <TouchableOpacity style={{borderRadius:10, borderWidth:1, alignItems:"center",justifyContent:"center",margin:10}} onPress={()=> {props.navigation.navigate('Writenoti')}}>
+                        <Text style={{fontSize:20,fontWeight:"700"}}> 공지사항 작성 </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={{borderRadius:10, borderWidth:1, alignItems:"center",justifyContent:"center", margin:10}} onPress={()=> {props.navigation.navigate('Wantedbut')}}>
+                        <Text style={{fontSize:20,fontWeight:"700"}}> 수배하기 </Text>
+                    </TouchableOpacity>
+                </View>
+
+
+                <View>
+                <View style={styles.noticon}>
+                                {notices.map((notice, index) => (
+                                <TouchableOpacity style={styles.notices} key={index} onPress={()=>{props.navigation.navigate('Notiview', {notice:notice})}}>
+                                <View style={styles.noticontent}>
+                                    <Text style={{fontSize:15,fontWeight:"700"}}>{notice.title}</Text>
+                                </View>
+                                </TouchableOpacity>
+
+                            ))}
+
+                        </View>
+                </View>
                 
-            </View>
         </ScrollView>
     );
 }
 
 const styles = StyleSheet.create({
+    noticon:{
+        flex:1,
+
+    },
+    notices:{
+        margin:10
+
+    },
 
 });

@@ -27,7 +27,8 @@ import { Notiview } from "../contents/Notiview";
 import { Wantedbut } from "../contents/Wantedbut";
 import { Wantedview } from "../contents/Wantedview";
 import { Daegong } from "../contents/Daegong";
-
+import { More2 } from "../contents/More2";
+import { More } from "../contents/More";
 
 import Icon from 'react-native-vector-icons/MaterialIcons';//아이콘
 import { Sharescreen } from "../contents/Sharescreen";
@@ -56,14 +57,14 @@ const TopTabs = () => {
           <TouchableOpacity style={{marginRight:10}}>
             <Icon name="notifications" size={30} color="#000000"/>
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={()=> navigate('Home')}>
             <Icon name="dashboard" size={30} color="#000000"/>
         </TouchableOpacity>
         </View>
       </View>
       
       <Tab.Navigator //아놔 왜 안됨 ㅡㅡ
-      initialRouteName="Home"
+      initialRouteName="Mainscreen"
       tabBarOptions={{
         style: {
           paddingTop: 10,
@@ -145,7 +146,10 @@ export const CNavigation = () => {
         <Stack.Screen name="Wantedview" component={Wantedview} options={{gestureEnabled: true}} />
         <Stack.Screen name="Sharescreen" component={Sharescreen} options={{gestureEnabled: true}} />
         <Stack.Screen name="Daegong" component={Daegong} options={{gestureEnabled: true}} />
-
+        <Stack.Screen name="More" component={More} options={{gestureEnabled: true, headerShown: true}} />
+        <Stack.Screen name="More2" component={More2} options={{gestureEnabled: true, headerShown: true}} />
+        <Stack.Screen name="Home" component={Home} options={{gestureEnabled: true, headerShown: true}} />
+      
       </Stack.Navigator>
     </NavigationContainer>
   );

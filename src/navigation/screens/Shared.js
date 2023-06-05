@@ -82,7 +82,7 @@ export const Shared = (props) => {
 
                 {reports.filter(rep=>rep.shareList.includes(selectedCategory) ||  rep.state===selectedCategory).map((report, index) => (
                     <View key={index} style={{flexDirection:"row"}}>
-                        <TouchableOpacity onPress={() => {props.navigation.navigate('Min1')}}>
+                        <TouchableOpacity onPress={()=>{props.navigation.navigate('Min1', {report:report})}}>
                             <View style={styles.item}>
                                 <View style={styles.photocon}>
                                 <Image source={roka} style={{borderRadius:30, width:"100%",height:"100%"}} />
@@ -93,7 +93,7 @@ export const Shared = (props) => {
                                 </View>
                             </View>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={() => {props.navigation.navigate('Min1')}}>
+                        <TouchableOpacity onPress={()=>{props.navigation.navigate('Min1', {report:report})}}>
                             <View style={styles.item}>
                                 <View style={styles.photocon}>
                                 <Image source={roka} style={{borderRadius:30, width:"100%",height:"100%"}} />
