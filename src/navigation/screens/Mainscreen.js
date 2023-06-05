@@ -66,11 +66,13 @@ export const Mainscreen = (props) => {
 
     
     return(
-        <ScrollView style={{width:"100%",height:"100%", backgroundColor:"white"}}>
+        <ScrollView style={{width:"100%",height:"100%", backgroundColor:"white"}} refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>}>
                 
                 <View style={{alignItems:"center", marginTop:10,}}>
                     <View style={styles.photocon1}> 
-                        <Image source={image} style={styles.photo} />
+                        <SliderBox images={[image, image, image]} autoplay circleLoop style={styles.photo}
+                        />
                     </View>
                 </View>
 
@@ -90,18 +92,20 @@ export const Mainscreen = (props) => {
                     
                     <View style={styles.Newmin1}>
                         <ScrollView horizontal = {true} > 
-                        {reports.filter(rep=>rep.state==="미접수").map((report, index)=>(
-                                <TouchableOpacity onPress={() => {props.navigation.navigate('Min1')}}>
+                        {reports.filter(rep=>rep.state==="미접수").map((report, index) => (
+                            <View>
+                                <TouchableOpacity key={index}>
                                     <View style={styles.item}>
                                         <View style={styles.photocon}>
                                             <Image source={roka} style={{borderRadius:30, width:"100%",height:"100%"}} />
                                         </View>
                                         <View style={{alignItems:"center"}}>
-                                            <Text style={{color:"white", marginTop:10, fontSize:15, fontWeight:"800"}}>sad</Text>
-                                            <Text style={{color:"white", marginTop:5, fontSize:15, fontWeight:"800"}}>asd</Text>
+                                            <Text style={{color:"white", marginTop:10, fontSize:15, fontWeight:"800"}}>{report.position}}</Text>
+                                            <Text style={{color:"white", marginTop:5, fontSize:15, fontWeight:"800"}}>{report.type}</Text>
                                         </View>
                                     </View>
                                 </TouchableOpacity>
+                            </View>
                                 ))}
                         </ScrollView>
                     </View>
@@ -122,15 +126,15 @@ export const Mainscreen = (props) => {
                     <View style={styles.Remin1}>
                         <ScrollView horizontal = {true}>
                             <View>
-                            {reports.filter(rep=>rep.state==="미접수").map((report, index)=>(
-                                <TouchableOpacity onPress={() => {props.navigation.navigate('Min1')}}>
+                            {reports.filter(rep=>rep.state==="처리중").map((report, i)=>(
+                                <TouchableOpacity key={i}>
                                     <View style={styles.item}>
                                         <View style={styles.photocon}>
                                             <Image source={roka} style={{borderRadius:30, width:"100%",height:"100%"}} />
                                         </View>
                                         <View style={{alignItems:"center"}}>
-                                            <Text style={{color:"white", marginTop:10, fontSize:15, fontWeight:"800"}}>sad</Text>
-                                            <Text style={{color:"white", marginTop:5, fontSize:15, fontWeight:"800"}}>asd</Text>
+                                            <Text style={{color:"white", marginTop:10, fontSize:15, fontWeight:"800"}}>{report.position}}</Text>
+                                            <Text style={{color:"white", marginTop:5, fontSize:15, fontWeight:"800"}}>{report.type}</Text>
                                         </View>
                                     </View>
                                 </TouchableOpacity>
@@ -152,28 +156,31 @@ const styles = StyleSheet.create({
         width:"95%",
         height:240,
         alignItems:"center",
-        justifyContent:"center",
+
     },
     photo:{
-        width:"100%",
+        width:"95%",
         height:"100%",
         borderRadius:20,
+        marginLeft:10,
+
     },
     Newmin1con:{
         width:"100%",
-        height:310,
-        margin:10,
+        height:300,
+        margin:5,
+        marginTop:15,
     },
     Newmin1:{
         width:"100%",
-        height:"90%",
+        height:"85%",
         justifyContent:"center",
 
     },
     Remin1con:{
         width:"100%",
-        height:310,
-        margin:10,
+        height:300,
+        margin:5,
     },
     Remin1:{
         width:"100%",
@@ -187,8 +194,8 @@ const styles = StyleSheet.create({
         //justifyContent:"center",
         alignItems:"center",
         borderRadius:30,
-        margin:10,
-        marginTop:15,
+        margin:5,
+        marginTop:10,
 
     },
     photocon:{

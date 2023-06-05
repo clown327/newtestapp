@@ -1,10 +1,6 @@
 {
   "expo": {
-    "plugins": [
-      "expo-image-picker"
-
-    ],
-    "name": "ARA for 관리자",
+    "name": "ARA Admin",
     "icon": "./assets/rokalogo.png",
     "slug": "rokaAppbata",
     "version": "1.0.0",

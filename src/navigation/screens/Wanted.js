@@ -40,20 +40,25 @@ export const Wanted = (props) => {
 
 
     return(
-        <ScrollView style={{backgroundColor:"white", width:"100%", height:"100%"}}>
-                <View style={{margin:10}} >
-                    <TouchableOpacity onPress={() => {props.navigation.navigate('Min1')}}>
+        <ScrollView style={{backgroundColor:"white", width:"100%", height:"100%"}}refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>}>
+            <View>
+            {bounties.map((bountie, index) => (
+                 <View style={{margin:10}} >
+                    <TouchableOpacity key={index} onPress={() => {props.navigation.navigate('Wantedview', {bountie:bountie})}}>
                         <View style={styles.item}>
                             <View style={styles.photocon}>
                                 <Image source={roka} style={{borderRadius:30, width:"100%",height:"100%"}} />
                             </View>
                             <View style={{alignItems:"center"}}>
-                                <Text style={{color:"white", marginTop:10, fontSize:15, fontWeight:"800"}}>sad</Text>
-                                <Text style={{color:"white", marginTop:5, fontSize:15, fontWeight:"800"}}>asd</Text>
+                                <Text style={{color:"white", marginTop:10, fontSize:15, fontWeight:"800"}}>{bountie.pos}</Text>
+                                <Text style={{color:"white", marginTop:5, fontSize:15, fontWeight:"800"}}>{bountie.title}</Text>
                             </View>
                         </View>
                     </TouchableOpacity>
                 </View>
+                ))}
+            </View>
         </ScrollView>
     );
 }
