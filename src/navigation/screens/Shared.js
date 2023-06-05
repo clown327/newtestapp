@@ -65,10 +65,12 @@ export const Shared = (props) => {
 
 
     return(
-        <ScrollView style={{width:"100%",height:"100%",backgroundColor:"white", flex:1}}>
+        <ScrollView style={{width:"100%",height:"100%",backgroundColor:"white", flex:1}} refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>}>
+
             <View>
                 <View style={{flexDirection:"row", justifyContent:"center"  }}>
-                     <TouchableOpacity style={selectedCategory === adminCode ? activeButtonStyle : inactiveButtonStyle}
+                     <TouchableOpacity style={selectedCategory == adminCode ? activeButtonStyle : inactiveButtonStyle}
                                         onPress={() => {setSelectedCategory(adminCode)}}>
                                             <Text style={{fontSize:15,fontWeight:"800",color:"black",}}>공유된 목록</Text>
                         </TouchableOpacity>
@@ -78,7 +80,7 @@ export const Shared = (props) => {
                         </TouchableOpacity>
                 </View>
 
-                {reports.filter(rep=>rep.state===selectedCategory || rep.shareList===selectedCategory).map((report, index) => (
+                {reports.filter(rep=>rep.shareList.includes(selectedCategory) ||  rep.state===selectedCategory).map((report, index) => (
                     <View key={index} style={{flexDirection:"row"}}>
                         <TouchableOpacity onPress={() => {props.navigation.navigate('Min1')}}>
                             <View style={styles.item}>
@@ -111,7 +113,6 @@ export const Shared = (props) => {
             </View>
         </ScrollView>
     );
-    //{reports.filter(rep=>rep.state===selectedCategory && rep.shareList===selectedCategory).map((report, index) => ())}
 };
 
 

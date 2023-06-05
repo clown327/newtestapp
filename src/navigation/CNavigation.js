@@ -31,7 +31,8 @@ import { Daegong } from "../contents/Daegong";
 
 import Icon from 'react-native-vector-icons/MaterialIcons';//아이콘
 import { Sharescreen } from "../contents/Sharescreen";
-import { View, Text } from "react-native";
+import { View, Text,TouchableOpacity } from "react-native";
+
 
 
 
@@ -49,9 +50,44 @@ const TopTabs = () => {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor:"white"}}>
-      <Tab.Navigator
+      <View style={{flexDirection:"row"}}>
+        <Text style={{fontSize:25, fontWeight:"800", marginLeft:15,}}>ARA</Text>
+        <View style={{marginLeft:225, flexDirection:"row"}}>
+          <TouchableOpacity style={{marginRight:10}}>
+            <Icon name="notifications" size={30} color="#000000"/>
+        </TouchableOpacity>
+        <TouchableOpacity>
+            <Icon name="dashboard" size={30} color="#000000"/>
+        </TouchableOpacity>
+        </View>
+      </View>
+      
+      <Tab.Navigator //아놔 왜 안됨 ㅡㅡ
       initialRouteName="Home"
-      TabBarOptions={{
+      tabBarOptions={{
+        style: {
+          paddingTop: 10,
+          borderTopwidth:2,
+          borderTopColor: "#ccc",
+          height: 60,
+        },
+        labelStyle: {
+          fontSize: 16,
+          fontWeight: "bold",
+        },
+        activeTintColor: "#000",
+        inactiveTintColor: "#ccc",
+        labelPosition: "below-icon",
+        showLabel: true,
+        showIcon: true,
+        indicatorStyle: {
+          backgroundColor: "#000",
+        },
+
+        tabStyle: {
+          paddingHorizontal: 0, // 탭바들 사이의 간격을 10으로 설정
+          
+        },
       }}
       >      
       <Tab.Screen name="Wanted"

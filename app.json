@@ -1,10 +1,6 @@
 {
   "expo": {
-<<<<<<< HEAD
-    "name": "ARA for 관리자",
-=======
     "name": "ARA Admin",
->>>>>>> 5df8152516709b3f2eedb8461757440280d3c2b2
     "icon": "./assets/rokalogo.png",
     "slug": "rokaAppbata",
     "version": "1.0.0",
