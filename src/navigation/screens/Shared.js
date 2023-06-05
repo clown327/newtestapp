@@ -5,12 +5,12 @@ import React, {useContext, useEffect, useState} from 'react';
 import { database } from '../../../firebase';
 import { ref, child, onChildAdded } from 'firebase/database';
 import { Context } from '../../../Context';
-import { mainColor, conColor } from '../../../color';
+import { mainColor, conColor, darkCello, darkLoafer, deco, powderGreen, darkGreen, matrix } from '../../../color';
 import roka from "../../../assets/rokalogo.png";
 import { ItemContainer } from '../../../CustomButtons/ItemContainer';
-
+import { LinearGradient } from 'expo-linear-gradient';
     
-    const reports = [];
+    let reports = [];
     
     const repref = child(ref(database), 'reports');
 
@@ -27,6 +27,7 @@ export const Shared = (props) => {
         });
         return(()=>{
             unsubscribe();
+            reports=[]
         })
      },[])
 
@@ -40,7 +41,7 @@ export const Shared = (props) => {
 
     //let filteredData = data.filter(x => String(x.approval).includes(approvalVariable));
     //let reports.filter(rep=>String(rep.shareList).includes(adminCode)===adminCode);
-    const [selectedCategory, setSelectedCategory] = useState("공유된 목록");
+    const [selectedCategory, setSelectedCategory] = useState(adminCode);
     //필터링을 두번 해줘야 됨 1.처리완료 된거 2.공유된 목록
     
     const activeButtonStyle = {
@@ -67,7 +68,15 @@ export const Shared = (props) => {
 
     return (
       <View style={{ flex: 1, backgroundColor: "white",alignItems:"center" }}>
+          <LinearGradient
+         colors={[darkLoafer, "rgba(255, 255, 255, 1)"]}
+         start={{ x: 0.5, y: 1 }}
+         end={{ x: 0.5, y: 0 }}
+         locations={[0, 1]}
+      style={{ position:"absolute",flex:1,width:"100%",height:"100%",opacity:0.95}}
+    ></LinearGradient>
         <View style={{ flexDirection: "row", justifyContent: "center" }}>
+      
           <TouchableOpacity
             style={
               selectedCategory == adminCode
@@ -78,8 +87,8 @@ export const Shared = (props) => {
               setSelectedCategory(adminCode);
             }}
           >
-            <Text style={{ fontSize: 15, fontWeight: "800", color: "black" }}>
-              공유된 목록
+            <Text style={{ fontSize: 15, fontWeight: "800", color: matrix}}>
+              공유받음
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
@@ -92,22 +101,22 @@ export const Shared = (props) => {
               setSelectedCategory("처리완료");
             }}
           >
-            <Text style={{ fontSize: 15, fontWeight: "800", color: "black" }}>
-              처리된 내역
+            <Text style={{ fontSize: 15, fontWeight: "800", color: matrix }}>
+              처리내역
             </Text>
           </TouchableOpacity>
         </View>
         <FlatList 
+        showsVerticalScrollIndicator={false}
         style={{
-            width: "100%",
+            width: "95%",
             padding:10,
             height: "100%",
-            backgroundColor: "white",
             flex: 1,
             alignSelf:"center"
           }}
           numColumns={2}
-          columnWrapperStyle={{justifyContent:"space-between"}}
+          columnWrapperStyle={{justifyContent:"space-between",}}
 
         data={reports.filter(
             (rep) =>
@@ -120,6 +129,7 @@ export const Shared = (props) => {
               onPress={() => {
                 props.navigation.navigate("Min1", { report: item });
               }}
+              style={{marginVertical:5}}
             >
                 <ItemContainer report={item}/>
               {/* <View style={styles.item}>

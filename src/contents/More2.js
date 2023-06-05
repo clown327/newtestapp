@@ -2,11 +2,11 @@ import {Text, View, ScrollView, StyleSheet, TouchableOpacity, RefreshControl, Im
 import React, { useEffect, useContext } from 'react';
 import { database } from '../../firebase';
 import { ref, child, onChildAdded} from 'firebase/database';
-import { conColor, mainColor } from '../../color';
+import { conColor, darkLoafer, mainColor } from '../../color';
 import { Context } from '../../Context';
 import roka from "../../assets/rokalogo.png";
 import { ItemContainer } from '../../CustomButtons/ItemContainer';
-
+import { LinearGradient } from 'expo-linear-gradient';
 
 //수배 위치
 //수배 내용
@@ -42,8 +42,16 @@ export const More2 = (props) => {
 
 
     return(
+        <View style={{ flex: 1, backgroundColor: "white",alignItems:"center",paddingTop:30 }}>
+        <LinearGradient
+        colors={[darkLoafer, "rgba(255, 255, 255, 1)"]}
+        start={{ x: 0.5, y: 1 }}
+        end={{ x: 0.5, y: 0 }}
+        locations={[0, 1]}
+     style={{ position:"absolute",flex:1,width:"100%",height:"120%",opacity:0.95}}
+   ></LinearGradient>
          <FlatList
-        style={{backgroundColor:"white", width:"100%", height:"100%"}}
+        style={{ width:"100%", height:"100%"}}
         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>} 
         // style={{
         //     width: "100%",
@@ -69,6 +77,7 @@ export const More2 = (props) => {
             )
         }}
         />
+        </View>
     );
 }
 

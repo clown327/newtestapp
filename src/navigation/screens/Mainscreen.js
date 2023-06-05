@@ -15,7 +15,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { database } from "../../../firebase";
 import { ref, child, onChildAdded, onChildChanged } from "firebase/database";
 import { Animated } from "react-native";
-import { conColor, darkCello, darkGreen, loafer, mainColor } from "../../../color";
+import { buttonGreen, cello, conColor, darkCello, darkGreen, darkLoafer, loafer, mainColor } from "../../../color";
 import logo from "../../../assets/logo.jpg";
 import roka from "../../../assets/rokalogo.png";
 import { Context } from "../../../Context";
@@ -84,11 +84,11 @@ export const Mainscreen = (props) => {
       }
     >
         <LinearGradient
-        colors={["#3d9285", "rgba(35, 198, 134,0.7)", "rgba(35, 198, 134,0.4)"]}
-        end={{ x: 0.7, y: 1 }}
-        start={{ x: 0.3, y: 0 }}
-        locations={[0, 0.8, 1]}
-      style={{ position:"absolute",flex:1,width:"100%",height:"120%"}}
+         colors={[darkLoafer, "rgba(255, 255, 255, 1)"]}
+         start={{ x: 0.5, y: 1 }}
+         end={{ x: 0.5, y: 0 }}
+         locations={[0, 1]}
+      style={{ position:"absolute",flex:1,width:"100%",height:"100%",opacity:0.95}}
     ></LinearGradient>
       <View style={{ alignItems: "center", marginTop: 10 }}>
         <View style={styles.photocon1}>
@@ -113,7 +113,7 @@ export const Mainscreen = (props) => {
             alignSelf:"center"
           }}
         >
-          <Text style={{ fontSize: 23, fontFamily: "suiteB" }}>
+          <Text style={{ fontSize: 23, fontFamily: "suiteB", color:buttonGreen}}>
             미접수 신고
           </Text>
 
@@ -122,10 +122,10 @@ export const Mainscreen = (props) => {
               onPress={() => {
                 props.navigation.navigate("More");
               }}
-              style={{backgroundColor:darkCello,padding:3,borderRadius:5,justifyContent:"center",alignItems:"center"}}
+              style={{backgroundColor:darkGreen,padding:7,borderRadius:20,justifyContent:"center",alignItems:"center"}}
             >
               <Text
-                style={{ fontSize: 17, fontFamily: "suiteL", color: "white", }}
+                style={{ fontSize: 14, fontFamily: "suiteL", color: "white", }}
               >
                 더 보기..
               </Text>
@@ -134,7 +134,7 @@ export const Mainscreen = (props) => {
         </View>
 
         <View style={styles.Newmin1}>
-          <ScrollView horizontal={true}>
+          <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
             {reports
               .filter((rep) => rep.state === "미접수")
               .map((report, index) => (
@@ -166,17 +166,17 @@ export const Mainscreen = (props) => {
             alignSelf:"center"
           }}
         >
-          <Text style={{ fontSize: 23, fontFamily: "suiteB" }}>처리 중</Text>
+          <Text style={{ fontSize: 23, fontFamily: "suiteB", color:buttonGreen }}>처리 중</Text>
 
           <View style={{ justifyContent: "center" }}>
             <TouchableOpacity
               onPress={() => {
                 props.navigation.navigate("More2");
               }}
-              style={{backgroundColor:darkCello,padding:3,borderRadius:5,justifyContent:"center",alignItems:"center"}}
+              style={{backgroundColor:darkGreen,padding:7,borderRadius:20,justifyContent:"center",alignItems:"center"}}
             >
               <Text
-                style={{ fontSize: 17, fontFamily: "suiteL", color: "white", }}
+                style={{ fontSize: 14, fontFamily: "suiteL", color: "white", }}
               >
                 더 보기..
               </Text>
@@ -185,21 +185,21 @@ export const Mainscreen = (props) => {
         </View>
 
         <View style={styles.Remin1}>
-          <ScrollView horizontal={true}>
-            <View>
-              {reports
-                .filter((rep) => rep.state === "처리중")
-                .map((report, i) => (
+        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+            {reports
+              .filter((rep) => rep.state === "처리중")
+              .map((report, index) => (
+                <View>
                   <TouchableOpacity
-                    key={i}
+                    key={index}
                     onPress={() => {
                       props.navigation.navigate("Min1", { report: report });
                     }}
                   >
-                     <ItemContainer report={report} />
+                    <ItemContainer report={report} />
                   </TouchableOpacity>
-                ))}
-            </View>
+                </View>
+              ))}
           </ScrollView>
         </View>
       </View>
@@ -240,7 +240,7 @@ const styles = StyleSheet.create({
   },
   Remin1: {
     width: "95%",
-    height: "90%",
+    height: "85%",
     justifyContent: "center",
     alignSelf:"center"
   },

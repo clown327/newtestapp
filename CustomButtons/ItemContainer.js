@@ -1,5 +1,5 @@
 import {View,Image,Text,StyleSheet} from 'react-native';
-import { buttonGreen, darkCello, darkLoafer, loafer, mainColor } from '../color';
+import { buttonGreen, cello, darkCello, darkGreen, darkLoafer, loafer, mainColor } from '../color';
 import roka from "../assets/rokalogo.png";
 export const ItemContainer=(props)=>{
     const report=props.report;
@@ -31,23 +31,38 @@ export const ItemContainer=(props)=>{
                     style={{
                       color: buttonGreen,
                       marginTop: 5,
-                      fontSize: 15,
-                      fontWeight: "800",
+                      fontSize: 17,
+                      fontFamily:"suiteB",
+                      textAlign:"center"
                     }}
                   >
                     {report.type}
                   </Text>
                   <Text
                     style={{
-                      color:darkCello,
+                      color:"white",
                       marginTop: 10,
-                      fontSize: 15,
-                      fontWeight: "800",
+                      fontSize: 10,
+                    //   fontWeight: "800",
+                        fontFamily:"suiteL"
                     }}
                     numberOfLines={1}
                     ellipsizeMode='tail'
                   >
                     {report.position}
+                  </Text>
+                  <Text
+                    style={{
+                      color:"white",
+                      marginTop: 10,
+                      fontSize: 10,
+                    //   fontWeight: "800",
+                        fontFamily:"suiteL"
+                    }}
+                    numberOfLines={2}
+                    ellipsizeMode='tail'
+                  >
+                    {report.detail}
                   </Text>
                  
                 </View>
@@ -59,13 +74,16 @@ const styles=StyleSheet.create({
     item:{
         width:160,
         height:240,
-        backgroundColor:darkLoafer,
+        backgroundColor:darkCello,
         //justifyContent:"center",
         alignItems:"center",
         marginLeft:10,
         borderRadius:15,
         marginBottom:10,
-        paddingHorizontal:10
+        paddingHorizontal:10,
+        // borderWidth:4,
+        // borderColor:darkCello,
+        elevation:2,
     },
     photocon:{
         margin:5,

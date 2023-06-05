@@ -1,3 +1,4 @@
+// import { View } from "react-native";
 //스택 관리 나 네비게이션 총 관리
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -33,7 +34,7 @@ import { More } from "../contents/More";
 import Icon from 'react-native-vector-icons/MaterialIcons';//아이콘
 import { Sharescreen } from "../contents/Sharescreen";
 import { View, Text,TouchableOpacity } from "react-native";
-import { darkCello, darkGreen, deco, shadowGreen } from "../../color";
+import { buttonGreen, darkCello, darkGreen, deco, powderGreen, shadowGreen } from "../../color";
 
 
 
@@ -51,7 +52,7 @@ const navigationRef = createNavigationContainerRef();
 const TopTabs = () => {
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor:shadowGreen}}>
+    <SafeAreaView style={{ flex: 1, backgroundColor:"white"}}>
       <View style={{flexDirection:"row", justifyContent:"space-between",paddingHorizontal:20,marginTop:10}}>
         <Text style={{fontSize:30, fontFamily:"armyBold", marginLeft:15,color:darkCello}}>ARA</Text>
         <View style={{flexDirection:"row"}}>
@@ -98,7 +99,7 @@ const TopTabs = () => {
           options={{
             headerShown: false,
             tabBarLabel: "신고 접수",
-            tabBarLabelStyle:{fontSize:22, fontFamily:"suiteL"}
+            tabBarLabelStyle:{fontSize:22, fontFamily:"suiteB"}
           }}
         />
         <Tab.Screen name="Shared"
@@ -106,7 +107,7 @@ const TopTabs = () => {
           options={{
             headerShown: false,
             tabBarLabel: "보관함",
-            tabBarLabelStyle:{fontSize:22, fontFamily:"suiteL"}
+            tabBarLabelStyle:{fontSize:22, fontFamily:"suiteB"}
           }}
         />
         <Tab.Screen name="Wanted"
@@ -114,7 +115,7 @@ const TopTabs = () => {
           options={{
             headerShown: false,
             tabBarLabel: "수배",
-            tabBarLabelStyle:{fontSize:22, fontFamily:"suiteL"},       
+            tabBarLabelStyle:{fontSize:22, fontFamily:"suiteB"},       
           }}
         />
       </Tab.Navigator>
@@ -148,8 +149,10 @@ export const CNavigation = () => {
         <Stack.Screen name="Wantedview" component={Wantedview} options={{gestureEnabled: true}} />
         <Stack.Screen name="Sharescreen" component={Sharescreen} options={{gestureEnabled: true}} />
         <Stack.Screen name="Daegong" component={Daegong} options={{gestureEnabled: true}} />
-        <Stack.Screen name="More" component={More} options={{gestureEnabled: true, headerShown: true}} />
-        <Stack.Screen name="More2" component={More2} options={{gestureEnabled: true, headerShown: true}} />
+        <Stack.Screen name="More" component={More} 
+        options={{gestureEnabled: true, headerShown: true, headerTitle:"미접수 신고",headerTitleStyle:{fontFamily:"suiteB", fontSize:22}, headerTintColor:"white",headerBackground:()=>(<View style={{flex:1,backgroundColor:darkGreen}}/>)}} />
+        <Stack.Screen name="More2" component={More2} 
+        options={{gestureEnabled: true, headerShown: true, headerTitle:"처리 중인 신고",headerTitleStyle:{fontFamily:"suiteB", fontSize:22}, headerTintColor:"white",headerBackground:()=>(<View style={{flex:1,backgroundColor:darkGreen}}/>)}} />
         <Stack.Screen name="Home" component={Home} options={{gestureEnabled: true, headerShown: true}} />
       
       </Stack.Navigator>

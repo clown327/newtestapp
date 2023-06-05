@@ -1,16 +1,16 @@
-import {Text, View, ScrollView, StyleSheet, TouchableOpacity, RefreshControl, Image} from 'react-native'
+import {Text, View, ScrollView, StyleSheet, TouchableOpacity, RefreshControl, Image, FlatList} from 'react-native'
 import React, { useEffect, useContext } from 'react';
 import { database } from '../../../firebase';
 import { ref, child, onChildAdded} from 'firebase/database';
-import { conColor, mainColor } from '../../../color';
+import { buttonGreen, conColor, darkCello, darkLoafer, mainColor } from '../../../color';
 import { Context } from '../../../Context';
 import roka from "../../../assets/rokalogo.png";
-
+import { LinearGradient } from 'expo-linear-gradient';
 
 //수배 위치
 //수배 내용
 //사진
-    const bounties = []; //database 안에 있는 bounties라는 파일들 가져오기
+    let bounties = []; //database 안에 있는 bounties라는 파일들 가져오기
 
     const bouref = child(ref(database), 'bounties');
 
@@ -26,6 +26,7 @@ export const Wanted = (props) => {
         });
         return(()=>{
             unsubscribe();
+            bounties=[]
         })
      },[])
 
@@ -39,27 +40,84 @@ export const Wanted = (props) => {
     
 
 
-    return(
-        <ScrollView style={{backgroundColor:"white", width:"100%", height:"100%"}}refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>}>
-            <View>
-            {bounties.map((bountie, index) => (
-                 <View style={{margin:10}} >
-                    <TouchableOpacity key={index} onPress={() => {props.navigation.navigate('Wantedview', {bountie:bountie})}}>
-                        <View style={styles.item}>
-                            <View style={styles.photocon}>
-                                <Image source={roka} style={{borderRadius:30, width:"100%",height:"100%"}} />
-                            </View>
-                            <View style={{alignItems:"center"}}>
-                                <Text style={{color:"white", marginTop:10, fontSize:15, fontWeight:"800"}}>{bountie.pos}</Text>
-                                <Text style={{color:"white", marginTop:5, fontSize:15, fontWeight:"800"}}>{bountie.title}</Text>
-                            </View>
-                        </View>
-                    </TouchableOpacity>
+    return (
+        <View style={{ flex: 1, backgroundColor: "white",alignItems:"center" }}>
+              <LinearGradient
+         colors={[darkLoafer, "rgba(255, 255, 255, 1)"]}
+         start={{ x: 0.5, y: 1 }}
+         end={{ x: 0.5, y: 0 }}
+         locations={[0, 1]}
+      style={{ position:"absolute",flex:1,width:"100%",height:"100%",opacity:0.95}}
+    ></LinearGradient>
+        <FlatList 
+         data={bounties}
+         numColumns={2}
+         style={{
+            width: "95%",
+            padding:10,
+            height: "100%",
+            flex: 1,
+            alignSelf:"center"
+          }}
+         columnWrapperStyle={{justifyContent:"space-between"}}
+         renderItem={({item,index}) => (
+            <View style={{ margin: 10 }}>
+              <TouchableOpacity
+                key={index}
+                onPress={() => {
+                  props.navigation.navigate("Wantedview", { bountie: item });
+                }}
+              >
+                <View style={styles.item}>
+                  <View style={styles.photocon}>
+                    <Image
+                      source={roka}
+                      style={{
+                        borderRadius: 30,
+                        width: "100%",
+                        height: "100%",
+                      }}
+                    />
+                  </View>
+                  <View style={{ alignItems: "center" }}>
+                    <Text
+                      style={{
+                        color: buttonGreen,
+                        marginTop: 10,
+                        fontSize: 17,
+                        fontFamily: "suiteB",
+                      }}
+                    >
+                      {item.pos}
+                    </Text>
+                    <Text
+                      style={{
+                        color: "white",
+                        marginTop: 5,
+                        fontSize: 15,
+                        fontFamily: "suiteL",
+                        textAlign: "center",
+                      }}
+                    >
+                      {item.title}
+                    </Text>
+                  </View>
                 </View>
-                ))}
+              </TouchableOpacity>
             </View>
-        </ScrollView>
+          )}
+        />
+        </View>
+    //   <ScrollView
+    //     style={{ backgroundColor: "white", width: "100%", height: "100%" }}
+    //     refreshControl={
+    //       <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+    //     }
+    //   >
+    //     <View>
+    //       {bounties.map()}
+    //     </View>
+    //   </ScrollView>
     );
 }
 
@@ -98,14 +156,18 @@ const styles = StyleSheet.create({
         justifyContent:"center",
     },
     item:{
-        width:180,
+        width:160,
         height:240,
-        backgroundColor:mainColor,
+        backgroundColor:darkCello,
         //justifyContent:"center",
         alignItems:"center",
         marginLeft:10,
-        borderRadius:30,
+        borderRadius:15,
         marginBottom:10,
+        paddingHorizontal:10,
+        // borderWidth:4,
+        // borderColor:darkCello,
+        elevation:2,
     },
     photocon:{
         margin:5,
