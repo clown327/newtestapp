@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "111686263956",
+    "firebase_url": "https://project-f3b79-default-rtdb.firebaseio.com",
+    "project_id": "project-f3b79",
+    "storage_bucket": "project-f3b79.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:111686263956:android:60087aa2c00676723ac081",
+        "android_client_info": {
+          "package_name": "com.clown327.rokaAppbata"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "111686263956-3bcgcq0v90p5s0833mrc3q45652cl17q.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.clown327.rokaAppbata",
+            "certificate_hash": "cd63c0d6bfc94b0306d8c3e203a4e8bbbf3814fb"
+          }
+        },
+        {
+          "client_id": "111686263956-9kuh11k8at5ogof2qqg2sb1qh2tp2dl7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCXv0WVsWiKiSY3tkIchU7ng8ezvz0IWqI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "111686263956-9kuh11k8at5ogof2qqg2sb1qh2tp2dl7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

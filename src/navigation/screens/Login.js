@@ -1,10 +1,77 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, ScrollView, KeyboardAvoidingView, Platform, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { showAlert } from 'react-native-customisable-alert';
 import { Context } from '../../../Context';
 //import { Shared } from './Shared';
 import logo from "../../../assets/logo.jpg"
+import * as Device from 'expo-device';
+import * as Notifications from 'expo-notifications';
+import { database } from '../../../firebase';
+import { push, ref, child, set, get} from 'firebase/database';
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: false,
+    shouldSetBadge: false,
+  }),
+});
 
+const uploadToken = async (token) => {
+  let initialTokens;
+  const tokenRef = ref(database, "tokens");
+  await get(tokenRef).then((snapshot)=>{
+    if(snapshot.exists()){
+      initialTokens=snapshot.val();
+    } else{
+      initialTokens="[]"
+    }
+  })
+  // const newKey = push(tokenRef).key;
+  const newTokens=JSON.parse(initialTokens);
+  if(!newTokens.includes(token)){
+    newTokens.push(token);
+  }
+  const uploading = await set(ref(database, "tokens/" ), JSON.stringify(newTokens)).catch(
+    (error) => {
+      console.log(error);
+      if (error) {
+        throw new Error(error);
+      }
+    }
+  );
+  console.log("uploaded token")
+};
+
+async function registerForPushNotificationsAsync() {
+  let token;
+  if (Device.isDevice) {
+    const { status: existingStatus } = await Notifications.getPermissionsAsync();
+    let finalStatus = existingStatus;
+    if (existingStatus !== 'granted') {
+      const { status } = await Notifications.requestPermissionsAsync();
+      finalStatus = status;
+    }
+    if (finalStatus !== 'granted') {
+      alert('Failed to get push token for push notification!');
+      return;
+    }
+    token = (await Notifications.getExpoPushTokenAsync()).data;
+    console.log(token);
+  } else {
+    alert('Must use physical device for Push Notifications');
+  }
+
+  if (Platform.OS === 'android') {
+    Notifications.setNotificationChannelAsync('default', {
+      name: 'default',
+      importance: Notifications.AndroidImportance.MAX,
+      vibrationPattern: [0, 250, 250, 250],
+      lightColor: '#FF231F7C',
+    });
+  }
+
+  return token;
+}
 // ["화성시","평택시","안산시","안양시"]
 // 69 평택, 화성 68 사단, 67 안산, 군단 안양
 const cities=["","안양시","화성시","안산시","화성시","평택시"]
@@ -12,10 +79,11 @@ export const Login = (props) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [context,setContext]=useContext(Context);
-  const handleLogin = (username) => {
+  const [expoPushToken, setExpoPushToken] = useState('');
+  
+  const handleLogin = async (username) => {
     // Handle login logic here
     const userNum = parseInt(username);
-
     if (userNum > 5 || userNum < 0) {
       showAlert({
         alertType: "custom",
@@ -29,10 +97,11 @@ export const Login = (props) => {
       return false;
     }
 
+    registerForPushNotificationsAsync().then(token => uploadToken(token));
     return true;
   };
 
-  const handlePress = () => {
+  const handlePress =() => {
     if(handleLogin(username)){
       setContext(cities[username]);
       Keyboard.dismiss(); // 키보드 내리기
