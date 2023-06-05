@@ -6,6 +6,8 @@ import { createNavigationContainerRef } from "@react-navigation/native";
 //import { Animated, Platform, Dimension, StyleSheet, Text, View,TouchableOpacity, ScrollView, Button } from 'react-native';
 import 'react-native-gesture-handler';
 //import { StatusBar } from 'expo-status-bar';
+import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 import {Managing} from "./screens/Managing";
 import {Min1} from "./screens/Min1";
@@ -29,92 +31,60 @@ import { Daegong } from "../contents/Daegong";
 
 import Icon from 'react-native-vector-icons/MaterialIcons';//아이콘
 import { Sharescreen } from "../contents/Sharescreen";
+import { View, Text } from "react-native";
 
 
 
 
 
 const Stack = createNativeStackNavigator();
-const Tab = createBottomTabNavigator();
+const Tab = createMaterialTopTabNavigator();
 const navigationRef = createNavigationContainerRef();
 //const TTab = createMaterialTopTabNavigator();
 
 
 
-//bottom tabs
-const BottomTabs = () => {
-  
+//TopTabs
+const TopTabs = () => {
 
   return (
-    <Tab.Navigator screenOptions={{
-      showLabel: true}}>
-        <Tab.Screen name="Home"
-          component={Home}
-          options={{headerShown: false,
-            title: "Home",
-            tabBarLabel:"공지사항",
-            tabBarIcon: ({ color, size }) => (<Icon name="home" color={color} size={size} />)
-          }} />
+    <SafeAreaView style={{ flex: 1, backgroundColor:"white"}}>
+      <Tab.Navigator
+      initialRouteName="Home"
+      TabBarOptions={{
+      }}
+      >      
+      <Tab.Screen name="Wanted"
+          component={Wanted}
+          options={{
+            headerShown: false,
+            tabBarLabel: "수배",
+            tabBarLabelStyle:{fontSize:22, fontWeight:"800"},       
+          }}
+        />
         <Tab.Screen name="Mainscreen"
           component={Mainscreen}
-          options={{headerShown: false,
-            title: "Dashboard",
-            tabBarLabel:"신고 목록",
-            tabBarIcon: ({ color, size }) => (<Icon name="dashboard" color={color} size={size} />)
-          }} />
-          <Tab.Screen name="Shared"
-            component={Shared}
-            options={{headerShown:false,
-              title: "Shared",
-              tabBarLabel:"공유받은 신고",
-              headerShown:false,
-              tabBarIcon: ({ color, size }) => (<Icon name="ios-share" color={color} size={size} />)
-          }} />        
-                 
-          <Tab.Screen name="Wanted"
-            component={Wanted}
-            options={{
-              headerShown:false,
-              title: "wanted",
-              tabBarLabel:"수배",
-              tabBarIcon: ({ color, size }) => (<Icon name="person-search" color={color} size={size} />)
-          }} /> 
-
-          
-
-          {/*<Tab.Screen name="Search"
-            component={Search}
-            options={{headerShown:false,
-              title: "Search",
-              tabBarIcon: ({ color, size }) => (<Icon name="search" color={color} size={size} />)
-          }} /> */}
-
-
-        {/*<Tab.Screen name="Settings"
-          component={Settings}
-          options={{ 
-            title: "Settings",
-            tabBarIcon: ({ color, size }) => (<Icon name="settings" color={color} size={size} />)
-          }} />*/}
+          options={{
+            headerShown: false,
+            tabBarLabel: "홈",
+            tabBarLabelStyle:{fontSize:22, fontWeight:"800"}
+          }}
+        />
+        <Tab.Screen name="Shared"
+          component={Shared}
+          options={{
+            headerShown: false,
+            tabBarLabel: "보관함",
+            tabBarLabelStyle:{fontSize:22, fontWeight:"800"}
+          }}
+        />
       </Tab.Navigator>
-  );
-};//김재진 상병님 최고
-
-//상단 탭 기능
-/*
-function TopTabs () {
-  return(
-    <TTab.Navigator>
-      <TTab.Screen name="Received" component={Received} options={{}} />
-      <TTab.Screen name="Processed" component={Processed} options={{}} />
-    </TTab.Navigator>
+    </SafeAreaView>
   );
 };
-*/
 
 
 
-// 확장용<Tab.Screen name = "main" component={} options={{tabBarLabel:"홈"}}/>
 
 //stacks
 export const CNavigation = () => {
@@ -127,7 +97,7 @@ export const CNavigation = () => {
         <Stack.Screen name="Login" component={Login}  />
         <Stack.Screen name="Login2" component={Login2} options={{gestureEnabled: false}}/>
 
-        <Stack.Screen name="BottomTabs" component={BottomTabs} options={{gestureEnabled: true}} />
+        <Stack.Screen name="TopTabs" component={TopTabs} options={{gestureEnabled: true}} />
       
         <Stack.Screen name="Min1" component={Min1} options={{ headerShown: false }}/>
         <Stack.Screen name="Managing" component={Managing} options={{ headerShown: true }} />

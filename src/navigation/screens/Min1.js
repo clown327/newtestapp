@@ -25,10 +25,7 @@ export const Min1 = (props) => {
   const {width,height}=useWindowDimensions()
   // console.log(report) //mainscreen에서 주는 reports의 배열 값
   const [userName,setUserName]=useContext(Context);
-<<<<<<< HEAD
 
-=======
->>>>>>> 0715562934365ef01be90a8fa132d45f660c4058
   const images = JSON.parse(report.photo)
     .slice(0, 4)
     .map((uri) => ({ uri }));

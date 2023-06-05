@@ -1,9 +1,10 @@
-import {Text, View, ScrollView, StyleSheet, TouchableOpacity, RefreshControl} from 'react-native'
+import {Text, View, ScrollView, StyleSheet, TouchableOpacity, RefreshControl, Image} from 'react-native'
 import React, { useEffect, useContext } from 'react';
 import { database } from '../../../firebase';
 import { ref, child, onChildAdded} from 'firebase/database';
 import { conColor, mainColor } from '../../../color';
 import { Context } from '../../../Context';
+import roka from "../../../assets/rokalogo.png";
 
 
 //수배 위치
@@ -12,15 +13,6 @@ import { Context } from '../../../Context';
     const bounties = []; //database 안에 있는 bounties라는 파일들 가져오기
 
     const bouref = child(ref(database), 'bounties');
-   
-    const adminName={
-        "0":"지상작전사령부",
-        "1":"수도군단",
-        "2":"51사단",
-        "3":"167여단",
-        "4":"168여단",
-        "5":"169여단"
-      }
 
 export const Wanted = (props) => {
 
@@ -48,57 +40,20 @@ export const Wanted = (props) => {
 
 
     return(
-        <ScrollView style={styles.container} contentContainerStyle={styles.scrollView} refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>}>
-
-            <View style={styles.container2}>
-                <View style={styles.topcontainer}>
-                                <View style={{width:"50%" , justifyContent:"center",marginTop:10,}}>
-                                    <Text style={{fontSize:27,fontWeight:"900",color:mainColor,margin:10,}}>수배</Text>
-                                    <Text style={{fontSize:17,fontWeight:"600",color:mainColor, margin:10,marginTop:17}}>{`부대명:${adminName[adminCode]}`}</Text>
-                                </View>
-                                <View style={{width:"50%"}}>
-                                    <TouchableOpacity style={{
-                                        width:80,
-                                        height:37,
-                                        marginLeft:90,
-                                        marginTop:20,
-                                        borderRadius:15,
-                                        alignItems:"center",
-                                        justifyContent:"center",
-                                        borderWidth:1.5,
-                                        backgroundColor:conColor,
-                                        borderColor:mainColor,
-                                    }} onPress={()=> props.navigation.navigate("Wantedbut")}>
-                                        <Text style={{
-                                                fontSize:17,
-                                                fontWeight:"bold",
-                                                color:mainColor
-                                        }}>수배하기</Text>
-                                    </TouchableOpacity>
-                                </View>
-
-
-                    </View>
-                    <View style={styles.botcontainer}>
-                        {bounties.map((bountie, index) => (
-                                    <TouchableOpacity key={index} onPress={() => {props.navigation.navigate('Wantedview', {bountie:bountie})}}>
-                                        <View style={styles.item}>
-                                        <View style={styles.textcontainer}>
-                                            <View style={styles.typedate}>
-                                            <Text style={styles.typetext}> {bountie.title}</Text>
-                                            </View>
-                                            <View style={styles.detail}>
-                                            <Text style={styles.detailpos}> {bountie.pos}</Text>
-                                            <Text style={styles.datetext}> {bountie.date}</Text>
-                                            <Text style={styles.detailtext}> {bountie.content}</Text>
-                                            </View>
-                                        </View>
-                                        </View>
-                                    </TouchableOpacity>
-                                    ))}
-                    </View>
-            </View>
+        <ScrollView style={{backgroundColor:"white", width:"100%", height:"100%"}}>
+                <View style={{margin:10}} >
+                    <TouchableOpacity onPress={() => {props.navigation.navigate('Min1')}}>
+                        <View style={styles.item}>
+                            <View style={styles.photocon}>
+                                <Image source={roka} style={{borderRadius:30, width:"100%",height:"100%"}} />
+                            </View>
+                            <View style={{alignItems:"center"}}>
+                                <Text style={{color:"white", marginTop:10, fontSize:15, fontWeight:"800"}}>sad</Text>
+                                <Text style={{color:"white", marginTop:5, fontSize:15, fontWeight:"800"}}>asd</Text>
+                            </View>
+                        </View>
+                    </TouchableOpacity>
+                </View>
         </ScrollView>
     );
 }
@@ -106,107 +61,54 @@ export const Wanted = (props) => {
 
 
 const styles = StyleSheet.create({
-    container: {
-        flex:1, 
+    photocon1:{
+        width:"95%",
+        height:240,
+        alignItems:"center",
+        justifyContent:"center",
+    },
+    photo:{
         width:"100%",
         height:"100%",
-        backgroundColor:"white",
-    },
-        topcontainer:{
-        width:"100%",
-        padding:10,
-        height:150,
-        justifyContent:"center",
-        //backgroundColor:"powderblue",
-        borderBottomWidth:2.5,
-        borderBottomColor:conColor,
-        flexDirection:"row"
-    },
-    botcontainer:{
-        width:"100%",
-        height:"88%",
-        padding:10,
-        //backgroundColor:"powderblue",
-        alignItems:"center",
-        //justifyContent:"center",
-    },
-    container2:{
-        marginTop:40,
-      },
-      container3:{
-        justifyContent:"center",
-        alignItems:"center",
-      },
-    catbutton: {
-        width:"100%",
-        height:"100%",
-        height:40,
-        flexDirection:"row",
-        justifyContent:'center',
-    },
-    item: {
-        width:350,
-        height: 180,
-        borderRadius: 20,
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        margin:20,
-        borderWidth:2.5,
-        borderColor:mainColor,
-      },
-    photocontainer: {
-        width:"42%",
-        height:"95%",
-       // backgroundColor: "red",
-        marginLeft:4,
         borderRadius:20,
     },
-    photo: { //여기에 이미지가 들어감
-      width: "100%",
-      height: "100%",
-      borderRadius: 20,
+    Newmin1con:{
+        width:"100%",
+        height:310,
+        margin:10,
     },
-    textcontainer: {
-        width:"95%",
-        height:"90%",
-        marginLeft:8,
-        borderRadius:15,
-        backgroundColor: conColor,
+    Newmin1:{
+        width:"100%",
+        height:"100%",
+        justifyContent:"center",
+    },
+    Remin1con:{
+        width:"100%",
+        height:310,
+        margin:10,
+    },
+    Remin1:{
+        width:"100%",
+        height:"100%",
+        justifyContent:"center",
+    },
+    item:{
+        width:180,
+        height:240,
+        backgroundColor:mainColor,
+        //justifyContent:"center",
+        alignItems:"center",
+        marginLeft:10,
+        borderRadius:30,
+        marginBottom:10,
+    },
+    photocon:{
         margin:5,
-    },
-    typedate:{  
-        width:"100%",
-        height: "20%",
-        //backgroundColor:"yellow",
-    },
-    detail:{
-        width:"100%",
-        height:"80%",
-        //backgroundColor:"red",
-    },
-    title:{
-        fontSize:27,
-        fontWeight:"900",
-        marginTop:10,
-        marginBottom:20,
-        color:mainColor,
-        textAlign:"center"
-    },
-    typetext:{
-        fontSize:15,
-        marginTop:2,
-        fontWeight:"bold",
-    },
-    detailtext:{
-        fontSize:13,
-    },
-    datetext:{
-        fontSize:12,
-    },
-    detailpos:{
-        fontSize:14,
-        fontWeight:"600",
-        marginBottom:2,
+        marginTop:20,
+        width:135,
+        height:120,
+        borderRadius:30,
+        justifyContent:"center",
+
     },
   });

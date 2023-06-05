@@ -30,7 +30,7 @@ export default function Login2(props) {
           <TouchableOpacity
             style={styles.button}
             onPress={() =>
-              props.navigation.reset({ routes: [{ name: "BottomTabs" }] })
+              props.navigation.reset({ routes: [{ name: "TopTabs" }] })
             }
           >
             <Text style={styles.buttonText}>시작하기</Text>

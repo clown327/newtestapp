@@ -1,26 +1,17 @@
 //민원을 관리할 수 있는 화면 입니다 stack
 import {Text, View, ScrollView, StyleSheet, 
         TouchableOpacity, Image, RefreshControl, } from 'react-native'
-import React, {useContext, useEffect} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import { database } from '../../../firebase';
 import { ref, child, onChildAdded } from 'firebase/database';
 import { Context } from '../../../Context';
 import { mainColor, conColor } from '../../../color';
-import logo from "../../../assets/logo.jpg";
+import roka from "../../../assets/rokalogo.png";
 
     
     const reports = [];
     
     const repref = child(ref(database), 'reports');
-    
-    const adminName={
-        "0":"지상작전사령부",
-        "1":"수도군단",
-        "2":"51사단",
-        "3":"167여단",
-        "4":"168여단",
-        "5":"68-2대대"
-      }
 
 export const Shared = (props) => {
 
@@ -43,167 +34,107 @@ export const Shared = (props) => {
       setRefreshing(true);
       setTimeout(() => {
         setRefreshing(false);
-      }, 700);
+      }, 800);
     }, []);
 
     //let filteredData = data.filter(x => String(x.approval).includes(approvalVariable));
     //let reports.filter(rep=>String(rep.shareList).includes(adminCode)===adminCode);
+    const [selectedCategory, setSelectedCategory] = useState("공유된 목록");
+    //필터링을 두번 해줘야 됨 1.처리완료 된거 2.공유된 목록
+    
+    const activeButtonStyle = {
+        width:"25%",
+        height:37,
+        color:mainColor,
+        margin:8,
+        alignItems: 'center',
+        justifyContent: 'center',
+        
+    };
+    
+    const inactiveButtonStyle = {
+        width: '25%',
+        height: 37,
+        margin:8,
+        alignItems: 'center',
+        justifyContent: 'center',
+        opacity:0.3,
+        };
+
+
+
 
     return(
-        <ScrollView style={styles.container} refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>}>
+        <ScrollView style={{width:"100%",height:"100%",backgroundColor:"white", flex:1}}>
+            <View>
+                <View style={{flexDirection:"row", justifyContent:"center"  }}>
+                     <TouchableOpacity style={selectedCategory === adminCode ? activeButtonStyle : inactiveButtonStyle}
+                                        onPress={() => {setSelectedCategory(adminCode)}}>
+                                            <Text style={{fontSize:15,fontWeight:"800",color:"black",}}>공유된 목록</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={selectedCategory == '처리완료'? activeButtonStyle: inactiveButtonStyle}
+                                        onPress={() => {setSelectedCategory("처리완료")}}>
+                                            <Text style={{fontSize:15,fontWeight:"800",color:"black"}}>처리된 내역</Text>
+                        </TouchableOpacity>
+                </View>
 
-                    <View style={styles.container2}>
-
-                        <View style={styles.topcontainer}>
-                            <View style={{flexDirection:"row",}}>
-                                 <Text style={{fontSize:27,fontWeight:"900",color:mainColor,margin:10,}}>공유받은 신고</Text>
-                                 <Image source={logo} style={{width:60,height:60, marginLeft:100,marginBottom:5,}}/>
-                            </View>
-                           
-                            <Text style={{fontSize:17,fontWeight:"600",color:mainColor, margin:10,}}>{`부대명:${adminName[adminCode]}`}</Text>
-
-                        </View>
-
-                        <View style={styles.botcontainer}>
-                        {reports.filter(rep => rep.shareList.includes(adminCode)).map((report, index) => (
-                        <TouchableOpacity key={index} onPress={() => {props.navigation.navigate('Sharescreen', {report:report})}}>
+                {reports.filter(rep=>rep.state===selectedCategory || rep.shareList===selectedCategory).map((report, index) => (
+                    <View key={index} style={{flexDirection:"row"}}>
+                        <TouchableOpacity onPress={() => {props.navigation.navigate('Min1')}}>
                             <View style={styles.item}>
-                            <View style={styles.photocontainer}>
-                                <Image source={{ uri: JSON.parse(report.photo)[0],}} style={styles.photo} />
-                            </View>
-                            <View style={styles.textcontainer}>
-                                <View style={styles.typedate}>
-                                <Text style={styles.typetext}>{report.type}({report.state})</Text>
+                                <View style={styles.photocon}>
+                                <Image source={roka} style={{borderRadius:30, width:"100%",height:"100%"}} />
                                 </View>
-                                <View style={styles.detail}>
-                                <Text style={styles.detailstate}>({report.state})</Text>
-                                <Text style={styles.detailtext}>{report.detail}</Text>
+                                <View style={{alignItems:"center"}}>
+                                <Text style={{color:"white", marginTop:10, fontSize:15, fontWeight:"800"}}>{report.position}</Text>
+                                <Text style={{color:"white", marginTop:5, fontSize:15, fontWeight:"800"}}>{report.type}</Text>
                                 </View>
-                            </View>
                             </View>
                         </TouchableOpacity>
-                        ))}
-
-
-                        </View>
-
-
-
+                        <TouchableOpacity onPress={() => {props.navigation.navigate('Min1')}}>
+                            <View style={styles.item}>
+                                <View style={styles.photocon}>
+                                <Image source={roka} style={{borderRadius:30, width:"100%",height:"100%"}} />
+                                </View>
+                                <View style={{alignItems:"center"}}>
+                                <Text style={{color:"white", marginTop:10, fontSize:15, fontWeight:"800"}}>{report.position}</Text>
+                                <Text style={{color:"white", marginTop:5, fontSize:15, fontWeight:"800"}}>{report.type}</Text>
+                                </View>
+                            </View>
+                        </TouchableOpacity>
                     </View>
+                ))}
+                            
+                <View>
+                </View>
+
+            </View>
         </ScrollView>
     );
+    //{reports.filter(rep=>rep.state===selectedCategory && rep.shareList===selectedCategory).map((report, index) => ())}
 };
 
 
 const styles = StyleSheet.create({
-    container:{
-        width:"100%",
-        height:"100%",
-        flex:1,
-        backgroundColor:"white"
-    },   
-     container2:{
-        marginTop:40,
-      },
-    topcontainer:{
-        width:"100%",
-        padding:10,
-        height:140,
-        //backgroundColor:"powderblue",
-        borderBottomWidth:2.5,
-        borderBottomColor:conColor,
+    item:{
+        width:180,
+        height:240,
+        backgroundColor:mainColor,
+        //justifyContent:"center",
+        alignItems:"center",
+        marginLeft:10,
+        borderRadius:30,
+        marginBottom:10,
+    },
+    photocon:{
+        margin:5,
+        marginTop:20,
+        width:135,
+        height:120,
+        borderRadius:30,
         justifyContent:"center",
+
     },
 
-    botcontainer:{
-        width:"100%",
-        height:"88%",
-        padding:10,
-        alignItems:"center",
-        //backgroundColor:"powderblue",
-    },
-    catbutton: {
-        width:"100%",
-        height:40,
-        borderBottomColor:"#C8D9F3",
-        borderBottomWidth:1.5,
-        marginBottom:35,
-        flexDirection:"row",
-        justifyContent:'center'
-    },
-    container2:{
-        marginTop:50,
-      },
-    titleTop:{
-        width:"100%",
-        height:60,
-       // backgroundColor:"powderblue",
-    },
-    titleText:{
-        fontSize:27,
-        fontWeight:"bold",
-        margin:10,
-        marginLeft:20,
-        color:mainColor,
-    },
-    item: {
-        width:360,
-        height: 180,
-        borderRadius: 20,
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        margin:20,
-        borderWidth:2.5,
-        borderColor:mainColor
-      },
-      photocontainer: {
-          width:"42%",
-          height:"92.5%",
-         // backgroundColor: "red",
-          marginLeft:6,
-          borderRadius:20,
-      },
-      photo: { //여기에 이미지가 들어감
-        width: "100%",
-        height: "100%",
-        borderRadius: 20,
-      },
-      textcontainer: {
-          width:"53%",
-          height:"100%",
-          //backgroundColor: "blue",
-          margin:10,
-      },
-      typedate:{  
-          width:"100%",
-          height: "20%",
-          //backgroundColor:"yellow",
-      },
-      detail:{
-          width:"100%",
-          height:"80%",
-          //backgroundColor:"red",
-      },
-      title:{
-          fontSize:27,
-          fontWeight:"bold",
-          marginTop:50,
-          marginBottom:30,
-          textAlign:"center"
-      },
-      typetext:{
-          fontSize:15,
-          marginTop:2,
-          fontWeight:"bold",
-      },
-      detailtext:{
-          fontSize:13,
-      },
-      detailstate:{
-        fontSize:14,
-        fontWeight:"600",
-        marginBottom:5,
-    },
+   
 });

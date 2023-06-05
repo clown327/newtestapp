@@ -1,5 +1,6 @@
 //새로 만들어진 민원들을 보여주는 페이지 입니다. 끝
-import {SafeAreaView ,Text, View, ScrollView, StyleSheet, TouchableOpacity, Button, Image, RefreshControl} from 'react-native'
+import {SafeAreaView ,Text, View, ScrollView, StyleSheet, 
+        TouchableOpacity, Button, Image, RefreshControl, FlatList} from 'react-native'
 import React, { useContext, useEffect, useState} from 'react';
 import { database } from '../../../firebase';
 import { ref, child, onChildAdded, onChildChanged } from 'firebase/database';
@@ -8,10 +9,18 @@ import { conColor, mainColor } from '../../../color';
 import logo from "../../../assets/logo.jpg";
 import roka from "../../../assets/rokalogo.png";
 import { Context } from '../../../Context';
+import { SliderBox } from "react-native-image-slider-box";
+import image from '../../../assets/image.jpg';
 
 
 
 
+        /*
+        삼항 연산자 ' (조건) ? (참일 경우) : (거짓일 경우) ' 로 부분 조건부 렌더링 구현
+
+        51사단 168여단 68-2대대 이렇게만 화성으로 분류할 것.
+
+        */
 
 //source = {{uri:JSON.parse(reports[1].photo)[0],}} style = {styles.square} 사진 넣는 법
 const reports = []; //database 안에 있는 reports라는 파일들 가져오기
@@ -52,229 +61,144 @@ export const Mainscreen = (props) => {
       }, 700);
     }, []);
 
-    // const [cateState, setCateState] = useState(reports); // 초기값은 전체 데이터
     const [selectedCategory, setSelectedCategory] = useState("미접수"); // 선택된 카테고리 초기값은 "전체"
-
-
-    // const category = (cate) => {
-    // if (cate == '전체') {
-    //     setCateState(reports);
-    //     setSelectedCategory('전체');
-    // } else {
-    //     setCateState(
-    //     reports.filter((d) => {
-    //         return d.state == cate;
-    //     })
-    //     );
-    //     setSelectedCategory(cate);
-    // }
-    // };
-    const activeButtonStyle = {
-        width:"20%",
-        height:37,
-        color:mainColor,
-        margin: 3,
-        marginLeft: 7,
-        marginRight: 7,
-        borderBottomWidth:2.5,
-        borderBottomColor:mainColor,
-        marginTop: 29.5,
-        alignItems: 'center',
-        justifyContent: 'center',
-        
-    };
-    
-    const inactiveButtonStyle = {
-        width: '20%',
-        height: 37,
-        borderBottomWidth:2.5,
-        borderBottomColor:conColor,
-        marginLeft: 8,
-        marginRight: 8,
-        marginTop: 29.5,
-        alignItems: 'center',
-        justifyContent: 'center',
-        opacity:0.4,
-        };
-      //미접수/접수/처리중/처리완료 
+ 
 
     
     return(
-    <ScrollView style={styles.container} contentContainerStyle={styles.scrollView}
-    refreshControl={
-      <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
-         
-        <View style={styles.container2}>
-
-            <View style={styles.topcontainer}>
-                <View style={styles.titlecontainer}>
-                    <Text style={{fontSize:27,fontWeight:"900",color:mainColor,margin:10, marginLeft:15,}}>신고 목록</Text>
-                    <Image source={logo} style={{width:60, height:60, marginLeft:152,}}/>
-                </View>    
-                 <View style={{}}>
-                    <View style={styles.catbutton}>
-                        <TouchableOpacity style={selectedCategory == '미접수'? activeButtonStyle : inactiveButtonStyle}
-                                        onPress={() => {setSelectedCategory("미접수")}}>
-                                            <Text style={{fontSize:17,fontWeight:"700",color:mainColor,}}>미접수</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={selectedCategory == '처리중'? activeButtonStyle: inactiveButtonStyle}
-                                        onPress={() => {setSelectedCategory("처리중")}}>
-                                            <Text style={{fontSize:17,fontWeight:"700",color:mainColor,}}>처리중</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={selectedCategory == '처리완료'? activeButtonStyle: inactiveButtonStyle}
-                                        onPress={() => {setSelectedCategory("처리완료")}}>
-                                            <Text style={{fontSize:17,fontWeight:"700",color:mainColor,}}>처리완료</Text>
-                        </TouchableOpacity>
-                    </View>    
+        <ScrollView style={{width:"100%",height:"100%", backgroundColor:"white"}}>
+                
+                <View style={{alignItems:"center", marginTop:10,}}>
+                    <View style={styles.photocon1}> 
+                        <Image source={image} style={styles.photo} />
+                    </View>
                 </View>
 
 
-            </View>
-
-
-                    <View style={styles.botcontainer}>
-                       
-                        {reports.filter(rep=>rep.state===selectedCategory && (adminCode==="2" || adminCode==="4"|| adminCode==="5") && rep.position.includes("화성")).map((report, index) => (
-                            <TouchableOpacity key={index} onPress={() => {props.navigation.navigate('Min1', {report:report})}}>
-                                <View style={styles.item}>
-                                <View style={styles.photocontainer}>
-                                    {JSON.parse(report.photo).length>0 ? (
-                                        <Image source={{ uri: JSON.parse(report.photo)[0],}} style={styles.photo} />
-                                        ) : (
-                                        <Image source={roka} style={styles.photo} />
-                                        )}
-                                </View>
-                                <View style={styles.textcontainer}>
-                                    <View style={styles.typedate}>
-                                    <Text style={styles.typetext}>{report.type}</Text>
-                                    </View>
-                                    <Text style={styles.detailstate}>({report.state})</Text>
-                                    <View style={styles.detail}>
-                                    <Text style={styles.detailtext}>{report.detail}</Text>
-                                    </View>
-                                </View>
-                                </View>
+                <View style={styles.Newmin1con}>
+                    <View style={{flexDirection:"row"}}>
+                        <Text style={{fontSize:17,fontWeight:"bold",}}>New 신고</Text>
+                        
+                        <View style={{marginLeft:200}}>
+                            <TouchableOpacity>
+                                <Text style={{fontSize:17,fontWeight:"bold", color:"#BE6DFE"}}>더보기..</Text>
                             </TouchableOpacity>
-                            ))}
+                        </View>
 
+                    </View>
+                    
+                    
+                    <View style={styles.Newmin1}>
+                        <ScrollView horizontal = {true} > 
+                        {reports.filter(rep=>rep.state==="미접수").map((report, index)=>(
+                                <TouchableOpacity onPress={() => {props.navigation.navigate('Min1')}}>
+                                    <View style={styles.item}>
+                                        <View style={styles.photocon}>
+                                            <Image source={roka} style={{borderRadius:30, width:"100%",height:"100%"}} />
+                                        </View>
+                                        <View style={{alignItems:"center"}}>
+                                            <Text style={{color:"white", marginTop:10, fontSize:15, fontWeight:"800"}}>sad</Text>
+                                            <Text style={{color:"white", marginTop:5, fontSize:15, fontWeight:"800"}}>asd</Text>
+                                        </View>
+                                    </View>
+                                </TouchableOpacity>
+                                ))}
+                        </ScrollView>
+                    </View>
+                </View>
 
+                <View style={styles.Remin1con}>
+                <View style={{flexDirection:"row"}}>
+                        <Text style={{fontSize:17,fontWeight:"bold",}}>접수했던 신고</Text>
+                        
+                        <View style={{marginLeft:170}}>
+                            <TouchableOpacity>
+                                <Text style={{fontSize:17,fontWeight:"bold", color:"#BE6DFE"}}>더보기..</Text>
+                            </TouchableOpacity>
+                        </View>
 
-            </View>
-        </View>
-    </ScrollView>
+                        </View>
+
+                    <View style={styles.Remin1}>
+                        <ScrollView horizontal = {true}>
+                            <View>
+                            {reports.filter(rep=>rep.state==="미접수").map((report, index)=>(
+                                <TouchableOpacity onPress={() => {props.navigation.navigate('Min1')}}>
+                                    <View style={styles.item}>
+                                        <View style={styles.photocon}>
+                                            <Image source={roka} style={{borderRadius:30, width:"100%",height:"100%"}} />
+                                        </View>
+                                        <View style={{alignItems:"center"}}>
+                                            <Text style={{color:"white", marginTop:10, fontSize:15, fontWeight:"800"}}>sad</Text>
+                                            <Text style={{color:"white", marginTop:5, fontSize:15, fontWeight:"800"}}>asd</Text>
+                                        </View>
+                                    </View>
+                                </TouchableOpacity>
+                                ))}
+                            </View>
+                                
+                        </ScrollView>
+                    </View>
+
+                </View> 
+        </ScrollView>
     );
 };
 
-        /*
-        삼항 연산자 ' (조건) ? (참일 경우) : (거짓일 경우) ' 로 부분 조건부 렌더링 구현
 
-        51사단 168여단 68-2대대 이렇게만 화성으로 분류할 것.
-
-        */
 
 const styles = StyleSheet.create({
-    container: {
-        flex:1, 
+    photocon1:{
+        width:"95%",
+        height:240,
+        alignItems:"center",
+        justifyContent:"center",
+    },
+    photo:{
         width:"100%",
         height:"100%",
-        backgroundColor:"white",
-    },
-    titlecontainer:{
-        flexDirection:"row",
-    },
-        topcontainer:{
-        width:"100%",
-        padding:10,
-        height:150,
-        justifyContent:"center",
-        //backgroundColor:"powderblue",
-        
-        borderBottomWidth:2.5,
-        borderBottomColor:conColor,
-    },
-    botcontainer:{
-        width:"100%",
-        height:"88%",
-        padding:10,
-        //backgroundColor:"powderblue",
-        alignItems:"center",
-        //justifyContent:"center",
-    },
-    container2:{
-        marginTop:40,
-      },
-      container3:{
-        justifyContent:"center",
-        alignItems:"center",
-      },
-    catbutton: {
-        width:"100%",
-        height:"100%",
-        height:40,
-        flexDirection:"row",
-        justifyContent:'center',
-    },
-    item: {
-      width:360,
-      height: 180,
-      borderRadius: 20,
-      flexDirection: 'row',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-      margin:20,
-      borderWidth:2.5,
-      borderColor:mainColor,
-    },
-    photocontainer: {
-        width:"42%",
-        height:"92.5%",
-       // backgroundColor: "red",
-        marginLeft:6,
         borderRadius:20,
     },
-    photo: { //여기에 이미지가 들어감
-      width: "100%",
-      height: "100%",
-      borderRadius: 20,
+    Newmin1con:{
+        width:"100%",
+        height:310,
+        margin:10,
     },
-    textcontainer: {
-        width:"53%",
+    Newmin1:{
+        width:"100%",
         height:"90%",
-        //backgroundColor: conColor,
-        borderRadius:20,
-        marginLeft:5,
-        marginRight:2,
+        justifyContent:"center",
+
     },
-    typedate:{  
+    Remin1con:{
         width:"100%",
-        height: "20%",
-        //backgroundColor:"yellow",
+        height:310,
+        margin:10,
     },
-    detail:{
+    Remin1:{
         width:"100%",
-        height:105,
-        //backgroundColor:"red",
+        height:"90%",
+        justifyContent:"center",
     },
-    title:{
-        fontSize:27,
-        fontWeight:"900",
-        marginTop:10,
-        marginBottom:20,
-        color:mainColor
-        //textAlign:"center"
+    item:{
+        width:180,
+        height:240,
+        backgroundColor:mainColor,
+        //justifyContent:"center",
+        alignItems:"center",
+        borderRadius:30,
+        margin:10,
+        marginTop:15,
+
     },
-    typetext:{
-        fontSize:14,
-        marginTop:2,
-        fontWeight:"bold",
-    },
-    detailtext:{
-        fontSize:13,
-    },
-    detailstate:{
-        fontSize:14,
-        fontWeight:"600",
-        marginBottom:5,
+    photocon:{
+        margin:5,
+        marginTop:20,
+        width:135,
+        height:120,
+        borderRadius:30,
+        justifyContent:"center",
+
     },
   });
   
