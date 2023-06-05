@@ -1,12 +1,13 @@
 //민원을 관리할 수 있는 화면 입니다 stack
 import {Text, View, ScrollView, StyleSheet, 
-        TouchableOpacity, Image, RefreshControl, } from 'react-native'
+        TouchableOpacity, Image, RefreshControl, FlatList, } from 'react-native'
 import React, {useContext, useEffect, useState} from 'react';
 import { database } from '../../../firebase';
 import { ref, child, onChildAdded } from 'firebase/database';
 import { Context } from '../../../Context';
 import { mainColor, conColor } from '../../../color';
 import roka from "../../../assets/rokalogo.png";
+import { ItemContainer } from '../../../CustomButtons/ItemContainer';
 
     
     const reports = [];
@@ -64,54 +65,169 @@ export const Shared = (props) => {
 
 
 
-    return(
-        <ScrollView style={{width:"100%",height:"100%",backgroundColor:"white", flex:1}} refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>}>
+    return (
+      <View style={{ flex: 1, backgroundColor: "white",alignItems:"center" }}>
+        <View style={{ flexDirection: "row", justifyContent: "center" }}>
+          <TouchableOpacity
+            style={
+              selectedCategory == adminCode
+                ? activeButtonStyle
+                : inactiveButtonStyle
+            }
+            onPress={() => {
+              setSelectedCategory(adminCode);
+            }}
+          >
+            <Text style={{ fontSize: 15, fontWeight: "800", color: "black" }}>
+              공유된 목록
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={
+              selectedCategory == "처리완료"
+                ? activeButtonStyle
+                : inactiveButtonStyle
+            }
+            onPress={() => {
+              setSelectedCategory("처리완료");
+            }}
+          >
+            <Text style={{ fontSize: 15, fontWeight: "800", color: "black" }}>
+              처리된 내역
+            </Text>
+          </TouchableOpacity>
+        </View>
+        <FlatList 
+        style={{
+            width: "100%",
+            padding:10,
+            height: "100%",
+            backgroundColor: "white",
+            flex: 1,
+            alignSelf:"center"
+          }}
+          numColumns={2}
+          columnWrapperStyle={{justifyContent:"space-between"}}
 
-            <View>
-                <View style={{flexDirection:"row", justifyContent:"center"  }}>
-                     <TouchableOpacity style={selectedCategory == adminCode ? activeButtonStyle : inactiveButtonStyle}
-                                        onPress={() => {setSelectedCategory(adminCode)}}>
-                                            <Text style={{fontSize:15,fontWeight:"800",color:"black",}}>공유된 목록</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={selectedCategory == '처리완료'? activeButtonStyle: inactiveButtonStyle}
-                                        onPress={() => {setSelectedCategory("처리완료")}}>
-                                            <Text style={{fontSize:15,fontWeight:"800",color:"black"}}>처리된 내역</Text>
-                        </TouchableOpacity>
+        data={reports.filter(
+            (rep) =>
+              rep.shareList.includes(selectedCategory) ||
+              rep.state === selectedCategory
+          )}
+          renderItem={({item}) => (
+            // <View key={index} style={{flexDirection:"row"}}>
+            <TouchableOpacity
+              onPress={() => {
+                props.navigation.navigate("Min1", { report: item });
+              }}
+            >
+                <ItemContainer report={item}/>
+              {/* <View style={styles.item}>
+                <View style={styles.photocon}>
+                  <Image
+                    source={roka}
+                    style={{
+                      borderRadius: 30,
+                      width: "100%",
+                      height: "100%",
+                    }}
+                  />
                 </View>
-
-                {reports.filter(rep=>rep.shareList.includes(selectedCategory) ||  rep.state===selectedCategory).map((report, index) => (
-                    <View key={index} style={{flexDirection:"row"}}>
-                        <TouchableOpacity onPress={()=>{props.navigation.navigate('Min1', {report:report})}}>
-                            <View style={styles.item}>
-                                <View style={styles.photocon}>
-                                <Image source={roka} style={{borderRadius:30, width:"100%",height:"100%"}} />
-                                </View>
-                                <View style={{alignItems:"center"}}>
-                                <Text style={{color:"white", marginTop:10, fontSize:15, fontWeight:"800"}}>{report.position}</Text>
-                                <Text style={{color:"white", marginTop:5, fontSize:15, fontWeight:"800"}}>{report.type}</Text>
-                                </View>
-                            </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={()=>{props.navigation.navigate('Min1', {report:report})}}>
-                            <View style={styles.item}>
-                                <View style={styles.photocon}>
-                                <Image source={roka} style={{borderRadius:30, width:"100%",height:"100%"}} />
-                                </View>
-                                <View style={{alignItems:"center"}}>
-                                <Text style={{color:"white", marginTop:10, fontSize:15, fontWeight:"800"}}>{report.position}</Text>
-                                <Text style={{color:"white", marginTop:5, fontSize:15, fontWeight:"800"}}>{report.type}</Text>
-                                </View>
-                            </View>
-                        </TouchableOpacity>
+                <View style={{ alignItems: "center" }}>
+                  <Text
+                    style={{
+                      color: "white",
+                      marginTop: 10,
+                      fontSize: 15,
+                      fontWeight: "800",
+                    }}
+                  >
+                    {item.position}
+                  </Text>
+                  <Text
+                    style={{
+                      color: "white",
+                      marginTop: 5,
+                      fontSize: 15,
+                      fontWeight: "800",
+                    }}
+                  >
+                    {item.type}
+                  </Text>
+                </View>
+              </View> */}
+            </TouchableOpacity>
+            // </View>
+          )}
+        />
+        {/* <ScrollView
+          style={{
+            width: "100%",
+            height: "100%",
+            backgroundColor: "white",
+            flex: 1,
+          }}
+          contentContainerStyle={{flexDirection:"row",flexWrap:"wrap"}}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
+        >
+          <View>
+            {reports
+              .filter(
+                (rep) =>
+                  rep.shareList.includes(selectedCategory) ||
+                  rep.state === selectedCategory
+              )
+              .map((report, index) => (
+                // <View key={index} style={{flexDirection:"row"}}>
+                <TouchableOpacity
+                  onPress={() => {
+                    props.navigation.navigate("Min1", { report: report });
+                  }}
+                >
+                  <View style={styles.item}>
+                    <View style={styles.photocon}>
+                      <Image
+                        source={roka}
+                        style={{
+                          borderRadius: 30,
+                          width: "100%",
+                          height: "100%",
+                        }}
+                      />
                     </View>
-                ))}
-                            
-                <View>
-                </View>
+                    <View style={{ alignItems: "center" }}>
+                      <Text
+                        style={{
+                          color: "white",
+                          marginTop: 10,
+                          fontSize: 15,
+                          fontWeight: "800",
+                        }}
+                      >
+                        {report.position}
+                      </Text>
+                      <Text
+                        style={{
+                          color: "white",
+                          marginTop: 5,
+                          fontSize: 15,
+                          fontWeight: "800",
+                        }}
+                      >
+                        {report.type}
+                      </Text>
+                    </View>
+                  </View>
+                </TouchableOpacity>
+                // </View>
+              ))}
 
-            </View>
-        </ScrollView>
+            <View></View>
+          </View>
+        </ScrollView> */}
+      </View>
     );
 };
 

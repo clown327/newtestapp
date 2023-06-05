@@ -17,6 +17,7 @@ import { disabled } from "deprecated-react-native-prop-types/DeprecatedTextPropT
 import roka from "../../../assets/rokalogo.png";
 import { useContext } from "react";
 import { Context } from "../../../Context";
+import { PopUpCard } from "../../../CustomButtons/PopUpCard";
 
 
 export const Min1 = (props) => {
@@ -246,24 +247,24 @@ export const Min1 = (props) => {
             </TouchableOpacity>
           )} */}
           {isProcessing && (
-            <DropDownCard
+            <PopUpCard
               buttonWidth={width * 0.85}
               buttonHeight={65}
               title={"조치사항 작성"}
               description={"신고 내용에 대한 조치사항 및 사진을 올려주세요!"}
             >
               <Comment report={report} />
-            </DropDownCard>
+            </PopUpCard>
           )}
           {isProcessing && (
-            <DropDownCard
+            <PopUpCard
               buttonWidth={width * 0.85}
               buttonHeight={65}
               title={"신고자 알림 작성"}
               description={"신고자에게 전달하고 싶은 사항을 작성해주세요"}
             >
               <Comment2 report={report} />
-            </DropDownCard>
+            </PopUpCard>
           )}
           {/* {isProcessing && (
             <TouchableOpacity

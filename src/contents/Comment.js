@@ -318,7 +318,7 @@ export const Comment = (props) => {
               <TextInput
                 style={styles.content}
                 editable={!props.isComplete}
-                placeholder="조치된 내용을 입력해 주세요"
+                placeholder={!props.isComplete?"조치된 내용을 입력해 주세요":"조치된 사항이 없습니다."}
                 onChangeText={(text) => setContent(text)}
                 value={content}
                 ref={(input) => (contentInput = input)}

@@ -33,6 +33,7 @@ import { More } from "../contents/More";
 import Icon from 'react-native-vector-icons/MaterialIcons';//아이콘
 import { Sharescreen } from "../contents/Sharescreen";
 import { View, Text,TouchableOpacity } from "react-native";
+import { darkCello, darkGreen, deco, shadowGreen } from "../../color";
 
 
 
@@ -50,15 +51,15 @@ const navigationRef = createNavigationContainerRef();
 const TopTabs = () => {
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor:"white"}}>
-      <View style={{flexDirection:"row"}}>
-        <Text style={{fontSize:25, fontWeight:"800", marginLeft:15,}}>ARA</Text>
-        <View style={{marginLeft:225, flexDirection:"row"}}>
-          <TouchableOpacity style={{marginRight:10}}>
+    <SafeAreaView style={{ flex: 1, backgroundColor:shadowGreen}}>
+      <View style={{flexDirection:"row", justifyContent:"space-between",paddingHorizontal:20,marginTop:10}}>
+        <Text style={{fontSize:30, fontFamily:"armyBold", marginLeft:15,color:darkCello}}>ARA</Text>
+        <View style={{flexDirection:"row"}}>
+          {/* <TouchableOpacity style={{marginRight:10}}>
             <Icon name="notifications" size={30} color="#000000"/>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         <TouchableOpacity onPress={()=> navigate('Home')}>
-            <Icon name="dashboard" size={30} color="#000000"/>
+            <Icon name="edit" size={30} color="#000000"/>
         </TouchableOpacity>
         </View>
       </View>
@@ -67,44 +68,37 @@ const TopTabs = () => {
       initialRouteName="Mainscreen"
       tabBarOptions={{
         style: {
-          paddingTop: 10,
           borderTopwidth:2,
           borderTopColor: "#ccc",
-          height: 60,
+          height: 50,
+          backgroundColor:darkGreen
         },
         labelStyle: {
           fontSize: 16,
           fontWeight: "bold",
         },
-        activeTintColor: "#000",
-        inactiveTintColor: "#ccc",
+        activeTintColor: deco,
+        inactiveTintColor: "white",
         labelPosition: "below-icon",
         showLabel: true,
         showIcon: true,
         indicatorStyle: {
-          backgroundColor: "#000",
+          backgroundColor: deco,
         },
 
         tabStyle: {
           paddingHorizontal: 0, // 탭바들 사이의 간격을 10으로 설정
-          
+          // backgroundColor:darkGreen
         },
       }}
       >      
-      <Tab.Screen name="Wanted"
-          component={Wanted}
-          options={{
-            headerShown: false,
-            tabBarLabel: "수배",
-            tabBarLabelStyle:{fontSize:22, fontWeight:"800"},       
-          }}
-        />
+      
         <Tab.Screen name="Mainscreen"
           component={Mainscreen}
           options={{
             headerShown: false,
-            tabBarLabel: "홈",
-            tabBarLabelStyle:{fontSize:22, fontWeight:"800"}
+            tabBarLabel: "신고 접수",
+            tabBarLabelStyle:{fontSize:22, fontFamily:"suiteL"}
           }}
         />
         <Tab.Screen name="Shared"
@@ -112,7 +106,15 @@ const TopTabs = () => {
           options={{
             headerShown: false,
             tabBarLabel: "보관함",
-            tabBarLabelStyle:{fontSize:22, fontWeight:"800"}
+            tabBarLabelStyle:{fontSize:22, fontFamily:"suiteL"}
+          }}
+        />
+        <Tab.Screen name="Wanted"
+          component={Wanted}
+          options={{
+            headerShown: false,
+            tabBarLabel: "수배",
+            tabBarLabelStyle:{fontSize:22, fontFamily:"suiteL"},       
           }}
         />
       </Tab.Navigator>

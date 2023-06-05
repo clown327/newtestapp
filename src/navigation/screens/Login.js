@@ -8,6 +8,8 @@ import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
 import { database } from '../../../firebase';
 import { push, ref, child, set, get} from 'firebase/database';
+import { LinearGradient } from 'expo-linear-gradient';
+import { darkCello, darkGreen, deco } from '../../../color';
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
     shouldShowAlert: true,
@@ -109,15 +111,46 @@ export const Login = (props) => {
     }
   }
 
-  return ( 
+  return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={styles.container}
       >
         <View style={styles.inner}>
-          <Image source = {logo} style={styles.image}/>
-          <Text style={styles.title}>관리자 로그인</Text>
+          {/* <Image source = {logo} style={styles.image}/>
+          <Text style={styles.title}>관리자 로그인</Text> */}
+          <LinearGradient
+            colors={["rgba(40, 93, 104,0.7)", darkCello]}
+            start={{ x: 0.5, y: 1 }}
+            end={{ x: 0.5, y: 0 }}
+            locations={[0, 0.8]}
+            style={{
+              position: "absolute",
+              flex: 1,
+              width: "100%",
+              height: "120%",
+            }}
+          ></LinearGradient>
+          <Text
+            style={{
+              fontFamily: "suiteL",
+              fontSize: 18,
+              color: deco,
+              marginBottom: 5,
+              borderBottomWidth: 1,
+              borderColor: deco,
+            }}
+          >
+            모두의 육군 주민 신고 앱
+          </Text>
+          <Text style={{ color: deco, fontSize: 70, fontFamily: "armyBold" }}>
+            {" "}
+            A R A{" "}
+          </Text>
+          <Text style={{ fontFamily: "goL", fontSize: 25, color: "white" }}>
+            Army Report App
+          </Text>
           <TextInput
             style={styles.input}
             placeholder="관리자 코드 번호 입력"
@@ -132,12 +165,15 @@ export const Login = (props) => {
             value={password}
             onChangeText={setPassword}
           /> */}
-          <TouchableOpacity style={styles.button} onPress={() => {
-            if(handleLogin(username)){
-              setContext(username);
-              props.navigation.navigate("Login2");
-            }
-            }}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => {
+              if (handleLogin(username)) {
+                setContext(username);
+                props.navigation.navigate("Login2");
+              }
+            }}
+          >
             <Text style={styles.buttonText}>로그인</Text>
           </TouchableOpacity>
         </View>
@@ -173,10 +209,11 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#ccc',
     marginBottom: 18,
-    textAlign:"center"
+    textAlign:"center",
+    backgroundColor:"white"
   },
   button: {
-    backgroundColor: '#1E90FF',
+    backgroundColor: darkGreen,
     width: '80%',
     height: 48,
     alignItems: 'center',

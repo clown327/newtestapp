@@ -1,16 +1,17 @@
-import {Text, View, ScrollView, StyleSheet, TouchableOpacity, RefreshControl, Image} from 'react-native'
+import {Text, View, ScrollView, StyleSheet, TouchableOpacity, RefreshControl, Image, FlatList} from 'react-native'
 import React, { useEffect, useContext } from 'react';
 import { database } from '../../firebase';
 import { ref, child, onChildAdded} from 'firebase/database';
 import { conColor, mainColor } from '../../color';
 import { Context } from '../../Context';
 import roka from "../../assets/rokalogo.png";
+import { ItemContainer } from '../../CustomButtons/ItemContainer';
 
 
 //수배 위치
 //수배 내용
 //사진
-    const report = []; //database 안에 있는 report라는 파일들 가져오기
+    let report = []; //database 안에 있는 report라는 파일들 가져오기
     const repref = child(ref(database), 'reports');
 
 
@@ -26,6 +27,7 @@ export const More2 = (props) => {
         });
         return(()=>{
             unsubscribe();
+            report=[];
         })
      },[])
 
@@ -40,29 +42,33 @@ export const More2 = (props) => {
 
 
     return(
-        <ScrollView style={{backgroundColor:"white", width:"100%", height:"100%"}}refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>}>
-                
-                {report.filter(rep=>rep.state==="처리중").map((report, index) => (
-                        <View>
-                            <TouchableOpacity key={index} onPress={()=>{props.navigation.navigate('Min1', {report:report})}}>
-                                <View style={styles.item}>
-                                    <View style={styles.photocon}>
-                                    {JSON.parse(report.photo).length>0 ? (
-                                    <Image source={{ uri: JSON.parse(report.photo)[0],}} style={{borderRadius:30, width:"100%",height:"100%"}} />
-                                    ) : (
-                                    <Image source={roka} style={{borderRadius:30, width:"100%",height:"100%"}} />
-                                    )}
-                                    </View>
-                                    <View style={{alignItems:"center"}}>
-                                        <Text style={{color:"white", marginTop:10, fontSize:15, fontWeight:"800"}}>{report.position}</Text>
-                                        <Text style={{color:"white", marginTop:5, fontSize:15, fontWeight:"800"}}>{report.type}</Text>
-                                    </View>
-                                </View>
-                            </TouchableOpacity>
-                        </View>
-                            ))}
-        </ScrollView>
+         <FlatList
+        style={{backgroundColor:"white", width:"100%", height:"100%"}}
+        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>} 
+        // style={{
+        //     width: "100%",
+        //     padding:10,
+        //     height: "100%",
+        //     backgroundColor: "white",
+        //     flex: 1,
+        //     alignSelf:"center"
+        //   }}
+        data={report.filter(rep=>rep.state==="처리중")}
+        numColumns={2}
+        columnWrapperStyle={{justifyContent:"space-between", paddingHorizontal:20}}
+        renderItem={({item})=>{
+            return(
+                    // <View key={index} style={{flexDirection:"row"}}>
+                    <TouchableOpacity
+                      onPress={() => {
+                        props.navigation.navigate("Min1", { report: item });
+                      }}
+                    >
+                        <ItemContainer report={item}/>
+                    </TouchableOpacity>
+            )
+        }}
+        />
     );
 }
 

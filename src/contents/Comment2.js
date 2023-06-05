@@ -77,7 +77,7 @@ showAlert({
               <TextInput
                 style={styles.content}
                 editable={!props.isComplete}
-                placeholder="신고자에게 전달할 내용을 적어주세요"
+                placeholder={!props.isComplete?"신고자에게 전달할 내용을 적어주세요":"신고자 알림이 없습니다."}
                 onChangeText={(text) => setContent(text)}
                 value={content}
                 ref={(input) => (contentInput = input)}
