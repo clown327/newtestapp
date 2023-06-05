@@ -12,6 +12,7 @@ import {
     getDownloadURL,
     
   } from "firebase/storage";
+import { darkCello, loafer, shadowGreen, subColor3 } from '../../color';
 const pickImage = async () => {
   //verify permmision
   const mediaPermission = await ImagePicker.getMediaLibraryPermissionsAsync();
@@ -279,6 +280,7 @@ export const Comment = (props) => {
                   <Text style={{ fontSize: 20 }}>+</Text>
                 </View>
               </TouchableOpacity>}
+              {(images.length===0&&props.isComplete)&&<Text style={{textAlignVertical:"center",fontFamily:"suiteL",color:subColor3}}>등록된 사진이 없습니다.</Text>}
               {images.map((uri) => {
                 //이미지 띄우기
                 //   console.log(uri);
@@ -338,12 +340,13 @@ const styles = StyleSheet.create({
     container:{
         width:"100%",
         // height:"90%",
-        backgroundColor:"white"
+        backgroundColor:loafer
     },
     send:{
         marginLeft: 70,
         marginRight:5,
         alignItems:"center",
+        
     },
     send2:{
         marginLeft:10,
@@ -351,7 +354,8 @@ const styles = StyleSheet.create({
     },
     sendTenxt:{
         fontSize:12,
-        fontWeight:"bold",
+        // fontWeight:"bold",
+        fontFamily:"suiteM"
     },
     title:{
         width:"100%",
@@ -362,14 +366,15 @@ const styles = StyleSheet.create({
     },
     titletext:{
         fontSize:27,
-        fontWeight:"bold",
+        // fontWeight:"bold",
         margin:10,
+        fontFamily:"suiteB"
     },
     inputContainer: {
         width: '90%',
         padding: 10,
         height: 60,
-        backgroundColor: 'powderblue',
+        backgroundColor: shadowGreen,
         borderRadius: 10,
         marginLeft: 16,
         marginTop: 20,
@@ -382,7 +387,7 @@ const styles = StyleSheet.create({
         width:"91%",
         padding:10,
         height:130,
-        backgroundColor:"powderblue",
+        backgroundColor:shadowGreen,
         borderRadius:10,
         marginLeft:16,
         marginTop: 5,
@@ -395,7 +400,9 @@ const styles = StyleSheet.create({
         width:"91%",
         height:300,
         flex:1,
-        backgroundColor:"#D9D9D9",
+        // backgroundColor: "gray",
+        borderWidth:2,
+        borderColor:darkCello,
         borderRadius:10,
         marginLeft:17,
         marginTop:30,

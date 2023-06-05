@@ -12,13 +12,13 @@ import { DropDownCard } from "../../../CustomButtons/DropDownCard";
 import { Comment } from "../../contents/Comment";
 import { Comment2 } from "../../contents/Comment2";
 import { MyCheckbox } from "../../../CustomButtons/MyCheckBox";
-import { conColor, mainColor } from "../../../color";
+import { buttonGreen, conColor, darkCello, darkGreen, darkLoafer, loafer, mainColor, subColor1, subColor3 } from "../../../color";
 import { disabled } from "deprecated-react-native-prop-types/DeprecatedTextPropTypes";
 import roka from "../../../assets/rokalogo.png";
 import { useContext } from "react";
 import { Context } from "../../../Context";
 import { PopUpCard } from "../../../CustomButtons/PopUpCard";
-
+import { LinearGradient } from "expo-linear-gradient";
 
 export const Min1 = (props) => {
   const report = props.route.params.report;
@@ -86,34 +86,53 @@ export const Min1 = (props) => {
 
   return (
     <ScrollView style={styles.container}>
+      <LinearGradient
+            colors={["rgba(40, 93, 104,0.7)", darkCello]}
+            start={{ x: 0.5, y: 1 }}
+            end={{ x: 0.5, y: 0 }}
+            locations={[0.3, 1.2]}
+            style={{
+              position: "absolute",
+              flex: 1,
+              width: "100%",
+              height: "120%",
+              // opacity:0.9
+            }}
+          ></LinearGradient>
       <View style={styles.container2}>
         <View>
           <View style={styles.title}>
-            <Text style={styles.titletext}>
+            <Text style={{...styles.titletext,color:buttonGreen}}>
               {report.type} ({report.state})
             </Text>
             <Text></Text>
           </View>
-            <View style={{height:365,width:"95%",marginLeft:10,alignItems:"center", borderBottomColor:mainColor, borderBottomWidth:1.5,}}>
+            <View style={{height:365,width:"95%",marginLeft:10,alignItems:"center", borderBottomColor:loafer,}}>
               <View style={styles.photocontainer}>
               {images.length > 0 ? (
                 <SliderBox images={images} style={styles.photo} />):(
-                  <SliderBox images={roka} style={styles.photo} />
+                  <SliderBox images={[roka]} style={styles.photo} />
                 )
               }
               </View>
             </View>
 
-
-
+        <View style={{backgroundColor:loafer, width:"95%",alignSelf:"center",borderTopRightRadius:50,borderTopLeftRadius:50}}>
+        <LinearGradient
+         colors={[darkLoafer, "rgba(255, 255, 255, 1)"]}
+         start={{ x: 0.5, y: 1 }}
+         end={{ x: 0.5, y: 0 }}
+         locations={[0, 1]}
+      style={{ position:"absolute",flex:1,width:"100%",height:"100%",opacity:0.95,borderTopRightRadius:50,borderTopLeftRadius:50}}
+    ></LinearGradient>
           <View style={styles.detail}>
               <Text style={styles.positext}>{report.position}</Text>
               <Text style={styles.pnumtext}>{report.pnumber}</Text>
   
 
             <Text style={styles.detailtext}>{report.detail}</Text>
-            <View style={{ backgroundColor: "powderblue", padding:10, borderRadius:10 }}>
-              <Text style={styles.titletext}>공유 부대 목록</Text>
+            <View style={{ backgroundColor: darkLoafer, padding:10, borderRadius:10,borderWidth:2,borderColor:darkCello,elevation:2 }}>
+              <Text style={{...styles.titletext,color:darkCello}}>공유 부대 목록</Text>
 
               <View style={{ flexDirection: "row", alignItems: "center",justifyContent:"space-around", marginBottom:10}}>
                 <MyCheckbox
@@ -169,11 +188,11 @@ export const Min1 = (props) => {
                 }}
                 initCheck={initSharedList.includes("5")}
               />
-              <Text>68-2여단</Text>
+              <Text>168-2대대</Text>
             </View>
             </View>
           </View>
-          <View style={{flexDirection:"row",}}>
+          <View style={{flexDirection:"row",justifyContent:"space-around",width:"95%",alignSelf:"center"}}>
                      <TouchableOpacity
               style={{...styles.combutton,width:"40%", alignSelf:"center"}}
               onPress={() => {
@@ -278,7 +297,7 @@ export const Min1 = (props) => {
           )} */}
           {isProcessing && (
             <TouchableOpacity
-              style={{...styles.combutton,alignSelf:"center"}}
+              style={{...styles.combutton,alignSelf:"center",width:"80%",backgroundColor:subColor1}}
               onPress={() => {
                 handleReceive1(report, "처리완료");
                 props.navigation.navigate("Mainscreen");
@@ -303,6 +322,7 @@ export const Min1 = (props) => {
           )}
         </View>
       </View>
+    </View>  
     </ScrollView>
   );
 };
@@ -318,12 +338,17 @@ const styles = StyleSheet.create({
     marginTop:50,
   },
   positext:{
-    fontSize:19,
-    fontWeight:"600",
+    fontSize:23,
+    fontFamily:"suiteB",
+    marginTop:10,
+    color:"black",
+    textAlign:"center"
 
   },
   pnumtext:{
-    color:"gray",
+    color:subColor3,
+    fontFamily:"suiteL",
+    textAlign:"right"
   },
   title: {
     width: "95%",
@@ -335,11 +360,12 @@ const styles = StyleSheet.create({
     alignItems:"center",
     flex:1,
     borderBottomWidth:1.5,
-    borderBottomColor:mainColor,
+    borderBottomColor:loafer,
   },
   titletext: {
     fontSize: 25,
-    fontWeight: "bold",
+    fontFamily:"suiteB",
+    color:loafer
   },
   photocontainer: {
     width: 320,
@@ -368,13 +394,15 @@ const styles = StyleSheet.create({
     fontSize: 17,
     marginTop: 15,
     marginBottom:15,
+    fontFamily:"suiteM",
+    color:"black"
   },
   combutton: {
     width: "35%",
     height: 65,
-    backgroundColor: "#1E90FF",
-    marginTop: 10,
-    marginLeft: 26,
+    backgroundColor:darkGreen,
+    marginVertical: 20,
+    // marginLeft: 26,
   
     borderRadius: 10,
     alignItems: "center",
@@ -393,8 +421,9 @@ const styles = StyleSheet.create({
   },
   comtext: {
     fontSize: 20,
-    fontWeight: "bold",
+    // fontWeight: "bold",
     color: "white",
+    fontFamily:"suiteB"
   },
 
 
@@ -408,7 +437,8 @@ const styles = StyleSheet.create({
   },
   comtext2:{
     fontSize:20,
-    fontWeight:"bold",
+    // fontWeight:"bold",
+    fontFamily:"suiteB"
   },
   photocontainer2:{
     width:"100%",

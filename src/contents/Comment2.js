@@ -4,6 +4,7 @@ import { database } from "../../firebase";
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { ref,update, child } from 'firebase/database';
 import { showAlert} from 'react-native-customisable-alert';
+import { darkCello, loafer } from '../../color';
 
 export const Comment2 = (props) => {
 
@@ -97,7 +98,7 @@ const styles = StyleSheet.create({
   container: {
     width: "100%",
     // height:"90%",
-    backgroundColor: "white",
+    backgroundColor:loafer
   },
   send: {
     marginLeft: 40,
@@ -110,7 +111,7 @@ const styles = StyleSheet.create({
   },
   sendTenxt: {
     fontSize: 12,
-    fontWeight: "bold",
+    fontFamily:"suiteM"
   },
   title: {
     width: "100%",
@@ -121,8 +122,9 @@ const styles = StyleSheet.create({
   },
   titletext: {
     fontSize: 27,
-    fontWeight: "bold",
+    // fontWeight: "bold",
     margin: 10,
+    fontFamily:"suiteB"
   },
   inputContainer: {
     width: "90%",
@@ -151,14 +153,16 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   contentcontainer: {
-    width: "91%",
-    height: 300,
-    flex: 1,
-    backgroundColor: "#D9D9D9",
-    borderRadius: 10,
-    marginLeft: 17,
-    marginTop: 30,
-    justifyContent: "flex-start",
+    width:"91%",
+    height:300,
+    flex:1,
+    // backgroundColor: "gray",
+    borderWidth:2,
+    borderColor:darkCello,
+    borderRadius:10,
+    marginLeft:17,
+    marginTop:30,
+    justifyContent:"flex-start"
   },
   content: {
     height: "100%",
@@ -169,6 +173,7 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     padding: 10,
     color: "black",
+    fontFamily:"suiteM"
   },
   alertText: {
     width: 250,

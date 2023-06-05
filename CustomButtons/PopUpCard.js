@@ -11,6 +11,7 @@ import {
   // import { mainColor } from "../constants/colors";
   import { useState } from "react";
 import { showAlert } from "react-native-customisable-alert";
+import { loafer, shadowGreen } from "../color";
   
   const { UIManager } = NativeModules;
   
@@ -43,8 +44,8 @@ import { showAlert } from "react-native-customisable-alert";
             customAlert:(
                < View
             style={{
-              width: width*0.8,
-              height:height*0.8,
+              width: width*0.9,
+              height:height*0.9,
               alignItems: "center",
               ...styles.popUp,
             }}
@@ -65,10 +66,10 @@ import { showAlert } from "react-native-customisable-alert";
             ...styles.buttonStyle,
           }}
         >
-          <Text style={{ color: "white", fontSize: 20 }}> {props.title} </Text>
+          <Text style={{ color: "white", fontSize: 20, fontFamily:"suiteB"}}> {props.title} </Text>
         </View>
         </TouchableOpacity>
-        {isSelected ? 
+        {/* {isSelected ? 
           <View
             style={{
               width: width*0.8,
@@ -83,7 +84,7 @@ import { showAlert } from "react-native-customisable-alert";
             </Text>
             
           </View> : null}
-  
+   */}
       
       </View>
     );
@@ -91,15 +92,14 @@ import { showAlert } from "react-native-customisable-alert";
   
   const styles = StyleSheet.create({
     buttonStyle: {
-      backgroundColor: "powderblue",
+      backgroundColor: shadowGreen,
       borderRadius: 10,
       justifyContent: "center",
       alignItems: "center",
     },
     popUp: {
-      backgroundColor: "white",
-      borderBottomLeftRadius: 20,
-      borderBottomRightRadius: 20,
+      backgroundColor: loafer,
+      borderRadius: 20,
       padding: 5,
       elevation:1,
     },
