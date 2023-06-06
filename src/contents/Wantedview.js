@@ -1,113 +1,129 @@
-//민원을 관리할 수 있는 화면 입니다 stack
-import {Text, View, StyleSheet, ScrollView } from 'react-native'
-import { mainColor } from '../../color';
 
+
+import { View, Text, StyleSheet, ScrollView,LayoutAnimation,NativeModules } from "react-native";
+import { buttonGreen, mainColor, subColor1, subColor3 } from "../../color.js";
+import * as Location from "expo-location";
+import { useCallback, useEffect, useState } from "react";
+import MapView, {PROVIDER_GOOGLE,Marker} from "react-native-maps";
+
+const { UIManager } = NativeModules;
+
+UIManager.setLayoutAnimationEnabledExperimental &&
+  UIManager.setLayoutAnimationEnabledExperimental(true);
 export const Wantedview = (props) => {
-    
-
-
+  // console.log(props.route)
   const bountie = props.route.params.bountie;
+  const [locationText, setLocationText] = useState("");
+  const [locationPermission, setLocationPermission] = Location.useForegroundPermissions();
+  const [coordLoaded,setCoordLoaded]=useState(false);
+  const [coords,setCoords]=useState(null);
+//   const getLocation= async (address) => {
+//     if (!locationPermission.granted) {
+//       await setLocationPermission();
+//     }
+//     const locationCoord =
+//       await Location.geocodeAsync(address);
+//     return locationCoord;
+// }
+ const setLocation=useCallback(async()=>{
+    if (!locationPermission?.granted) {
+        await setLocationPermission();
+      }
+      const locationCoord =
+        await Location.geocodeAsync(bountie.pos);
+    //  console.log(locationCoord);
+    if(locationCoord.length>0){
+      console.log(locationCoord)
+      await setCoords(locationCoord);
+      LayoutAnimation.spring();
+      await setCoordLoaded(true);
+    }
+ 
+ })
+  useEffect(()=>{
+    setTimeout(()=>{
+        setLocation();
+    },1000)
   
-  return(
-  <ScrollView
-       style={styles.container}
-       keyboardShouldPersistTaps='handled'>
-       <View style={styles.container2}>
-           <View style={styles.title}>
-               <Text style={styles.titletext}>수배</Text>
-           </View>
-           <View style={styles.title2}>
-              <Text style={styles.titletext2}>{bountie.title}</Text>
-           </View>
-           <View style={styles.contentcontainer}>
-              <Text style={styles.content2}>{bountie.pos}</Text>
-           </View>
-           <View style={styles.contentcontainer}>
-              <Text style={styles.content}>{bountie.content}</Text>
-           </View>
-       </View>
-   </ScrollView>
+  },[locationPermission])
+  return (
+    <View style={{ flex: 1, justifyContent:"flex-start", alignItems: "center",paddingTop:40,backgroundColor:"white" }}>
+      <View style={styles.titleView}>
+        <Text style={styles.titleText}>{bountie.title}</Text>
+      </View>
+      <View style={styles.dateView}>
+      <Text style={{color:subColor3,fontFamily:"suiteL"}} >{bountie.date}</Text>
+      </View>
+      {coordLoaded?<MapView 
+      provider={PROVIDER_GOOGLE}
+      style={{width:300,height:300}}
+      initialRegion={
+        {
+            latitude: coords[0].latitude,
+            longitude: coords[0].longitude,
+            latitudeDelta: 0.0222,
+            longitudeDelta: 0.0100,
+        }
+      }
+      showsUserLocation={true}
+      >
+        <Marker 
+        key={1}
+        coordinate={{
+            latitude: coords[0].latitude,
+            longitude: coords[0].longitude,
+        }}
+        title={"수배 위치"}
+        />
+        </MapView>:<Text style={{height:100,textAlign:'center',fontFamily:"suiteL",textAlignVertical:"center",color:subColor3}}>지도표시 중...</Text>}
+      <View style={styles.position}>
+       <Text style={{color:subColor1,textAlign:"center",fontSize:16,fontFamily:"suiteB"}} >{"-수배 위치-\n"+bountie.pos}</Text>
+      </View>
+      <ScrollView style={styles.contentScroll}>
+        <Text style={{fontFamily:"suiteM"}}>
+            {bountie.content}
+        </Text>
+      </ScrollView>
+    </View>
   );
-}
+};
+
 const styles = StyleSheet.create({
-  container:{
-      width:"100%",
-      height:"100%",
-      backgroundColor:"white"
+  titleView: {
+    width: "80%",
+    borderBottomColor: buttonGreen,
+    borderBottomWidth: 1,
+    alignItems: "center",
   },
-  container2:{
-      marginTop:50,
-    },    
-  send:{
-      marginLeft: 110,
-
+  dateView:{
+    width:"80%",
+    alignItems:"flex-end",
+    marginBottom:15
   },
-  title:{
-      width:"100%",
-      height:60,
-      margin:13,
-      flexDirection:"row"
+  titleText:{
+    fontSize:18,
+    fontFamily:"suiteB",
+    textAlign:"center",
+    marginBottom:5
   },
-  titletext:{
-      fontSize:27,
-      fontWeight:"bold",
-      margin:10,
-      color:mainColor,
+  contentScroll:{
+    borderWidth:1,
+    padding:20,
+    borderColor:buttonGreen,
+    borderRadius:10,
+    maxHeight:250,
+    width:"80%",
+    backgroundColor:'white',
+    elevation:3
   },
-  imagecontainer:{
-
+  dateView:{
+    width:"80%",
+    alignItems:"flex-end",
+    marginBottom:15
   },
-  inputContainer: {
-      width: '90%',
-      padding: 10,
-      height: 60,
-      backgroundColor: 'powderblue',
-      borderRadius: 10,
-      marginLeft: 16,
-      marginTop: 20,
+  position:{
+    width:"100%",
+    alignItems:"center",
+    marginVertical:15,
   },
-  input: {
-      fontSize: 27,
-      fontWeight: 'bold',
-  },
-  title2:{
-      width:"91%",
-      padding:10,
-      height:"100%",
-      flex:1,
-      backgroundColor:"powderblue",
-      borderRadius:10,
-      marginLeft:16,
-      marginTop: 10,
-      justifyContent:"center",
-      
-  },
-  titletext2:{
-      fontSize:24,
-      fontWeight:"bold",
-  },
-  contentcontainer:{
-      width:"91%",
-      height:"100%",
-      flex:1,
-      backgroundColor:"#E9E4E4",
-      borderRadius:10,
-      marginLeft:17,
-      marginTop:30,
-  },
-  content:{
-      fontSize:17,
-      marginTop:3,
-      marginLeft:10,
-      marginRight:5,
-      marginBottom:5,
-  },
-  content2:{
-    fontWeight:"bold",
-    fontSize:17,
-    marginTop:3,
-    marginLeft:10,
-    marginRight:5,
-    marginBottom:5,
-}
 });

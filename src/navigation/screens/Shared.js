@@ -15,7 +15,14 @@ import { LinearGradient } from 'expo-linear-gradient';
     const repref = child(ref(database), 'reports');
 
 export const Shared = (props) => {
-
+   const regions={
+    "0":"수도",
+    "1":"안양",
+    "2":"화성",
+    "3":"안산",
+    "4":"화성",
+    "5":"화성"
+   }
 
     const [adminCode, setAdminCode]=useContext(Context);
     
@@ -121,13 +128,13 @@ export const Shared = (props) => {
         data={reports.filter(
             (rep) =>
               rep.shareList.includes(selectedCategory) ||
-              rep.state === selectedCategory
+              ((rep.state === selectedCategory)&&rep.position.includes(regions[adminCode])) 
           )}
           renderItem={({item}) => (
             // <View key={index} style={{flexDirection:"row"}}>
             <TouchableOpacity
               onPress={() => {
-                props.navigation.navigate("Min1", { report: item });
+                props.navigation.navigate("Min1", { report: item, isShared:item.shareList.includes(selectedCategory) });
               }}
               style={{marginVertical:5}}
             >

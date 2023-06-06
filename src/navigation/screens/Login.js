@@ -76,7 +76,7 @@ async function registerForPushNotificationsAsync() {
 }
 // ["화성시","평택시","안산시","안양시"]
 // 69 평택, 화성 68 사단, 67 안산, 군단 안양
-const cities=["","안양시","화성시","안산시","화성시","평택시"]
+const cities=["","안양시","화성시","안산시","화성시","화성시"]
 export const Login = (props) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');

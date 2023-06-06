@@ -35,6 +35,8 @@ import Icon from 'react-native-vector-icons/MaterialIcons';//아이콘
 import { Sharescreen } from "../contents/Sharescreen";
 import { View, Text,TouchableOpacity } from "react-native";
 import { buttonGreen, darkCello, darkGreen, deco, powderGreen, shadowGreen } from "../../color";
+import { useContext } from "react";
+import { Context } from "../../Context";
 
 
 
@@ -47,14 +49,33 @@ const navigationRef = createNavigationContainerRef();
 //const TTab = createMaterialTopTabNavigator();
 
 
-
+const adminName={
+  "0":"지상작전사령부",
+  "1":"수도군단",
+  "2":"51사단",
+  "3":"167여단",
+  "4":"168여단",
+  "5":"168여단 2대대" //169->68-2로 바뀜 
+}
+const regions={
+  "0":"관할지역 없음",
+  "1":"안양시",
+  "2":"화성시",
+  "3":"안산시",
+  "4":"화성시",
+  "5":"화성시"
+ }
 //TopTabs
 const TopTabs = () => {
-
+ const [adminCode,setAdminCode]=useContext(Context);
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor:"white"}}>
-      <View style={{flexDirection:"row", justifyContent:"space-between",paddingHorizontal:20,marginTop:10}}>
-        <Text style={{fontSize:30, fontFamily:"armyBold", marginLeft:15,color:darkCello}}>ARA</Text>
+      <View style={{flexDirection:"row", justifyContent:"space-between",alignItems:"center",paddingHorizontal:20,marginTop:10}}>
+        
+        <View style={{flexDirection:"row",alignItems:"center"}}>
+          <Text style={{fontSize:30, fontFamily:"armyBold", marginLeft:15,color:darkCello}}>{`ARA`}</Text>
+          <Text style={{fontSize:17,fontFamily:"suiteL",color:darkCello,marginLeft:5}}>{`${adminName[adminCode]} (${regions[adminCode]})`}</Text>
+        </View>
         <View style={{flexDirection:"row"}}>
           {/* <TouchableOpacity style={{marginRight:10}}>
             <Icon name="notifications" size={30} color="#000000"/>
@@ -144,7 +165,8 @@ export const CNavigation = () => {
         <Stack.Screen name="Complete" component={Complete} options={{gestureEnabled: false}} />
         <Stack.Screen name="Writenoti" component={Writenoti} options={{gestureEnabled: true}} />
         <Stack.Screen name="Comment" component={Comment} options={{gestureEnabled: true}} />
-        <Stack.Screen name="Notiview" component={Notiview} options={{gestureEnabled: true}} />
+        <Stack.Screen name="Notiview" component={Notiview}
+        options={{gestureEnabled: true, headerShown: true,headerTitle:"",headerTitleStyle:{fontFamily:"suiteB", fontSize:22}, headerTintColor:"white",headerBackground:()=>(<View style={{flex:1,backgroundColor:darkGreen}}/>)}} />
         <Stack.Screen name="Wantedbut" component={Wantedbut} options={{gestureEnabled: true}} />
         <Stack.Screen name="Wantedview" component={Wantedview} options={{gestureEnabled: true}} />
         <Stack.Screen name="Sharescreen" component={Sharescreen} options={{gestureEnabled: true}} />
@@ -153,7 +175,8 @@ export const CNavigation = () => {
         options={{gestureEnabled: true, headerShown: true, headerTitle:"미접수 신고",headerTitleStyle:{fontFamily:"suiteB", fontSize:22}, headerTintColor:"white",headerBackground:()=>(<View style={{flex:1,backgroundColor:darkGreen}}/>)}} />
         <Stack.Screen name="More2" component={More2} 
         options={{gestureEnabled: true, headerShown: true, headerTitle:"처리 중인 신고",headerTitleStyle:{fontFamily:"suiteB", fontSize:22}, headerTintColor:"white",headerBackground:()=>(<View style={{flex:1,backgroundColor:darkGreen}}/>)}} />
-        <Stack.Screen name="Home" component={Home} options={{gestureEnabled: true, headerShown: true}} />
+        <Stack.Screen name="Home" component={Home} 
+        options={{gestureEnabled: true, headerShown: true,headerTitle:"공지사항",headerTitleStyle:{fontFamily:"suiteB", fontSize:22}, headerTintColor:"white",headerBackground:()=>(<View style={{flex:1,backgroundColor:darkGreen}}/>)}} />
       
       </Stack.Navigator>
     </NavigationContainer>

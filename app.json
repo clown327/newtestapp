@@ -23,6 +23,11 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyCoLySCHCCTXssLBiAPOlku-ZSjNwQOy7A"
+        }
+      },
       "package": "com.clown327.rokaAppbata"
     },
     "web": {

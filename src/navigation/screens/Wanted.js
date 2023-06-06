@@ -2,7 +2,7 @@ import {Text, View, ScrollView, StyleSheet, TouchableOpacity, RefreshControl, Im
 import React, { useEffect, useContext } from 'react';
 import { database } from '../../../firebase';
 import { ref, child, onChildAdded} from 'firebase/database';
-import { buttonGreen, conColor, darkCello, darkLoafer, mainColor } from '../../../color';
+import { buttonGreen, conColor, darkCello, darkLoafer, mainColor, matrix } from '../../../color';
 import { Context } from '../../../Context';
 import roka from "../../../assets/rokalogo.png";
 import { LinearGradient } from 'expo-linear-gradient';
@@ -37,8 +37,6 @@ export const Wanted = (props) => {
         setRefreshing(false);
       }, 700);
     }, []);
-    
-
 
     return (
         <View style={{ flex: 1, backgroundColor: "white",alignItems:"center" }}>
@@ -49,6 +47,31 @@ export const Wanted = (props) => {
          locations={[0, 1]}
       style={{ position:"absolute",flex:1,width:"100%",height:"100%",opacity:0.95}}
     ></LinearGradient>
+    <View style={{ flexDirection: "row", justifyContent: "center" }}>
+      
+      <TouchableOpacity
+        style={
+          {
+            width:"25%",
+            height:37,
+            color:matrix,
+            margin:8,
+            alignItems: 'center',
+            justifyContent: 'center',
+            
+        }
+      
+           
+        }
+        onPress={() => {
+          props.navigation.navigate("Wantedbut")
+        }}
+      >
+        <Text style={{ fontSize: 15, fontWeight: "800", color: matrix}}>
+          수배 작성하기
+        </Text>
+      </TouchableOpacity>
+</View>
         <FlatList 
          data={bounties}
          numColumns={2}

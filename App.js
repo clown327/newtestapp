@@ -9,7 +9,10 @@ import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
 import * as TaskManager from "expo-task-manager";
 import {useFonts} from 'expo-font'
-
+import * as Location from 'expo-location';
+const mapsetting=async ()=>{
+  await Location.setGoogleApiKey("AIzaSyCoLySCHCCTXssLBiAPOlku-ZSjNwQOy7A");
+}
 const BACKGROUND_NOTIFICATION_TASK = 'BACKGROUND-NOTIFICATION-TASK';
 
 TaskManager.defineTask(BACKGROUND_NOTIFICATION_TASK, ({ data, error, executionInfo }) => {

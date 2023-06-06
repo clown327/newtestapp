@@ -10,7 +10,9 @@ import {
 import { database } from './../../firebase';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { ref, push, set, getDatabase, child } from 'firebase/database';
-
+import { darkGreen, lightGreen, shadowGreen,darkLoafer, buttonGreen, darkCello, cello } from '../../color';
+import { LinearGradient } from 'expo-linear-gradient';
+// import { ceil } from 'react-native-reanimated';
 const dbRef = ref(database);
 const noticesRef = child(dbRef, 'notices');
 
@@ -35,16 +37,25 @@ export const Writenoti = (props) => {
   };
 
   return (
+    <View style={{flex:1,height:"100%",width:"100%"}}>
+       <LinearGradient
+         colors={[cello, "rgba(255, 255, 255, 1)"]}
+         start={{ x: 0.5, y: 1 }}
+         end={{ x: 0.5, y: 0 }}
+         locations={[0, 0.9]}
+      style={{ position:"absolute",flex:1,width:"100%",height:"100%",opacity:0.95}}
+    ></LinearGradient>
     <ScrollView
       style={styles.container}
       keyboardShouldPersistTaps="handled"
     >
+      
       <View style={styles.container2}>
         <View style={styles.title}>
           <Text style={styles.titletext}>공지사항 작성</Text>
           <TouchableOpacity style={styles.button} onPress={Post}>
             <View style={styles.send}>
-              <Icon name="done" size={50} color="#000000" />
+              <Icon name="done" size={50} color={buttonGreen} />
             </View>
           </TouchableOpacity>
         </View>
@@ -75,6 +86,7 @@ export const Writenoti = (props) => {
         </View>
       </View>
     </ScrollView>
+    </View>
   );
 };
 
@@ -82,25 +94,31 @@ const styles = StyleSheet.create({
   container: {
     width: '100%',
     height: '100%',
-    backgroundColor: 'white',
+    // backgroundColor: 'white',
+    flex:1,
   },
   container2:{
-    marginTop:50,
   },
 
   send: {
-    marginLeft: 110,
+    // marginLeft: 110,
+    
   },
   title: {
     width: '100%',
     height: 60,
-    margin: 13,
+    marginVertical: 13,
     flexDirection: 'row',
+    justifyContent:"space-between",
+    paddingHorizontal:20
   },
   titletext: {
     fontSize: 27,
-    fontWeight: 'bold',
+    // fontWeight: 'bold',
+    fontFamily:"suiteB",
     margin: 10,
+    alignSelf:"center",
+    color:darkCello
   },
   imagecontainer: {},
 
@@ -122,39 +140,49 @@ const styles = StyleSheet.create({
     padding: 10,
     height: "100%",
     flex:1,
-    backgroundColor: 'powderblue',
+    // backgroundColor: shadowGreen,
     borderRadius: 10,
+    borderColor:darkGreen,
+    borderWidth:2,
     marginLeft: 16,
     marginTop: 10,
     justifyContent:"center",
+    // alignItems:"center"
   },
   titletext2: {
     fontSize: 24,
     fontWeight: 'bold',
+    // textAlign:"center",
+    width:"100%"
   },
   contentcontainer: {
     width: '91%',
-    height: '100%',
+    height: 300,
     flex: 1,
-    backgroundColor: '#E9E4E4',
+    backgroundColor: lightGreen,
     borderRadius: 10,
-    marginLeft: 17,
+    // marginLeft: 17,
+    alignSelf:"center",
     marginTop: 20,
+    padding:10
   },
   content1: {
-    fontSize: 20,
-    marginTop: 3,
-    marginLeft: 10,
-    marginRight: 5,
-    marginBottom: 5,
-    fontWeight:"bold",
+    fontSize: 18,
+    // marginTop: 3,
+    // marginLeft: 10,
+    // marginRight: 5,
+    // marginBottom: 5,
+    fontFamily:"suiteB",
+    width:"100%",
+    textAlign:"center"
   },
   content2: {
-    fontSize: 17,
-    marginTop: 3,
-    marginLeft: 10,
-    marginRight: 5,
-    marginBottom: 5,
-    //fontWeight:"bold",
+    fontSize: 18,
+    // marginTop: 3,
+    // marginLeft: 10,
+    // marginRight: 5,
+    // marginBottom: 5,
+    fontFamily:"suiteL",
+    width:"100%",
   },
 });

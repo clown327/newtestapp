@@ -1,6 +1,6 @@
 //공지를 보여주는 화면입니다.
 import {Text, View, SafeAreaView, StyleSheet, ScrollView} from 'react-native'
-import { mainColor } from '../../color';
+import { buttonGreen, cello, darkLoafer, loafer, mainColor, subColor3 } from '../../color';
 
 export const Notiview = (props) => {
     
@@ -9,96 +9,51 @@ export const Notiview = (props) => {
     const notice = props.route.params.notice;
     
     return(
-    <ScrollView
-         style={styles.container}
-         keyboardShouldPersistTaps='handled'>
-         <View style={styles.container2}>
-             <View style={styles.title}>
-                 <Text style={styles.titletext}>공지사항</Text>
-             </View>
-             <View style={styles.title2}>
-                <Text style={styles.titletext2}>{notice.title}</Text>
-             </View>
-             <View style={styles.contentcontainer}>
-                <Text style={styles.content}>{notice.content}</Text>
-             </View>
-         </View>
-     </ScrollView>
+        <View style={{ flex: 1, justifyContent:"flex-start", alignItems: "center",paddingTop:40,backgroundColor:darkLoafer }}>
+        <View style={styles.titleView}>
+          <Text style={styles.titleText}>{notice.title}</Text>
+        </View>
+        <View style={styles.dateView}>
+        <Text style={{ color:subColor3, fontFamily:"suiteL", marginTop:10}} >{notice.date}</Text>
+        </View>
+        <ScrollView style={styles.contentScroll}>
+          <Text style={{fontFamily:"suiteM"}}>
+              {notice.content}
+          </Text>
+        </ScrollView>
+      </View>
     );
 }
 
 
 const styles = StyleSheet.create({
-    container:{
-        width:"100%",
-        height:"100%",
-        backgroundColor:"white"
+    titleView: {
+      width: "80%",
+      borderBottomColor: buttonGreen,
+      borderBottomWidth: 2,
+      alignItems: "center",
     },
-    container2:{
-        marginTop:50,
-      },    
-    send:{
-        marginLeft: 110,
-
+    dateView:{
+      width:"80%",
+      alignItems:"flex-end",
+      marginBottom:15
     },
-    title:{
-        width:"100%",
-        height:60,
-        margin:13,
-        flexDirection:"row"
+    titleText:{
+      fontSize:18,
+      fontFamily:"suiteB",
+      textAlign:"center",
+      marginBottom:5,
+     
     },
-    titletext:{
-        fontSize:27,
-        fontWeight:"bold",
-        margin:10,
-        color:mainColor,
-    },
-    imagecontainer:{
-
-    },
-    inputContainer: {
-        width: '90%',
-        padding: 10,
-        height: 60,
-        backgroundColor: 'powderblue',
-        borderRadius: 10,
-        marginLeft: 16,
-        marginTop: 20,
-    },
-    input: {
-        fontSize: 27,
-        fontWeight: 'bold',
-    },
-    title2:{
-        width:"91%",
-        padding:10,
-        height:"100%",
-        flex:1,
-        backgroundColor:"powderblue",
-        borderRadius:10,
-        marginLeft:16,
-        marginTop: 10,
-        justifyContent:"center",
-        
-    },
-    titletext2:{
-        fontSize:24,
-        fontWeight:"bold",
-    },
-    contentcontainer:{
-        width:"91%",
-        height:"100%",
-        flex:1,
-        backgroundColor:"#E9E4E4",
-        borderRadius:10,
-        marginLeft:17,
-        marginTop:30,
-    },
-    content:{
-        fontSize:17,
-        marginTop:3,
-        marginLeft:10,
-        marginRight:5,
-        marginBottom:5,
+    contentScroll:{
+      borderWidth:2,
+      padding:20,
+      borderColor:cello,
+      borderRadius:10,
+      maxHeight:500,
+      width:"80%",
+      backgroundColor:loafer,
+      elevation:3
     }
-});
+  });
+  

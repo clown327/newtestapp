@@ -12,7 +12,7 @@ import { DropDownCard } from "../../../CustomButtons/DropDownCard";
 import { Comment } from "../../contents/Comment";
 import { Comment2 } from "../../contents/Comment2";
 import { MyCheckbox } from "../../../CustomButtons/MyCheckBox";
-import { buttonGreen, conColor, darkCello, darkGreen, darkLoafer, loafer, mainColor, subColor1, subColor3 } from "../../../color";
+import { buttonGreen, conColor, darkCello, darkGreen, darkLoafer, loafer, mainColor, matrix, shadowGreen, subColor1, subColor3 } from "../../../color";
 import { disabled } from "deprecated-react-native-prop-types/DeprecatedTextPropTypes";
 import roka from "../../../assets/rokalogo.png";
 import { useContext } from "react";
@@ -32,10 +32,16 @@ export const Min1 = (props) => {
     .map((uri) => ({ uri }));
 
 
-  const isCompleted = report.state === "처리완료";
-  const isProcessing = report.state === "처리중";
-  const isReceived = report.state === "미접수";
-  // const isDoing = report.state === '접수';
+  let isCompleted = report.state === "처리완료";
+  let isProcessing = report.state === "처리중";
+  let isReceived = report.state === "미접수";
+  let isSharedView = props.route.params.isShared;
+  if(isSharedView){
+    isProcessing=false;
+    isReceived=false;
+    isCompleted=true;
+  }
+    // const isDoing = report.state === '접수';
 
   const updateSharedList=async (adminCode,bool)=>{
     const sharedList=JSON.parse(report.shareList);
@@ -103,9 +109,9 @@ export const Min1 = (props) => {
         <View>
           <View style={styles.title}>
             <Text style={{...styles.titletext,color:buttonGreen}}>
-              {report.type} ({report.state})
+              {report.type} 
             </Text>
-            <Text></Text>
+            <Text style={{...styles.titletext,color:shadowGreen,fontSize:18,fontFamily:"suiteL"}} >({report.state})</Text>
           </View>
             <View style={{height:365,width:"95%",marginLeft:10,alignItems:"center", borderBottomColor:loafer,}}>
               <View style={styles.photocontainer}>
@@ -129,7 +135,7 @@ export const Min1 = (props) => {
               <Text style={styles.positext}>{report.position}</Text>
               <Text style={styles.pnumtext}>{report.pnumber}</Text>
   
-
+              <Text style={{fontFamily:"suiteB",fontSize:18, color:buttonGreen}}>신고내용</Text>
             <Text style={styles.detailtext}>{report.detail}</Text>
             <View style={{ backgroundColor: darkLoafer, padding:10, borderRadius:10,borderWidth:2,borderColor:darkCello,elevation:2 }}>
               <Text style={{...styles.titletext,color:darkCello}}>공유 부대 목록</Text>
@@ -212,7 +218,7 @@ export const Min1 = (props) => {
 
           {isReceived && (
             <TouchableOpacity
-              style={styles.combutton}
+              style={{...styles.combutton, width:"85%",alignSelf:'center',backgroundColor:subColor1}}
               onPress={() => {
                 handleReceive1(report, "처리중");
                 props.navigation.navigate("Mainscreen");
@@ -230,15 +236,15 @@ export const Min1 = (props) => {
                       }}
                     >
                       <View style={styles.comcontainer2}>
-                        <Text style={styles.comtext2}>접수되었습니다!</Text>
+                        <Text style={{...styles.comtext2,fontFamily:"suiteB"}}>접수되었습니다!</Text>
                       </View>
                           <View style={styles.photocontainer2}>
-                              <Icon name="done" size={170} color="#222A5A" />
+                              <Icon name="done" size={170} color={buttonGreen} />
                       </View>
                      
                       <View style={styles.buttoncontainer2}>
                         <TouchableOpacity
-                          style={styles.button2}
+                          style={{...styles.button2, backgroundColor:darkGreen}}
                           onPress={() => {
                             closeAlert();
                           }}
@@ -251,7 +257,7 @@ export const Min1 = (props) => {
                 });
               }}
             >
-              <Text style={styles.comtext}>접수하기!</Text>
+              <Text style={{...styles.comtext,fontFamily:"armyBold"}}>접수하기</Text>
             </TouchableOpacity>
           )}
 
@@ -312,7 +318,7 @@ export const Min1 = (props) => {
           {isCompleted && (
             <Comment2 report={report} isComplete={true}/>
           )}
-          {isCompleted && ( //처리완료된 민원을 다시 미접수로 만들어주는 부분 
+          {(report.state === "처리완료") && ( //처리완료된 민원을 다시 미접수로 만들어주는 부분 
             <TouchableOpacity
               style={{...styles.combutton2}}
               disabled={true}
@@ -368,8 +374,8 @@ const styles = StyleSheet.create({
     color:loafer
   },
   photocontainer: {
-    width: 320,
-    height: 320,
+    width: 300,
+    height: 300,
     //marginTop: -10,
     margin: 10,
     marginTop:20,
@@ -380,8 +386,8 @@ const styles = StyleSheet.create({
     //backgroundColor:"black",
   },
   photo: {
-    width: 320,
-    height: 320,
+    width: 300,
+    height: 300,
     borderRadius: 10,
   },
   detail: {
@@ -392,10 +398,14 @@ const styles = StyleSheet.create({
   },
   detailtext: {
     fontSize: 17,
-    marginTop: 15,
+    marginTop: 5,
     marginBottom:15,
-    fontFamily:"suiteM",
-    color:"black"
+    fontFamily:"suiteL",
+    color:"black",
+    borderWidth:1,
+    borderColor:darkCello,
+    borderRadius:5,
+    padding:10
   },
   combutton: {
     width: "35%",

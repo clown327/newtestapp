@@ -170,13 +170,20 @@ export const Comment = (props) => {
           <SafeAreaView>
             <View style={styles.title}>
               <Text style={styles.titletext}>조치 사항</Text>
-
+              <View style={{flexDirection:"row"}}>
              {!props.isComplete&& <TouchableOpacity style={styles.button} onPress={()=>{handleSave(images)}}>
                 <View style={styles.send}>
                   <Icon name="save" size={50} color="#000000" />
                   <Text style={styles.sendTenxt}>저장하기</Text>
                 </View>
               </TouchableOpacity>}
+              {!props.isComplete&& <TouchableOpacity style={styles.button} onPress={()=>{closeAlert()}}>
+                <View style={styles.send}>
+                  <Icon name="cancel" size={50} color="#000000" />
+                  <Text style={styles.sendTenxt}>나가기</Text>
+                </View>
+              </TouchableOpacity>}
+              </View>
             </View>
             <View style={styles.title2}>
             <ScrollView
@@ -343,7 +350,7 @@ const styles = StyleSheet.create({
         backgroundColor:loafer
     },
     send:{
-        marginLeft: 70,
+        // marginLeft: 70,
         marginRight:5,
         alignItems:"center",
         
@@ -360,9 +367,13 @@ const styles = StyleSheet.create({
     title:{
         width:"100%",
         height:60,
-        margin:13,
+        alignItems:"center",
+        // borderWidth:1,
+        marginVertical:10,
         //backgroundColor:"blue",
-        flexDirection:"row"
+        flexDirection:"row",
+        justifyContent:"space-between",
+        paddingHorizontal:10
     },
     titletext:{
         fontSize:27,

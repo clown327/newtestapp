@@ -1,7 +1,7 @@
 import {Text, View, ScrollView, StyleSheet, TouchableOpacity, RefreshControl, Image, FlatList} from 'react-native'
 import React, { useEffect, useContext } from 'react';
 import { database } from '../../firebase';
-import { ref, child, onChildAdded} from 'firebase/database';
+import { ref, child, onChildAdded, onChildChanged} from 'firebase/database';
 import { conColor, darkLoafer, mainColor } from '../../color';
 import { Context } from '../../Context';
 import roka from "../../assets/rokalogo.png";
@@ -20,20 +20,63 @@ export const More = (props) => {
     const [adminCode, setAdminCode]=useContext(Context);
 
 
-    useEffect(()=>{
-        console.log("subscribed!")
-        console.log(report);
-        const unsubscribe=onChildAdded(repref, (snapshot) => {
-            console.log("childadded")
-            report.unshift(snapshot.val());
-            onRefresh();
+    useEffect(() => {
+        const unsubscribe = onChildAdded(repref, (snapshot) => {
+          if(["2","4","5"].includes(adminCode)){
+            if(snapshot.val().position.includes("화성")){
+              report.unshift(snapshot.val());
+            }
+          } else if(adminCode==="1"){
+            if(snapshot.val().position.includes("안양")){
+              report.unshift(snapshot.val());
+            }
+            
+          } else if (adminCode==="3"){
+            if(snapshot.val().position.includes("안산")){
+              report.unshift(snapshot.val());
+            }
+          }
+         
+          onRefresh();
         });
-        return(()=>{
-            unsubscribe();
-            console.log("unsubscribed!")
-            report=[];
-        })
-     },[])
+    
+        const unsubscribe2 = onChildChanged(repref, (snapshot) => {
+          if(["2","4","5"].includes(adminCode)){
+            if(snapshot.val().position.includes("화성")){
+              report.splice(
+                report.findIndex((element) => element.uid === snapshot.val().uid),
+                1,
+                snapshot.val()
+              );
+            }
+          } else if(adminCode==="1"){
+            if(snapshot.val().position.includes("안양")){
+              report.splice(
+                report.findIndex((element) => element.uid === snapshot.val().uid),
+                1,
+                snapshot.val()
+              );
+            }
+            
+          } else if (adminCode==="3"){
+            if(snapshot.val().position.includes("안산")){
+              report.splice(
+                report.findIndex((element) => element.uid === snapshot.val().uid),
+                1,
+                snapshot.val()
+              );
+            }
+          }
+          
+          onRefresh();
+        });
+    
+        return () => {
+          unsubscribe();
+          unsubscribe2();
+          report=[];
+        };
+      }, []);
 
     const [refreshing, setRefreshing] = React.useState(false); //리프레쉬 시켜주는거
     const onRefresh = React.useCallback(() => {

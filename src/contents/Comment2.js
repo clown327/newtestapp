@@ -3,7 +3,7 @@ import { SafeAreaView ,Text, View, ScrollView, StyleSheet, TouchableOpacity, Tex
 import { database } from "../../firebase";
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { ref,update, child } from 'firebase/database';
-import { showAlert} from 'react-native-customisable-alert';
+import { showAlert, closeAlert} from 'react-native-customisable-alert';
 import { darkCello, loafer } from '../../color';
 
 export const Comment2 = (props) => {
@@ -67,12 +67,20 @@ showAlert({
             <View style={styles.title}>
               <Text style={styles.titletext}>신고자 알림</Text>
 
-              {!props.isComplete&&<TouchableOpacity style={styles.button} onPress={handleSave}>
+              <View style={{flexDirection:"row"}}>
+             {!props.isComplete&& <TouchableOpacity style={styles.button} onPress={()=>{handleSave(images)}}>
                 <View style={styles.send}>
                   <Icon name="save" size={50} color="#000000" />
                   <Text style={styles.sendTenxt}>저장하기</Text>
                 </View>
               </TouchableOpacity>}
+              {!props.isComplete&& <TouchableOpacity style={styles.button} onPress={()=>{closeAlert()}}>
+                <View style={styles.send}>
+                  <Icon name="cancel" size={50} color="#000000" />
+                  <Text style={styles.sendTenxt}>나가기</Text>
+                </View>
+              </TouchableOpacity>}
+              </View>
             </View>
             <View style={styles.contentcontainer}>
               <TextInput
@@ -101,7 +109,7 @@ const styles = StyleSheet.create({
     backgroundColor:loafer
   },
   send: {
-    marginLeft: 40,
+    // marginLeft: 40,
     marginRight: 5,
     alignItems: "center",
   },
@@ -113,13 +121,17 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontFamily:"suiteM"
   },
-  title: {
-    width: "100%",
-    height: 60,
-    margin: 13,
+  title:{
+    width:"100%",
+    height:60,
+    alignItems:"center",
+    // borderWidth:1,
+    marginVertical:10,
     //backgroundColor:"blue",
-    flexDirection: "row",
-  },
+    flexDirection:"row",
+    justifyContent:"space-between",
+    paddingHorizontal:10
+},
   titletext: {
     fontSize: 27,
     // fontWeight: "bold",

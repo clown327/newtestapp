@@ -35,35 +35,74 @@ import { LinearGradient } from "expo-linear-gradient";
         */
 
 //source = {{uri:JSON.parse(reports[1].photo)[0],}} style = {styles.square} 사진 넣는 법
-const reports = []; //database 안에 있는 reports라는 파일들 가져오기
+let reports = []; //database 안에 있는 reports라는 파일들 가져오기
 
 const repref = child(ref(database), "reports");
 // const hwa = hwaCode("2", "4", "5");
 // hwaCode = ("화성");
 
 export const Mainscreen = (props) => {
+  const [adminCode, setAdminCode] = useContext(Context);
+
   useEffect(() => {
     const unsubscribe = onChildAdded(repref, (snapshot) => {
-      reports.unshift(snapshot.val());
+      if(["2","4","5"].includes(adminCode)){
+        if(snapshot.val().position.includes("화성")){
+          reports.unshift(snapshot.val());
+        }
+      } else if(adminCode==="1"){
+        if(snapshot.val().position.includes("안양")){
+          reports.unshift(snapshot.val());
+        }
+        
+      } else if (adminCode==="3"){
+        if(snapshot.val().position.includes("안산")){
+          reports.unshift(snapshot.val());
+        }
+      }
+     
       onRefresh();
     });
 
     const unsubscribe2 = onChildChanged(repref, (snapshot) => {
-      reports.splice(
-        reports.findIndex((element) => element.uid === snapshot.val().uid),
-        1,
-        snapshot.val()
-      );
+      if(["2","4","5"].includes(adminCode)){
+        if(snapshot.val().position.includes("화성")){
+          reports.splice(
+            reports.findIndex((element) => element.uid === snapshot.val().uid),
+            1,
+            snapshot.val()
+          );
+        }
+      } else if(adminCode==="1"){
+        if(snapshot.val().position.includes("안양")){
+          reports.splice(
+            reports.findIndex((element) => element.uid === snapshot.val().uid),
+            1,
+            snapshot.val()
+          );
+        }
+        
+      } else if (adminCode==="3"){
+        if(snapshot.val().position.includes("안산")){
+          reports.splice(
+            reports.findIndex((element) => element.uid === snapshot.val().uid),
+            1,
+            snapshot.val()
+          );
+        }
+      }
+      
       onRefresh();
     });
 
     return () => {
       unsubscribe();
       unsubscribe2();
+      reports=[];
     };
   }, []);
 
-  const [adminCode, setAdminCode] = useContext(Context);
+  
 
   const [refreshing, setRefreshing] = React.useState(false); //리프레쉬 시켜주는거
 
