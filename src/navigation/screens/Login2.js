@@ -3,6 +3,9 @@ import {Image, StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { Context } from "../../../Context";
 import logo from "../../../assets/logo.jpg"
 import { conColor, mainColor } from "../../../color";
+import {army} from '../../../assets/army.png';
+import Icon from 'react-native-vector-icons/MaterialIcons';//아이콘
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const adminName={
   "0":"지상작전사령부",
@@ -12,109 +15,44 @@ const adminName={
   "4":"168여단",
   "5":"168여단 2대대" //169->68-2로 바뀜 
 }
-
+//<Text style={{fontSize:15,marginTop:10}}>{`관리자 계정: ${adminName[adminCode]}`}</Text>
 export default function Login2(props) {
     console.disableYellowBox = true;
     const [adminCode,setAdminCode]=useContext(Context);
     return (
-      <View style={styles.container}>
-        <View style={styles.titlecontainer}>
-          <Text style={styles.title}>국방 안전</Text>
-          <Text style={styles.title}>신고앱입니다.</Text>
-        </View>
-        <View style={styles.introContainer}>
-          <Image source={logo} style={styles.image} />
-          <Text style={styles.introTitleText}>국민을 위해 힘쓰는</Text>
-          <Text style={styles.introTitleText}>당신이 '영웅'입니다.</Text>
-          <Text style={{fontSize:15,marginTop:10}}>{`관리자 계정: ${adminName[adminCode]}`}</Text>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() =>
-              props.navigation.reset({ routes: [{ name: "TopTabs" }] })
-            }
-          >
-            <Text style={styles.buttonText}>시작하기</Text>
+      <SafeAreaView style={{width:"100%",height:"100%", backgroundColor:"#fff"}}>
+        <View style={{width:"100%",height:"100%", backgroundColor:"#fff"}}>
+
+        <View style={{width:'100%',height:50, alignItems:'flex-end',justifyContent:'center'}}>
+          <TouchableOpacity onPress={()=> {props.navigation.navigate("Help")}} style={{width:40, height:40, borderRadius:50, borderWidth:2,alignItems:'center',justifyContent:'center', marginRight:10}}>
+            <Icon name="hlep" size={30} color="#000000"/>
           </TouchableOpacity>
         </View>
+        <View style={{width:'100%'}}>
+          <View style={{alignItems:'center',justifyContent:'center',}}>
+            <Text style={{fontSize:30,fontWeight:"bold", margin:30, marginTop:80}}>모두의 육국 민 신고 앱</Text>
+            
+          </View>
+          <View style={{width:'100%',alignItems:'center' }}>
+            <Text style={{fontSize:50, fontWeight:"bold", marginTop:30}}>ARA</Text>
+            <Text style={{fontSize:30, fontWeight:"bold", marginTop:50}}>Army Report App</Text>
+          </View>
+              
+        </View>
+            <View style={{width:'100%',alignItems:'center', marginTop:80 }}>
+              <TouchableOpacity onPress={()=>props.navigation.reset({ routes: [{ name: "TopTabs" }] })} style={{width:'90%', height:70, justifyContent:'center',borderWidth:1, borderRadius:25, alignItems:'center'}}>
+                <Text style={{fontSize:40, fontWeight:"bold"}}>시작하기</Text>
+              </TouchableOpacity>
+            </View>
+            <View>
+              <Image source={army} style={{width:'100%',alignItems:'center',}}/>
+            </View>
       </View>
+      </SafeAreaView>
+      
     );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    width: "100%",
-    height: "100%",
-    backgroundColor: conColor,
-    paddingTop: 50,
-    paddingLeft: 20,
-    paddingRight: 20,
-    alignItems: "center",
-  },
-  titlecontainer:{
-    marginTop:50,
-    alignItems:"center",
-
-  },  
-  title: {
-    fontSize: 35,
-    fontWeight: "bold",
-    color: "black",
-    //marginTop: 50,
-  },
-  introContainer: {
-    backgroundColor: "white",
-    borderRadius: 20,
-    height: 500,
-    marginTop: 30,
-    padding: 30,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  image: {
-    width: 200,
-    height: 200,
-    borderRadius: 30,
-    flexDirection:"column",
-  },
-  introTitleText: {
-    width: 250,
-    fontSize: 25,
-    fontWeight: "bold",
-    textAlign: "center",
-  },
-  introdescText: {
-    width: 250,
-    fontSize: 15,
-    fontWeight: "bold",
-    textAlign: "center",
-    marginTop: 20,
-  },
-  button: {
-    backgroundColor: "#071462",
-    borderRadius: 20,
-    width: 200,
-    height: 50,
-    alignItems: "center",
-    justifyContent: "center",
-
-    marginTop: 20,
-  },
-  buttonText: {
-    fontSize: 30,
-    color: "white",
-    fontWeight:"bold",
-  },
-  buttonimage: {
-    width: 50,
-    height: 50,
-    borderRadius: 10,
-    
-  },
-  buttonplace: {
-    alignItems: "flex-start",
-    flexDirections: "row",
-    //justifyContent: "center",
-    position: 'absolute',
-    right: 150,
-  },
+ 
 });

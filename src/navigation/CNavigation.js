@@ -30,6 +30,7 @@ import { Wantedview } from "../contents/Wantedview";
 import { Daegong } from "../contents/Daegong";
 import { More2 } from "../contents/More2";
 import { More } from "../contents/More";
+import { Help } from "../contents/Help";
 
 import Icon from 'react-native-vector-icons/MaterialIcons';//아이콘
 import { Sharescreen } from "../contents/Sharescreen";
